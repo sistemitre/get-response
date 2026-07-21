@@ -1,0 +1,23 @@
+# Repo-wide artifacts not specific to a single package.
+# Each package also has its own .gitignore for build/tooling output scoped to it.
+
+# Python tooling (generator + any root-level test/lint runs)
+.venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Generator debug artifact (regenerate with `--dump-ir`)
+codegen/_ir_dump.json
+
+# IDEs / editors
+.vs/
+.vscode/
+.idea/
+*.user
+
+# OS
+.DS_Store
+Thumbs.db

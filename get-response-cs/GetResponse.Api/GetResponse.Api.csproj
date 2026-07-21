@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RootNamespace>GetResponse.Api</RootNamespace>
+    <AssemblyName>GetResponse.Api</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>GetResponse.Api</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Sistemi Tre</Authors>
+    <Description>A complete, typed, async C# client for the GetResponse v3 API (contacts, campaigns, ecommerce, automations, and more), generated from the official OpenAPI spec.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/sistemitre/get-response</RepositoryUrl>
+    <PackageTags>getresponse;email-marketing;api-client</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Threading.RateLimiting" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
