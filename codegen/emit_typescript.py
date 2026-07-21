@@ -780,6 +780,7 @@ _PACKAGE_JSON = """{
   "name": "getresponse",
   "version": "0.1.0",
   "description": "Async, fully-typed Node.js client for the GetResponse v3 API.",
+  "license": "MIT",
   "type": "module",
   "engines": { "node": ">=18" },
   "main": "dist/index.js",
