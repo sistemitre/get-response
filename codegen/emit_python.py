@@ -335,100 +335,120 @@ def _render_resources_init(tags: list[str]) -> str:
 # -- client.py, _core.py, __init__.py, py.typed -----------------------------------
 
 
-def _render_client_py(tags: list[str]) -> str:
+def _render_resource_groups_py(tags: list[str]) -> str:
+    """Render `_resource_groups.py`: a mixin adding one typed resource attribute per tag.
+
+    `client.py` is scaffold-once (hand-maintained after first creation), but the set of
+    resource groups is spec-derived and must stay in sync as tags are added/removed. This
+    mixin is the always-regenerated half: `GetResponseClient(_ResourceGroups)` gets the
+    attributes/typing for free, and `_attach_resource_groups` does the assignment that used
+    to live inline in the client's `__init__`.
+    """
     lines = [
-        '"""Root async client: auth, resource groups, lifecycle, and pagination."""',
+        '"""Resource-group attributes attached to GetResponseClient. Generated from the '
+        'spec\'s tags."""',
         "",
         "from __future__ import annotations",
         "",
-        "from collections.abc import AsyncIterator, Awaitable, Callable",
-        "from typing import Any",
-        "",
-        "import httpx",
-        "",
-        "from ._core import DEFAULT_BASE_URL, _Core",
-        "from ._ratelimit import RateLimitOptions",
+        "from ._core import _Core",
         "from .resources import (",
     ]
     lines.extend(f"    {_tag_pascal(tag)}Resource," for tag in tags)
     lines.append(")")
     lines.append("")
     lines.append("")
-    lines.append("class GetResponseClient:")
-    lines.append('    """Async GetResponse v3 API client; one resource-group attribute per tag."""')
+    lines.append("class _ResourceGroups:")
+    lines.append('    """Mixin providing one typed resource-group attribute per API tag."""')
     lines.append("")
-    lines.append("    def __init__(")
-    lines.append("        self,")
-    lines.append("        api_key: str | None = None,")
-    lines.append("        *,")
-    lines.append("        access_token: str | None = None,")
-    lines.append("        base_url: str = DEFAULT_BASE_URL,")
-    lines.append("        timeout: float = 30.0,")
-    lines.append("        transport: httpx.AsyncBaseTransport | None = None,")
-    lines.append("        rate_limit: RateLimitOptions | None = None,")
-    lines.append("    ) -> None:")
-    lines.append("        if (api_key is None) == (access_token is None):")
-    lines.append('            raise ValueError("Provide exactly one of `api_key` or `access_token`.")')
-    lines.append("        headers = (")
-    lines.append('            {"X-Auth-Token": f"api-key {api_key}"}')
-    lines.append("            if api_key is not None")
-    lines.append('            else {"Authorization": f"Bearer {access_token}"}')
-    lines.append("        )")
-    lines.append("        self._client = httpx.AsyncClient(")
-    lines.append("            base_url=base_url, headers=headers, timeout=timeout, transport=transport")
-    lines.append("        )")
-    lines.append("        self._core = _Core(self._client, rate_limit)")
     for tag in tags:
-        lines.append(f"        self.{_tag_snake(tag)} = {_tag_pascal(tag)}Resource(self._core)")
+        lines.append(f"    {_tag_snake(tag)}: {_tag_pascal(tag)}Resource")
     lines.append("")
-    lines.append("    async def aclose(self) -> None:")
-    lines.append('        """Close the underlying HTTP connection pool."""')
-    lines.append("        await self._client.aclose()")
-    lines.append("")
-    lines.append("    async def __aenter__(self) -> GetResponseClient:")
-    lines.append("        return self")
-    lines.append("")
-    lines.append("    async def __aexit__(")
-    lines.append("        self,")
-    lines.append("        exc_type: type[BaseException] | None,")
-    lines.append("        exc: BaseException | None,")
-    lines.append("        tb: object | None,")
-    lines.append("    ) -> None:")
-    lines.append("        await self.aclose()")
-    lines.append("")
-    lines.append("    async def paginate(")
-    lines.append("        self,")
-    lines.append("        list_method: Callable[..., Awaitable[list[Any]]],")
-    lines.append("        *,")
-    lines.append("        per_page: int = 100,")
-    lines.append("        **kwargs: Any,")
-    lines.append("    ) -> AsyncIterator[Any]:")
-    lines.append(
-        '        """Walk every page of a `list_*` resource method, yielding items one by one.'
-    )
-    lines.append("")
-    lines.append(
-        "        GetResponse also reports `TotalCount`/`CurrentPage`/`TotalPages` response"
-    )
-    lines.append(
-        "        headers, but resource methods only return typed bodies (no header access),"
-    )
-    lines.append(
-        "        so this walks by page length instead: it stops once a page comes back empty"
-    )
-    lines.append('        or shorter than `per_page`.')
-    lines.append('        """')
-    lines.append("        page = 1")
-    lines.append("        while True:")
-    lines.append("            items = await list_method(page=page, per_page=per_page, **kwargs)")
-    lines.append("            if not items:")
-    lines.append("                return")
-    lines.append("            for item in items:")
-    lines.append("                yield item")
-    lines.append("            if len(items) < per_page:")
-    lines.append("                return")
-    lines.append("            page += 1")
+    lines.append("    def _attach_resource_groups(self, core: _Core) -> None:")
+    for tag in tags:
+        lines.append(f"        self.{_tag_snake(tag)} = {_tag_pascal(tag)}Resource(core)")
     return "\n".join(lines) + "\n"
+
+
+_CLIENT_PY = '''"""Root async client: auth, resource groups, lifecycle, and pagination."""
+
+from __future__ import annotations
+
+from collections.abc import AsyncIterator, Awaitable, Callable
+from typing import Any
+
+import httpx
+
+from ._core import DEFAULT_BASE_URL, _Core
+from ._ratelimit import RateLimitOptions
+from ._resource_groups import _ResourceGroups
+
+
+class GetResponseClient(_ResourceGroups):
+    """Async GetResponse v3 API client; one resource-group attribute per tag."""
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        *,
+        access_token: str | None = None,
+        base_url: str = DEFAULT_BASE_URL,
+        timeout: float = 30.0,
+        transport: httpx.AsyncBaseTransport | None = None,
+        rate_limit: RateLimitOptions | None = None,
+    ) -> None:
+        if (api_key is None) == (access_token is None):
+            raise ValueError("Provide exactly one of `api_key` or `access_token`.")
+        headers = (
+            {"X-Auth-Token": f"api-key {api_key}"}
+            if api_key is not None
+            else {"Authorization": f"Bearer {access_token}"}
+        )
+        self._client = httpx.AsyncClient(
+            base_url=base_url, headers=headers, timeout=timeout, transport=transport
+        )
+        self._core = _Core(self._client, rate_limit)
+        self._attach_resource_groups(self._core)
+
+    async def aclose(self) -> None:
+        """Close the underlying HTTP connection pool."""
+        await self._client.aclose()
+
+    async def __aenter__(self) -> GetResponseClient:
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: object | None,
+    ) -> None:
+        await self.aclose()
+
+    async def paginate(
+        self,
+        list_method: Callable[..., Awaitable[list[Any]]],
+        *,
+        per_page: int = 100,
+        **kwargs: Any,
+    ) -> AsyncIterator[Any]:
+        """Walk every page of a `list_*` resource method, yielding items one by one.
+
+        GetResponse also reports `TotalCount`/`CurrentPage`/`TotalPages` response
+        headers, but resource methods only return typed bodies (no header access),
+        so this walks by page length instead: it stops once a page comes back empty
+        or shorter than `per_page`.
+        """
+        page = 1
+        while True:
+            items = await list_method(page=page, per_page=per_page, **kwargs)
+            if not items:
+                return
+            for item in items:
+                yield item
+            if len(items) < per_page:
+                return
+            page += 1
+'''
 
 
 _RATELIMIT_PY = '''"""Opt-in rate limiter: a concurrency cap plus per-second/per-window token buckets.
@@ -1354,25 +1374,42 @@ async def test_proactive_rate_pacing_with_fake_clock() -> None:
 # -- orchestration --------------------------------------------------------------------
 
 
-def emit(api: Api, out_dir: str = "get-response-py") -> None:
-    """Render the full `get-response-py` package from `api` and clean it up with ruff."""
-    root = Path(out_dir)
-    if root.exists():
-        shutil.rmtree(root)
+def _write_once(path: Path, content: str) -> None:
+    """Write `content` to `path` only if it doesn't already exist.
 
+    Used for every hand-maintained (scaffold-once) file: written on first generation,
+    then left alone on every later regeneration so hand edits survive.
+    """
+    if not path.exists():
+        path.write_text(content, encoding="utf-8")
+
+
+def emit(api: Api, out_dir: str = "get-response-py") -> None:
+    """Render `get-response-py` from `api` and clean it up with ruff.
+
+    Two buckets: `models.py`, `resources/`, and `_resource_groups.py` are spec-derived and
+    fully wiped + rewritten every run. Everything else (project/build files, the
+    hand-written core runtime, `client.py`, tests) is hand-maintained -- scaffolded once via
+    `_write_once` on first generation, then left untouched.
+    """
+    root = Path(out_dir)
     pkg = root / "getresponse"
     resources_dir = pkg / "resources"
     tests_dir = root / "tests"
+
+    if resources_dir.exists():
+        shutil.rmtree(resources_dir)
     for d in (pkg, resources_dir, tests_dir):
         d.mkdir(parents=True, exist_ok=True)
 
-    (root / "pyproject.toml").write_text(_PYPROJECT_TOML, encoding="utf-8")
-    (root / "README.md").write_text(_README_MD, encoding="utf-8")
+    _write_once(root / "pyproject.toml", _PYPROJECT_TOML)
+    _write_once(root / "README.md", _README_MD)
 
-    (pkg / "__init__.py").write_text(_INIT_PY, encoding="utf-8")
-    (pkg / "py.typed").write_text("", encoding="utf-8")
-    (pkg / "_ratelimit.py").write_text(_RATELIMIT_PY, encoding="utf-8")
-    (pkg / "_core.py").write_text(_CORE_PY, encoding="utf-8")
+    _write_once(pkg / "__init__.py", _INIT_PY)
+    _write_once(pkg / "py.typed", "")
+    _write_once(pkg / "_ratelimit.py", _RATELIMIT_PY)
+    _write_once(pkg / "_core.py", _CORE_PY)
+
     (pkg / "models.py").write_text(_render_models_py(api), encoding="utf-8")
 
     tags = sorted({op.tag for op in api.operations})
@@ -1385,17 +1422,22 @@ def emit(api: Api, out_dir: str = "get-response-py") -> None:
         module = _render_resource_module(tag, by_tag[tag])
         (resources_dir / f"{_tag_snake(tag)}.py").write_text(module, encoding="utf-8")
 
-    (pkg / "client.py").write_text(_render_client_py(tags), encoding="utf-8")
+    (pkg / "_resource_groups.py").write_text(_render_resource_groups_py(tags), encoding="utf-8")
 
-    (tests_dir / "conftest.py").write_text(_TEST_CONFTEST, encoding="utf-8")
-    (tests_dir / "test_auth.py").write_text(_TEST_AUTH, encoding="utf-8")
-    (tests_dir / "test_query_building.py").write_text(_TEST_QUERY_BUILDING, encoding="utf-8")
-    (tests_dir / "test_models.py").write_text(_TEST_MODELS, encoding="utf-8")
-    (tests_dir / "test_pagination.py").write_text(_TEST_PAGINATION, encoding="utf-8")
-    (tests_dir / "test_errors.py").write_text(_TEST_ERRORS, encoding="utf-8")
-    (tests_dir / "test_ratelimit.py").write_text(_TEST_RATELIMIT, encoding="utf-8")
+    _write_once(pkg / "client.py", _CLIENT_PY)
 
-    print(f"wrote {len(tags)} resource modules, models.py, core, client, tests -> {root}")
+    _write_once(tests_dir / "conftest.py", _TEST_CONFTEST)
+    _write_once(tests_dir / "test_auth.py", _TEST_AUTH)
+    _write_once(tests_dir / "test_query_building.py", _TEST_QUERY_BUILDING)
+    _write_once(tests_dir / "test_models.py", _TEST_MODELS)
+    _write_once(tests_dir / "test_pagination.py", _TEST_PAGINATION)
+    _write_once(tests_dir / "test_errors.py", _TEST_ERRORS)
+    _write_once(tests_dir / "test_ratelimit.py", _TEST_RATELIMIT)
+
+    print(
+        f"wrote {len(tags)} resource modules, models.py, _resource_groups.py "
+        f"(scaffold files left untouched if already present) -> {root}"
+    )
 
     subprocess.run([sys.executable, "-m", "ruff", "format", str(root)], check=True)
     subprocess.run(

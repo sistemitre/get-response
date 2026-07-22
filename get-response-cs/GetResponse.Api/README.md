@@ -1,9 +1,9 @@
 # GetResponse.Api
 
 A complete, typed, async C# client for the [GetResponse v3 API](https://apireference.getresponse.com/),
-generated from the official OpenAPI spec. Targets `net8.0` and `net9.0`, uses `System.Text.Json`
-for all serialization, and has no dependency beyond `System.Threading.RateLimiting` (used only by
-the optional rate limiter below).
+generated from the official OpenAPI spec. Targets `net8.0`, `net9.0`, and `net10.0`, uses
+`System.Text.Json` for all serialization, and has no dependency beyond
+`System.Threading.RateLimiting` (used only by the optional rate limiter below).
 
 - 220 operations across 49 resource groups (Contacts, Campaigns, Newsletters, Autoresponders,
   e-commerce, Automations, and more) as strongly-typed `Task`-returning methods.

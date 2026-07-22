@@ -1,10 +1,12 @@
 # codegen — the GetResponse client generator
 
-This package is the **single source of truth** for every GetResponse API client in this
-repo (Python, C#, TypeScript). Nothing in `get-response-py/`, `get-response-cs/GetResponse.Api/`,
-or `get-response-ts/` is hand-edited beyond the small hand-written runtime core each
-language needs — everything else (models, enums, per-tag resource methods) is generated
-from `openapi/open-api.json`.
+This package is the **single source of truth** for what's actually derived from the
+OpenAPI spec in every GetResponse API client in this repo (Python, C#, TypeScript):
+models, enums, and per-tag resource/operation methods. Everything else in
+`get-response-py/`, `get-response-cs/`, and `get-response-ts/` — build/project files, the
+hand-written core runtime (HTTP transport, auth, pagination, error mapping, the rate
+limiter), READMEs, and test suites — is **scaffolded once** and then genuinely
+hand-maintained; regenerating never touches it again. See "Two buckets" below.
 
 Audience: maintainers of this repo, not consumers of the generated libraries. If you just
 want to *use* a client, see that library's own README (`get-response-py/README.md`,
@@ -39,11 +41,55 @@ openapi/open-api.json ─▶ spec.py (load, $ref-resolve, allOf-flatten, type-ma
    `spec.py` when precomputing names and by emitters for anything not already on the IR
    (e.g. resource-group class names derived from tags).
 4. **`emit_python.py` / `emit_csharp.py` / `emit_typescript.py`** each render the same `Api`
-   IR into a complete, idiomatic package for their language: models, enums, one class per
-   resource tag, a hand-written-quality core (HTTP transport, auth, pagination, error
-   mapping, opt-in rate limiter), and a test suite. Each emitter also runs its language's
-   formatter/linter as the last step of `emit()`, so generated output is always
-   already-clean — `git diff` after a regenerate should only ever show real content changes.
+   IR into a complete, idiomatic package for their language, split across two buckets (see
+   below). Each emitter also runs its language's formatter/linter as the last step of
+   `emit()`, so generated output is always already-clean — `git diff` after a regenerate
+   should only ever show real content changes to the always-generated bucket.
+
+## Two buckets: what's regenerated vs. scaffolded once
+
+Every `emit()` writes two kinds of files, and treats them completely differently:
+
+- **Always generated** — models, enums, and one resource-group class per API tag, fully
+  wiped and rewritten on *every* run: `getresponse/models.py` + `getresponse/resources/`
+  (Python), `Models/`/`Resources/` (C#), `src/models.ts` + `src/resources/` (TypeScript).
+  These are the only things actually derived from the spec.
+- **Scaffold-once** — everything else: build/project files (`pyproject.toml`,
+  `package.json`, `GetResponse.sln`, both `.csproj` files, lint/format configs), the
+  hand-written core runtime (HTTP transport, auth, pagination, error mapping, the opt-in
+  rate limiter), the root client's constructors/lifecycle, READMEs, and test suites. Each
+  is written **only if it doesn't already exist** — a fresh checkout gets them scaffolded
+  once; every later regenerate leaves them untouched. **Hand-editing these is expected and
+  safe** — that's the whole point.
+  - The C# `.sln` and both `.csproj` files are scaffolded via the real `dotnet` CLI
+    (`dotnet new sln`/`classlib`/`xunit`, `dotnet sln add`, `dotnet add package`/
+    `reference`) rather than a Python string template, gated by the same exists-check —
+    see `_scaffold_solution_and_projects`/`_patch_api_csproj`/`_patch_tests_csproj` in
+    `emit_csharp.py`. A few properties (`TargetFrameworks` multi-targeting, NuGet package
+    metadata) have no CLI flag and get a one-time XML patch right after scaffolding, same
+    as a human setting this up by hand would do.
+
+**Keeping the root client in sync despite being scaffold-once**: `GetResponseClient` needs
+one property per resource tag, but the tag list can change when the spec does. Each
+language solves this with its own idiom for extending a type's public surface from two
+places while keeping full static typing:
+- **Python**: a generated mixin class `_ResourceGroups` (in `_resource_groups.py`, always
+  regenerated) declares one typed attribute per tag plus an `_attach_resource_groups`
+  method; the scaffold-once `GetResponseClient` inherits from it.
+- **C#**: `GetResponseClient` is a `partial class`. The generated half
+  (`GetResponseClient.Resources.cs`) declares the per-tag properties (`{ get; private
+  set; }`, since C# forbids assigning a getter-only auto-property from outside the type's
+  own constructor) plus an `InitializeResourceGroups` method; the scaffold-once half calls
+  it from each constructor.
+- **TypeScript**: a generated `resourceGroups.ts` exports an interface
+  `GeneratedResourceGroups` plus a `createResourceGroups(core)` factory; the scaffold-once
+  `client.ts` declaration-merges (`interface GetResponseClient extends
+  GeneratedResourceGroups {}`) and calls `Object.assign(this, createResourceGroups(...))`
+  in its constructor.
+
+**To force a scaffold file back to its generated default** (rare — e.g. you want to
+discard local hand-edits and start over): delete the file and regenerate; it'll be
+recreated fresh. There's no flag for this — deleting the file *is* the mechanism.
 
 ## Regenerating
 
@@ -57,7 +103,9 @@ distribution) and write a full IR JSON dump to `codegen/_ir_dump.json` — the f
 to inspect what a given schema or operation resolved to without re-reading the raw spec.
 
 To pick up an API change: re-vendor `openapi/open-api.json` (re-download from
-`https://apireference.getresponse.com/open-api.json`), then regenerate.
+`https://apireference.getresponse.com/open-api.json`), then regenerate. This only ever
+touches the always-generated bucket (models/enums/resources) — your hand-edits to the core
+runtime, build files, README, or tests are never at risk.
 
 ## Testing the generator itself
 
@@ -81,10 +129,13 @@ each one's full test suite before committing — a change here fans out everywhe
 
 **Adding a fourth target language**: write `emit_<language>.py` exposing
 `emit(api: Api, out_dir: str) -> None`, following the shape of the existing emitters (each
-is self-contained: it owns its output directory, its hand-written core templates, and its
-own lint/format/test wiring). Wire a new `--<language>` flag into `generate.py`'s
-lazy-import branches — the pattern there is deliberately copy-paste-friendly. You should
-not need to touch `spec.py`, `ir.py`, or another language's emitter.
+is self-contained: it owns its output directory, its own lint/format/test wiring, and the
+same two-bucket split — always-generated models/resources plus a scaffold-once core,
+build files, README, and tests, with a generated resource-groups mixin/partial/interface
+so the root client stays in sync without itself being regenerated). Wire a new
+`--<language>` flag into `generate.py`'s lazy-import branches — the pattern there is
+deliberately copy-paste-friendly. You should not need to touch `spec.py`, `ir.py`, or
+another language's emitter.
 
 ## Design notes / known simplifications
 

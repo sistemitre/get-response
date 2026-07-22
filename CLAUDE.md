@@ -16,12 +16,16 @@ over-explain — the reader is an experienced programmer.
 
 ## Architecture
 
-A spec-driven code generator in `codegen/` is the **single source of truth**. Nothing in
-`get-response-py/`, `get-response-cs/GetResponse.Api/`, or `get-response-ts/src/` is hand-edited
-beyond the small hand-written runtime core each language needs (HTTP transport, auth,
-pagination, error mapping, opt-in rate limiting) — everything else (models, enums, per-tag
-resource methods) is generated from the spec. To pick up API changes: re-vendor the spec,
-then regenerate.
+A spec-driven code generator in `codegen/` is the **single source of truth** for what's
+actually derived from the spec: models, enums, and per-tag resource/operation methods.
+Regenerating **fully wipes and rewrites only those** — everything else (build/project files,
+the hand-written core runtime, READMEs, tests) is **scaffolded once** (written only if
+missing) and safe to hand-edit forever after. See `codegen/README.md`'s "Two buckets"
+section for the full breakdown and how each language keeps the root client's resource-group
+properties in sync with the spec's tags without the client itself being regenerated
+(a generated mixin/partial-class/declaration-merging, one idiom per language). To pick up
+API changes: re-vendor the spec, then regenerate — this only ever touches the
+always-generated bucket.
 
 To regenerate all three libraries:
 
@@ -50,8 +54,8 @@ only one library. `--dump-ir` prints IR summary stats and writes a full IR JSON 
 **Python** (`get-response-py/`): async only, `httpx` + `pydantic` v2, lint/format via `ruff`,
 types via `mypy`.
 
-**C#** (`get-response-cs/GetResponse.Api/`): `net8.0;net9.0`, `System.Text.Json` only (no
-external serialization deps), xUnit tests, `.editorconfig` + `dotnet format`.
+**C#** (`get-response-cs/GetResponse.Api/`): `net8.0;net9.0;net10.0`, `System.Text.Json` only
+(no external serialization deps), xUnit tests, `.editorconfig` + `dotnet format`.
 
 **TypeScript** (`get-response-ts/`): ESM only, Node >=18, zero runtime deps (built on the
 global `fetch`), models are plain interfaces keyed by wire name (identity (de)serialization)

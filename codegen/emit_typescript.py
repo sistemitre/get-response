@@ -1,10 +1,18 @@
 """TypeScript emitter: renders the `Api` IR (see `codegen/ir.py`) into a complete, typed,
-async, zero-runtime-dependency ESM client for Node -- models, per-tag resource classes, the
-root client, the shared HTTP/rate-limit core, and a vitest test suite -- under
-`get-response-ts/`.
+async, zero-runtime-dependency ESM client for Node under `get-response-ts/`.
 
-Regenerate via `python -m codegen.generate --typescript`. Never hand-edit anything under
-`get-response-ts/src/`; fix this emitter and re-run instead. `emit()` finishes by running
+Two buckets, per `emit()`:
+  - Always generated (spec-derived, wiped + rewritten every run): `src/models.ts`,
+    `src/resources/*.ts` (per-tag resource classes), `src/resourceGroups.ts` (the glue
+    that attaches one resource-group property per tag to `GetResponseClient` via TS
+    declaration merging).
+  - Scaffold-once (written only if missing via `_write_once`, then permanently
+    hand-maintained): project/build config, `src/core.ts`/`errors.ts`/`ratelimit.ts`,
+    `src/client.ts`, `src/index.ts`, `README.md`, and the `test/` suite. Safe to hand-edit
+    once created -- regenerating never touches them again.
+
+Regenerate via `python -m codegen.generate --typescript`. Never hand-edit the
+always-generated bucket; fix this emitter and re-run instead. `emit()` finishes by running
 `prettier --write` and `eslint --fix` over the output (skipped with a warning if
 `node_modules` isn't installed yet -- run `npm install` once, then regenerate).
 """
@@ -293,83 +301,115 @@ def _render_resources_index(tags: list[str]) -> str:
     return "\n".join(lines) + "\n"
 
 
-# -- client.ts / index.ts ----------------------------------------------------------------
+# -- resourceGroups.ts (always generated) / client.ts (scaffold-once) -------------------
 
 
-def _render_client_ts(tags: list[str]) -> str:
+def _render_resource_groups_ts(tags: list[str]) -> str:
+    """Render `src/resourceGroups.ts`: one readonly property + one constructor call per tag.
+
+    `GetResponseClient` (scaffold-once, hand-maintained) picks this up via TS declaration
+    merging (`export interface GetResponseClient extends GeneratedResourceGroups {}`) plus
+    `Object.assign(this, createResourceGroups(this.core))` in its constructor, so a new tag
+    shows up on the client without ever touching the hand-written file.
+    """
     lines = [
-        "/** Root client: auth, one property per resource-group tag, and pagination. */",
+        "/** Resource-group properties attached to GetResponseClient. Generated from the spec's tags. */",
         "",
-        "import { Core, DEFAULT_BASE_URL, type FetchFn } from './core.js';",
-        "import type { RateLimitOptions } from './ratelimit.js';",
+        "import type { Core } from './core.js';",
         "import {",
     ]
     for tag in tags:
         lines.append(f"  {_tag_pascal(tag)}Resource,")
     lines.append("} from './resources/index.js';")
     lines.append("")
-    lines.append("/** Constructor options for {@link GetResponseClient}. */")
-    lines.append("export interface GetResponseClientOptions {")
-    lines.append("  /** API key: sent as `X-Auth-Token: api-key <apiKey>`. Mutually exclusive with `accessToken`. */")
-    lines.append("  apiKey?: string;")
-    lines.append("  /** OAuth2 bearer token: sent as `Authorization: Bearer <accessToken>`. */")
-    lines.append("  accessToken?: string;")
-    lines.append("  /** API base URL. Defaults to the standard GetResponse endpoint (see also the MAX US/PL constants in `core.ts`). */")
-    lines.append("  baseUrl?: string;")
-    lines.append("  /** Per-request timeout in milliseconds. Defaults to 30000. */")
-    lines.append("  timeoutMs?: number;")
-    lines.append("  /** Inject a custom `fetch` implementation (used by the test suite). Defaults to the global `fetch`. */")
-    lines.append("  fetch?: FetchFn;")
-    lines.append("  /** Opt-in client-side rate limiting; disabled unless provided. */")
-    lines.append("  rateLimit?: RateLimitOptions;")
-    lines.append("}")
-    lines.append("")
-    lines.append("/** Async, fully-typed GetResponse v3 API client; one property per resource-group tag. */")
-    lines.append("export class GetResponseClient {")
-    lines.append("  private readonly core: Core;")
-    lines.append("")
+    lines.append("/** One readonly resource-group property per API tag. */")
+    lines.append("export interface GeneratedResourceGroups {")
     for tag in tags:
         lines.append(f"  readonly {_tag_camel(tag)}: {_tag_pascal(tag)}Resource;")
+    lines.append("}")
     lines.append("")
-    lines.append("  constructor(options: GetResponseClientOptions = {}) {")
-    lines.append("    const { apiKey, accessToken, baseUrl = DEFAULT_BASE_URL, timeoutMs = 30_000, fetch: fetchImpl, rateLimit } = options;")
-    lines.append("    if ((apiKey === undefined) === (accessToken === undefined)) {")
-    lines.append("      throw new Error('Provide exactly one of `apiKey` or `accessToken`.');")
-    lines.append("    }")
-    lines.append("    const authHeader: Record<string, string> = apiKey !== undefined")
-    lines.append("      ? { 'X-Auth-Token': `api-key ${apiKey}` }")
-    lines.append("      : { Authorization: `Bearer ${accessToken}` };")
-    lines.append("    this.core = new Core({ baseUrl, authHeader, timeoutMs, fetch: fetchImpl, rateLimit });")
+    lines.append("/** Constructs one resource-group instance per tag, keyed by property name. */")
+    lines.append("export function createResourceGroups(core: Core): GeneratedResourceGroups {")
+    lines.append("  return {")
     for tag in tags:
-        lines.append(f"    this.{_tag_camel(tag)} = new {_tag_pascal(tag)}Resource(this.core);")
-    lines.append("  }")
-    lines.append("")
-    lines.append("  /**")
-    lines.append("   * Walk every page of a `list`/`get*List` resource method, yielding items one by one.")
-    lines.append("   *")
-    lines.append("   * GetResponse also reports `TotalCount`/`CurrentPage`/`TotalPages` response headers, but")
-    lines.append("   * resource methods only return typed bodies (no header access), so this walks by page")
-    lines.append("   * length instead: it stops once a page comes back empty or shorter than `perPage`.")
-    lines.append("   */")
-    lines.append("  async *paginate<T>(")
-    lines.append("    listMethod: (")
-    lines.append("      params: Record<string, unknown> & { page?: number; perPage?: number },")
-    lines.append("      signal?: AbortSignal,")
-    lines.append("    ) => Promise<T[]>,")
-    lines.append("    options: { perPage?: number; params?: Record<string, unknown>; signal?: AbortSignal } = {},")
-    lines.append("  ): AsyncGenerator<T, void, void> {")
-    lines.append("    const perPage = options.perPage ?? 100;")
-    lines.append("    let page = 1;")
-    lines.append("    for (;;) {")
-    lines.append("      const items = await listMethod({ ...options.params, page, perPage }, options.signal);")
-    lines.append("      if (items.length === 0) return;")
-    lines.append("      yield* items;")
-    lines.append("      if (items.length < perPage) return;")
-    lines.append("      page += 1;")
-    lines.append("    }")
-    lines.append("  }")
+        lines.append(f"    {_tag_camel(tag)}: new {_tag_pascal(tag)}Resource(core),")
+    lines.append("  };")
     lines.append("}")
     return "\n".join(lines) + "\n"
+
+
+_CLIENT_TS = """/** Root client: auth, resource-group properties (via declaration merging), and pagination. */
+
+import { Core, DEFAULT_BASE_URL, type FetchFn } from './core.js';
+import type { RateLimitOptions } from './ratelimit.js';
+import { createResourceGroups, type GeneratedResourceGroups } from './resourceGroups.js';
+
+/** Constructor options for {@link GetResponseClient}. */
+export interface GetResponseClientOptions {
+  /** API key: sent as `X-Auth-Token: api-key <apiKey>`. Mutually exclusive with `accessToken`. */
+  apiKey?: string;
+  /** OAuth2 bearer token: sent as `Authorization: Bearer <accessToken>`. */
+  accessToken?: string;
+  /** API base URL. Defaults to the standard GetResponse endpoint (see also the MAX US/PL constants in `core.ts`). */
+  baseUrl?: string;
+  /** Per-request timeout in milliseconds. Defaults to 30000. */
+  timeoutMs?: number;
+  /** Inject a custom `fetch` implementation (used by the test suite). Defaults to the global `fetch`. */
+  fetch?: FetchFn;
+  /** Opt-in client-side rate limiting; disabled unless provided. */
+  rateLimit?: RateLimitOptions;
+}
+
+// Declaration merging: `GeneratedResourceGroups` (regenerated from the spec's tags) supplies
+// one readonly resource-group property per tag; the runtime assignment happens in the
+// constructor below via `Object.assign`. Safe despite eslint's static check -- the merged
+// interface only ever adds readonly properties that `Object.assign` populates at construction.
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging, @typescript-eslint/no-empty-object-type
+export interface GetResponseClient extends GeneratedResourceGroups {}
+
+/** Async, fully-typed GetResponse v3 API client; one property per resource-group tag. */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+export class GetResponseClient {
+  private readonly core: Core;
+
+  constructor(options: GetResponseClientOptions = {}) {
+    const { apiKey, accessToken, baseUrl = DEFAULT_BASE_URL, timeoutMs = 30_000, fetch: fetchImpl, rateLimit } = options;
+    if ((apiKey === undefined) === (accessToken === undefined)) {
+      throw new Error('Provide exactly one of `apiKey` or `accessToken`.');
+    }
+    const authHeader: Record<string, string> = apiKey !== undefined
+      ? { 'X-Auth-Token': `api-key ${apiKey}` }
+      : { Authorization: `Bearer ${accessToken}` };
+    this.core = new Core({ baseUrl, authHeader, timeoutMs, fetch: fetchImpl, rateLimit });
+    Object.assign(this, createResourceGroups(this.core));
+  }
+
+  /**
+   * Walk every page of a `list`/`get*List` resource method, yielding items one by one.
+   *
+   * GetResponse also reports `TotalCount`/`CurrentPage`/`TotalPages` response headers, but
+   * resource methods only return typed bodies (no header access), so this walks by page
+   * length instead: it stops once a page comes back empty or shorter than `perPage`.
+   */
+  async *paginate<T>(
+    listMethod: (
+      params: Record<string, unknown> & { page?: number; perPage?: number },
+      signal?: AbortSignal,
+    ) => Promise<T[]>,
+    options: { perPage?: number; params?: Record<string, unknown>; signal?: AbortSignal } = {},
+  ): AsyncGenerator<T, void, void> {
+    const perPage = options.perPage ?? 100;
+    let page = 1;
+    for (;;) {
+      const items = await listMethod({ ...options.params, page, perPage }, options.signal);
+      if (items.length === 0) return;
+      yield* items;
+      if (items.length < perPage) return;
+      page += 1;
+    }
+  }
+}
+"""
 
 
 _INDEX_TS = """/** Async, fully-typed GetResponse v3 API client. */
@@ -1244,6 +1284,18 @@ describe('rate limiter', () => {
 # -- orchestration --------------------------------------------------------------------
 
 
+def _write_once(path: Path, content: str) -> None:
+    """Write `content` to `path` only if it doesn't already exist.
+
+    Used for every scaffold-bucket file (project/build config, the hand-written core
+    runtime, `client.ts`, `index.ts`, tests): written once on first generate, then left
+    alone forever so it can be hand-maintained without a later regenerate clobbering it.
+    """
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+
+
 def _run_formatters(root: Path) -> None:
     """Run prettier --write + eslint --fix over `root/src`, if the toolchain is installed."""
     bin_dir = root / "node_modules" / ".bin"
@@ -1265,34 +1317,31 @@ def _run_formatters(root: Path) -> None:
 
 
 def emit(api: Api, out_dir: str = "get-response-ts") -> None:
-    """Render the full `get-response-ts` package from `api` and format it via prettier/eslint."""
-    root = Path(out_dir)
-    # Wipe only the generated subtrees, not the whole directory: `node_modules` and the
-    # npm lockfile are left alone so a regenerate doesn't force a fresh `npm install`.
-    for generated in (root / "src", root / "test"):
-        if generated.exists():
-            shutil.rmtree(generated)
+    """Render `get-response-ts`, then format it via prettier/eslint.
 
+    Two buckets:
+      - Always generated (spec-derived, wiped + rewritten every run): `src/models.ts`,
+        `src/resources/` (whole dir), `src/resourceGroups.ts`.
+      - Scaffold-once (written only if missing, then permanently hand-maintained):
+        everything else -- project/build config, the hand-written core runtime
+        (`core.ts`/`errors.ts`/`ratelimit.ts`), `client.ts`, `index.ts`, `README.md`, and
+        the whole `test/` suite. Once created these are never touched again, so they can
+        be hand-edited safely.
+    """
+    root = Path(out_dir)
     src = root / "src"
     resources_dir = src / "resources"
     test_dir = root / "test"
-    for d in (src, resources_dir, test_dir):
-        d.mkdir(parents=True, exist_ok=True)
 
-    (root / "package.json").write_text(_PACKAGE_JSON, encoding="utf-8")
-    (root / "tsconfig.json").write_text(_TSCONFIG_JSON, encoding="utf-8")
-    (root / "eslint.config.js").write_text(_ESLINT_CONFIG, encoding="utf-8")
-    (root / ".prettierrc").write_text(_PRETTIERRC, encoding="utf-8")
-    (root / ".prettierignore").write_text(_PRETTIERIGNORE, encoding="utf-8")
-    (root / ".gitignore").write_text(_GITIGNORE, encoding="utf-8")
-    (root / "vitest.config.ts").write_text(_VITEST_CONFIG, encoding="utf-8")
-    (root / "README.md").write_text(_README_MD, encoding="utf-8")
+    # Narrow wipe: only the generated-only subtrees get deleted + recreated. Everything
+    # else in `src/`/`test/`, plus `node_modules`/the npm lockfile, is left alone.
+    if resources_dir.exists():
+        shutil.rmtree(resources_dir)
+    src.mkdir(parents=True, exist_ok=True)
+    resources_dir.mkdir(parents=True, exist_ok=True)
+    test_dir.mkdir(parents=True, exist_ok=True)
 
     (src / "models.ts").write_text(_render_models_ts(api), encoding="utf-8")
-    (src / "errors.ts").write_text(_ERRORS_TS, encoding="utf-8")
-    (src / "ratelimit.ts").write_text(_RATELIMIT_TS, encoding="utf-8")
-    (src / "core.ts").write_text(_CORE_TS, encoding="utf-8")
-    (src / "index.ts").write_text(_INDEX_TS, encoding="utf-8")
 
     tags = sorted({op.tag for op in api.operations})
     by_tag: dict[str, list[Operation]] = {tag: [] for tag in tags}
@@ -1305,19 +1354,32 @@ def emit(api: Api, out_dir: str = "get-response-ts") -> None:
         )
     (resources_dir / "index.ts").write_text(_render_resources_index(tags), encoding="utf-8")
 
-    (src / "client.ts").write_text(_render_client_ts(tags), encoding="utf-8")
+    (src / "resourceGroups.ts").write_text(_render_resource_groups_ts(tags), encoding="utf-8")
 
-    (test_dir / "helpers.ts").write_text(_TEST_HELPERS, encoding="utf-8")
-    (test_dir / "auth.test.ts").write_text(_TEST_AUTH, encoding="utf-8")
-    (test_dir / "query-building.test.ts").write_text(_TEST_QUERY_BUILDING, encoding="utf-8")
-    (test_dir / "models.test.ts").write_text(_TEST_MODELS, encoding="utf-8")
-    (test_dir / "pagination.test.ts").write_text(_TEST_PAGINATION, encoding="utf-8")
-    (test_dir / "errors.test.ts").write_text(_TEST_ERRORS, encoding="utf-8")
-    (test_dir / "ratelimit.test.ts").write_text(_TEST_RATELIMIT, encoding="utf-8")
+    # Scaffold-once: written only on first generate, then hand-maintained forever.
+    _write_once(root / "package.json", _PACKAGE_JSON)
+    _write_once(root / "tsconfig.json", _TSCONFIG_JSON)
+    _write_once(root / "eslint.config.js", _ESLINT_CONFIG)
+    _write_once(root / ".prettierrc", _PRETTIERRC)
+    _write_once(root / ".prettierignore", _PRETTIERIGNORE)
+    _write_once(root / ".gitignore", _GITIGNORE)
+    _write_once(root / "vitest.config.ts", _VITEST_CONFIG)
+    _write_once(root / "README.md", _README_MD)
 
-    print(
-        f"wrote {len(tags)} resource modules, models.ts, core/errors/ratelimit, client, "
-        f"tests -> {root}"
-    )
+    _write_once(src / "errors.ts", _ERRORS_TS)
+    _write_once(src / "ratelimit.ts", _RATELIMIT_TS)
+    _write_once(src / "core.ts", _CORE_TS)
+    _write_once(src / "index.ts", _INDEX_TS)
+    _write_once(src / "client.ts", _CLIENT_TS)
+
+    _write_once(test_dir / "helpers.ts", _TEST_HELPERS)
+    _write_once(test_dir / "auth.test.ts", _TEST_AUTH)
+    _write_once(test_dir / "query-building.test.ts", _TEST_QUERY_BUILDING)
+    _write_once(test_dir / "models.test.ts", _TEST_MODELS)
+    _write_once(test_dir / "pagination.test.ts", _TEST_PAGINATION)
+    _write_once(test_dir / "errors.test.ts", _TEST_ERRORS)
+    _write_once(test_dir / "ratelimit.test.ts", _TEST_RATELIMIT)
+
+    print(f"wrote {len(tags)} resource modules, models.ts, resourceGroups.ts -> {root}")
 
     _run_formatters(root)
