@@ -9,10 +9,15 @@ description = "Async, fully-typed Python client for the GetResponse v3 API."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
+authors = [{ name = "Sistemi Tre" }]
 dependencies = [
     "httpx>=0.27",
     "pydantic>=2",
 ]
+
+[project.urls]
+Repository = "https://github.com/sistemitre/get-response"
+Issues = "https://github.com/sistemitre/get-response/issues"
 
 [project.optional-dependencies]
 dev = [

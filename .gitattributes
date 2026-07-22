@@ -1,0 +1,4 @@
+# Force LF for all text files regardless of platform/git-autocrlf settings, so a Windows
+# checkout never reintroduces CRLF into files the formatters (ruff/dotnet format/prettier)
+# expect as LF.
+* text=auto eol=lf
