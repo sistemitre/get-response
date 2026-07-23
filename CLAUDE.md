@@ -78,8 +78,10 @@ GitHub Actions workflows live in `.github/workflows/` in this repo:
   regenerate — then lints/builds/tests all three.
 - **Release** (`release.yml`) triggers only on a version tag (`vX.Y.Z`) pushed to this repo.
   All three packages share one version, taken from the tag, and publish to their public
-  registries (nuget.org, PyPI, npm) using repo secrets `NUGET_API_KEY`, `PYPI_API_TOKEN`,
-  `NPM_TOKEN`. To cut a release:
+  registries. PyPI and nuget.org publish via **Trusted Publishing** (OIDC, no stored
+  secret — see the workflow's top comment for the one-time pending-publisher/policy setup).
+  npm still uses a `NPM_TOKEN` Granular Access Token until its own Trusted Publisher can be
+  configured, which requires the package to already exist on npm. To cut a release:
 
 ```
 git tag v1.2.0
