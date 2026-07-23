@@ -6,15 +6,19 @@
 # CLAUDE.md / README.md "Versioning" section for the SemVer policy.
 #
 # One-time setup required before this workflow can publish anything:
-#   1. Create an API token for each registry (if you haven't already):
-#        - nuget.org: account -> API Keys -> create, scoped to the GetResponse.Api package ID
-#          once it's been published the first time.
-#        - pypi.org: account -> API tokens -> create, scoped to the `getresponse` project once
-#          it exists.
-#        - npmjs.com: access tokens -> Generate New Token -> Automation (survives 2FA).
-#   2. Add each as a repository (or organization) secret: Settings -> Secrets and variables ->
-#      Actions -> New repository secret: `NUGET_API_KEY`, `PYPI_API_TOKEN`, `NPM_TOKEN`.
-#   3. Verify the three package names are actually available (or already owned by this team)
+#   1. PyPI and nuget.org use Trusted Publishing (OIDC) -- no stored token, ever:
+#        - pypi.org/manage/account/publishing/ -> add a pending publisher: owner `sistemitre`,
+#          repo `get-response`, workflow `release.yml`, environment `pypi`.
+#        - nuget.org -> username menu -> Trusted Publishing -> add a policy: repository owner
+#          `sistemitre`, repository `get-response`, workflow `release.yml`, environment `nuget`.
+#   2. npm can't bootstrap via OIDC (a brand-new package name must be published once with a
+#      token first) -- create a Granular Access Token (npmjs.com -> Access Tokens -> Generate
+#      New Token), read+write, and add it as repo secret `NPM_TOKEN`. Once `getresponse` exists
+#      on npm, add a Trusted Publisher on its package settings page and switch this job to OIDC
+#      too, removing `NPM_TOKEN`.
+#   3. Create the `pypi`, `nuget`, and `npm` GitHub Environments (Settings -> Environments) so
+#      the `environment:` on each job below has something to match against.
+#   4. Verify the three package names are actually available (or already owned by this team)
 #      before the first real run: `getresponse` on PyPI and npm, `GetResponse.Api` on NuGet.
 
 name: Release
@@ -27,6 +31,9 @@ jobs:
   # -----------------------------------------------------------------------------------
   publish-python:
     runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -48,7 +55,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.14'
 
       - name: Set version from tag
         working-directory: get-response-py
@@ -74,19 +81,20 @@ jobs:
         working-directory: get-response-py
         run: |
           set -e
-          python -m pip install build twine
+          python -m pip install build
           python -m build
 
       - name: Publish to PyPI
-        working-directory: get-response-py
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: python -m twine upload dist/*
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: get-response-py/dist
 
   # -----------------------------------------------------------------------------------
   publish-csharp:
     runs-on: ubuntu-latest
+    environment: nuget
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -134,16 +142,28 @@ jobs:
           dotnet pack GetResponse.Api/GetResponse.Api.csproj -c Release \
             -p:Version=${{ steps.version.outputs.value }} -o "${{ runner.temp }}/nuget"
 
+      - name: NuGet login (OIDC)
+        id: nuget-login
+        uses: NuGet/login@v1
+        with:
+          user: sistemitre
+
       - name: Publish to nuget.org
         run: |
           set -e
           dotnet nuget push "${{ runner.temp }}/nuget/*.nupkg" \
             --source https://api.nuget.org/v3/index.json \
-            --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
+            --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" --skip-duplicate
 
   # -----------------------------------------------------------------------------------
+  # Interim bootstrap job: npm can't use Trusted Publishing until `getresponse` exists on the
+  # registry (its Trusted Publisher can only be configured from an existing package's settings
+  # page). Once the first release below has published it, add a Trusted Publisher on
+  # npmjs.com/package/getresponse/access and switch this job to `NuGet/login`-style OIDC too --
+  # drop NPM_TOKEN, add `permissions: id-token: write`.
   publish-typescript:
     runs-on: ubuntu-latest
+    environment: npm
     steps:
       - uses: actions/checkout@v4
         with:
@@ -165,7 +185,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Set version from tag
