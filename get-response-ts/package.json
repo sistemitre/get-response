@@ -1,5 +1,5 @@
 {
-  "name": "getresponse",
+  "name": "@sistemitre/getresponse",
   "version": "0.1.0",
   "description": "Async, fully-typed Node.js client for the GetResponse v3 API.",
   "license": "MIT",

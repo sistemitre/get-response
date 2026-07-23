@@ -1,4 +1,4 @@
-# getresponse
+# @sistemitre/getresponse
 
 An async, fully-typed Node.js client for the [GetResponse v3 API](https://apireference.getresponse.com/),
 generated from the official OpenAPI spec. ESM only, zero runtime dependencies -- built on
@@ -7,13 +7,13 @@ the global `fetch`.
 ## Install
 
 ```bash
-npm install getresponse
+npm install @sistemitre/getresponse
 ```
 
 ## Quickstart
 
 ```ts
-import { GetResponseClient } from 'getresponse';
+import { GetResponseClient } from '@sistemitre/getresponse';
 
 const client = new GetResponseClient({ apiKey: 'YOUR_API_KEY' });
 

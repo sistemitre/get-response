@@ -6,7 +6,7 @@ Interact completely with the GetResponse v3 API. Three deliverables:
 
 - **Python package** in `get-response-py/`
 - **C# .NET solution** in `get-response-cs/` (solution) with project `get-response-cs/GetResponse.Api/` (NuGet package)
-- **TypeScript/Node package** in `get-response-ts/` (npm package `getresponse`)
+- **TypeScript/Node package** in `get-response-ts/` (npm package `@sistemitre/getresponse`)
 
 Both are built from the official OpenAPI spec:
 `https://apireference.getresponse.com/open-api.json` — vendored at `openapi/open-api.json`.
@@ -78,10 +78,10 @@ GitHub Actions workflows live in `.github/workflows/` in this repo:
   regenerate — then lints/builds/tests all three.
 - **Release** (`release.yml`) triggers only on a version tag (`vX.Y.Z`) pushed to this repo.
   All three packages share one version, taken from the tag, and publish to their public
-  registries. PyPI and nuget.org publish via **Trusted Publishing** (OIDC, no stored
-  secret — see the workflow's top comment for the one-time pending-publisher/policy setup).
-  npm still uses a `NPM_TOKEN` Granular Access Token until its own Trusted Publisher can be
-  configured, which requires the package to already exist on npm. To cut a release:
+  registries. All three publish via **Trusted Publishing** (OIDC, no stored secret — see the
+  workflow's top comment for the one-time pending-publisher/policy setup on each registry).
+  npm's Trusted Publisher could only be configured after `@sistemitre/getresponse`'s first
+  publish, which was done manually once to bootstrap the package name. To cut a release:
 
 ```
 git tag v1.2.0
