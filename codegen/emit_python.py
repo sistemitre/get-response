@@ -132,10 +132,14 @@ def _dedupe_by_wire_name(params: list[Param]) -> list[Param]:
 
 
 def _render_enum(e: EnumType) -> str:
-    lines = [f"class {e.name}(str, Enum):"]
+    lines = [f"class {e.name}(_UnknownFallbackEnum):"]
     lines.append(f"    {_lit(e.doc or f'{e.name} enum.')}")
     lines.append("")
-    used: set[str] = set()
+    lines.append(
+        f"    UNKNOWN = {_lit('')}"
+        "  # any wire value this client doesn't recognize resolves here, see _missing_"
+    )
+    used: set[str] = {"UNKNOWN"}
     for v in e.values:
         member = _enum_member_name(v, used)
         lines.append(f"    {member} = {_lit(v)}")
@@ -177,10 +181,11 @@ def _render_models_py(api: Api) -> str:
         "from __future__ import annotations",
         "",
         "from datetime import datetime",
-        "from enum import Enum",
         "from typing import Any",
         "",
         "from pydantic import BaseModel, ConfigDict, Field",
+        "",
+        "from ._compat import _UnknownFallbackEnum",
         "",
     ]
     for e in enums_sorted:
@@ -448,6 +453,30 @@ class GetResponseClient(_ResourceGroups):
             if len(items) < per_page:
                 return
             page += 1
+'''
+
+
+_COMPAT_PY = '''"""Hand-maintained compatibility helpers for the generated models/enums. Not regenerated."""
+
+from __future__ import annotations
+
+from enum import Enum
+
+
+class _UnknownFallbackEnum(str, Enum):
+    """Base class for every generated enum.
+
+    GetResponse sometimes sends a wire value this client doesn't recognize -- either
+    literally `""` instead of `null` for an optional enum with no value (e.g.
+    `geolocation.continentCode` when the location can't be resolved), or a genuinely new
+    value the API started returning after this client was generated. Either way, this
+    resolves to the enum's own `UNKNOWN` member (defined on every generated enum) instead
+    of raising, so a new server-side value never breaks deserialization.
+    """
+
+    @classmethod
+    def _missing_(cls, value: object) -> "_UnknownFallbackEnum":
+        return cls.UNKNOWN  # type: ignore[attr-defined]
 '''
 
 
@@ -1412,6 +1441,7 @@ def emit(api: Api, out_dir: str = "get-response-py") -> None:
 
     _write_once(pkg / "__init__.py", _INIT_PY)
     _write_once(pkg / "py.typed", "")
+    _write_once(pkg / "_compat.py", _COMPAT_PY)
     _write_once(pkg / "_ratelimit.py", _RATELIMIT_PY)
     _write_once(pkg / "_core.py", _CORE_PY)
 

@@ -41,22 +41,33 @@ internal static class EnumWireValues<T>
     }
 }
 
-/// <summary>Creates an <see cref="EnumMemberJsonConverter{T}"/> for every enum type.</summary>
+/// <summary>
+/// Creates an <see cref="EnumMemberJsonConverter{T}"/> for a plain enum type, or a
+/// <see cref="NullableEnumMemberJsonConverter{T}"/> for a nullable one -- the two are
+/// registered separately because only the nullable converter can represent "no value" as
+/// C# <c>null</c>; the non-nullable one falls back to the enum's <c>Unknown</c> member.
+/// </summary>
 internal sealed class EnumMemberJsonConverterFactory : JsonConverterFactory
 {
-    public override bool CanConvert(Type typeToConvert) => typeToConvert.IsEnum;
+    public override bool CanConvert(Type typeToConvert) =>
+        typeToConvert.IsEnum || Nullable.GetUnderlyingType(typeToConvert)?.IsEnum == true;
 
     public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
     {
-        var converterType = typeof(EnumMemberJsonConverter<>).MakeGenericType(typeToConvert);
+        var underlying = Nullable.GetUnderlyingType(typeToConvert);
+        var converterType = underlying is null
+            ? typeof(EnumMemberJsonConverter<>).MakeGenericType(typeToConvert)
+            : typeof(NullableEnumMemberJsonConverter<>).MakeGenericType(underlying);
         return (JsonConverter)Activator.CreateInstance(converterType)!;
     }
 }
 
 /// <summary>
-/// (De)serializes an enum using each member's <see cref="EnumMemberAttribute"/> wire string
-/// rather than its C# name. An unrecognized wire value maps to the enum's <c>Unknown</c> member
-/// instead of failing, so a new server-side value never breaks deserialization.
+/// (De)serializes a non-nullable enum using each member's <see cref="EnumMemberAttribute"/>
+/// wire string rather than its C# name. An unrecognized wire value maps to the enum's
+/// <c>Unknown</c> member instead of failing, so a new server-side value never breaks
+/// deserialization. Used for non-nullable enum properties only -- see
+/// <see cref="NullableEnumMemberJsonConverter{T}"/> for nullable ones.
 /// </summary>
 internal sealed class EnumMemberJsonConverter<T> : JsonConverter<T>
     where T : struct, Enum
@@ -74,5 +85,42 @@ internal sealed class EnumMemberJsonConverter<T> : JsonConverter<T>
     public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
     {
         writer.WriteStringValue(EnumWireValues<T>.ToWireValue.TryGetValue(value, out var wire) ? wire : value.ToString());
+    }
+}
+
+/// <summary>
+/// (De)serializes a nullable enum property. Unlike <see cref="EnumMemberJsonConverter{T}"/>, an
+/// empty string or any other unrecognized wire value maps to <c>null</c> here, not
+/// <c>Unknown</c> -- GetResponse sometimes returns "" instead of omitting the field entirely for
+/// an optional enum with no value, and a nullable property already has a real <c>null</c> to
+/// represent exactly that, so there's no need to fall back to a sentinel member.
+/// </summary>
+internal sealed class NullableEnumMemberJsonConverter<T> : JsonConverter<T?>
+    where T : struct, Enum
+{
+    public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (reader.TokenType == JsonTokenType.Null)
+        {
+            return null;
+        }
+        var wire = reader.GetString();
+        return wire is not null && EnumWireValues<T>.FromWireValue.TryGetValue(wire, out var value)
+            ? value
+            : null;
+    }
+
+    public override void Write(Utf8JsonWriter writer, T? value, JsonSerializerOptions options)
+    {
+        if (value is null)
+        {
+            writer.WriteNullValue();
+        }
+        else
+        {
+            writer.WriteStringValue(
+                EnumWireValues<T>.ToWireValue.TryGetValue(value.Value, out var wire) ? wire : value.Value.ToString()
+            );
+        }
     }
 }

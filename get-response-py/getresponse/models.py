@@ -7,15 +7,17 @@ file is generated -- do not edit it directly.
 from __future__ import annotations
 
 from datetime import datetime
-from enum import Enum
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from ._compat import _UnknownFallbackEnum
 
-class AbtestsSubjectDetailsEditor(str, Enum):
+
+class AbtestsSubjectDetailsEditor(_UnknownFallbackEnum):
     "The message editor used for the A/B test"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Html2 = "html2"
     Custom = "custom"
     Text = "text"
@@ -24,9 +26,10 @@ class AbtestsSubjectDetailsEditor(str, Enum):
     Legacy = "legacy"
 
 
-class AbtestsSubjectDetailsFlagsItem(str, Enum):
+class AbtestsSubjectDetailsFlagsItem(_UnknownFallbackEnum):
     "Tracking options enabled for the newsletter"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Clicktrack = "clicktrack"
     SubscriptionReminder = "subscription_reminder"
     Openrate = "openrate"
@@ -36,9 +39,10 @@ class AbtestsSubjectDetailsFlagsItem(str, Enum):
     EcommerceTracking = "ecommerce_tracking"
 
 
-class AbtestsSubjectDetailsStage(str, Enum):
+class AbtestsSubjectDetailsStage(_UnknownFallbackEnum):
     "A/B test stage"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Preparing = "preparing"
     Testing = "testing"
     Finished = "finished"
@@ -48,17 +52,19 @@ class AbtestsSubjectDetailsStage(str, Enum):
     Completed = "completed"
 
 
-class AbtestsSubjectDetailsStatus(str, Enum):
+class AbtestsSubjectDetailsStatus(_UnknownFallbackEnum):
     "Newsletter status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
     Deleted = "deleted"
 
 
-class AbtestsSubjectListItemFlagsItem(str, Enum):
+class AbtestsSubjectListItemFlagsItem(_UnknownFallbackEnum):
     "Tracking options enabled for the newsletter"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Clicktrack = "clicktrack"
     SubscriptionReminder = "subscription_reminder"
     Openrate = "openrate"
@@ -68,9 +74,10 @@ class AbtestsSubjectListItemFlagsItem(str, Enum):
     EcommerceTracking = "ecommerce_tracking"
 
 
-class AbtestsSubjectListItemStage(str, Enum):
+class AbtestsSubjectListItemStage(_UnknownFallbackEnum):
     "A/B test stage"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Preparing = "preparing"
     Testing = "testing"
     Finished = "finished"
@@ -80,17 +87,19 @@ class AbtestsSubjectListItemStage(str, Enum):
     Completed = "completed"
 
 
-class AbtestsSubjectListItemStatus(str, Enum):
+class AbtestsSubjectListItemStatus(_UnknownFallbackEnum):
     "Newsletter status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
     Deleted = "deleted"
 
 
-class AccountBillingPaymentMethod(str, Enum):
+class AccountBillingPaymentMethod(_UnknownFallbackEnum):
     "Payment method"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     OutsideSystem = "outside_system"
     InsideSystem = "inside_system"
     CreditCard = "credit_card"
@@ -107,34 +116,38 @@ class AccountBillingPaymentMethod(str, Enum):
     Webmoney = "webmoney"
 
 
-class AccountBillingPaymentPlan(str, Enum):
+class AccountBillingPaymentPlan(_UnknownFallbackEnum):
     "Payment plan"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     FreeTrial = "Free Trial"
     Monthly = "Monthly"
     V_12Months = "12 Months"
     V_24Months = "24 Months"
 
 
-class AccountNumberOfEmployees(str, Enum):
+class AccountNumberOfEmployees(_UnknownFallbackEnum):
     "Numbers of employees"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     V_50 = "50"
     V_250 = "250"
     V_500 = "500"
     More = "more"
 
 
-class AccountTimeFormat(str, Enum):
+class AccountTimeFormat(_UnknownFallbackEnum):
     "Account time notation"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     V_12h = "12h"
     V_24h = "24h"
 
 
-class AutoresponderDayConditionConditionType(str, Enum):
+class AutoresponderDayConditionConditionType(_UnknownFallbackEnum):
     "AutoresponderDayConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -169,15 +182,17 @@ class AutoresponderDayConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class AutoresponderDayConditionOperatorType(str, Enum):
+class AutoresponderDayConditionOperatorType(_UnknownFallbackEnum):
     "AutoresponderDayConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericOperator = "numeric_operator"
 
 
-class AutoresponderSendSettingsExcludedDaysOfWeekItem(str, Enum):
+class AutoresponderSendSettingsExcludedDaysOfWeekItem(_UnknownFallbackEnum):
     "AutoresponderSendSettingsExcludedDaysOfWeekItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Monday = "Monday"
     Tuesday = "Tuesday"
     Wednesday = "Wednesday"
@@ -187,18 +202,20 @@ class AutoresponderSendSettingsExcludedDaysOfWeekItem(str, Enum):
     Sunday = "Sunday"
 
 
-class AutoresponderSendSettingsType(str, Enum):
+class AutoresponderSendSettingsType(_UnknownFallbackEnum):
     "When to send the message"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Signup = "signup"
     Immediately = "immediately"
     Delay = "delay"
     Custom = "custom"
 
 
-class BaseCreateCustomReportType(str, Enum):
+class BaseCreateCustomReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -216,73 +233,83 @@ class BaseCreateCustomReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class BaseLandingPageUserDomainStatus(str, Enum):
+class BaseLandingPageUserDomainStatus(_UnknownFallbackEnum):
     "The DNS status for the user's private domain. Can be `null` if a private domain isn't assigned."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
     Waiting = "waiting"
 
 
-class BaseMetaFieldValueType(str, Enum):
+class BaseMetaFieldValueType(_UnknownFallbackEnum):
     "The value type enumerable"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Integer = "integer"
 
 
-class BaseSendSmsRecipientsType(str, Enum):
+class BaseSendSmsRecipientsType(_UnknownFallbackEnum):
     "The recipient type. To send a text message to contacts in your list, select `contacts`. To message contacts who are not in any of your lists, select `importedNumbers`"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Contacts = "contacts"
     Importednumbers = "importedNumbers"
 
 
-class CampaignConfirmationMimeType(str, Enum):
+class CampaignConfirmationMimeType(_UnknownFallbackEnum):
     "The MIME type for the confirmation message"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     TextHtml = "text/html"
     TextPlain = "text/plain"
     Combo = "combo"
 
 
-class CampaignConfirmationRedirectType(str, Enum):
+class CampaignConfirmationRedirectType(_UnknownFallbackEnum):
     "What will happen after email confirmation. The values allowed include: hosted (the subscriber will stay on the default GetResponse website), customUrl (the subscriber will be redirected to a custom URL provided by the user)."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Hosted = "hosted"
     Customurl = "customUrl"
 
 
-class CampaignOptinTypesApi(str, Enum):
+class CampaignOptinTypesApi(_UnknownFallbackEnum):
     "Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Single = "single"
     Double = "double"
 
 
-class CampaignOptinTypesEmail(str, Enum):
+class CampaignOptinTypesEmail(_UnknownFallbackEnum):
     "Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Single = "single"
     Double = "double"
 
 
-class CampaignOptinTypesImport(str, Enum):
+class CampaignOptinTypesImport(_UnknownFallbackEnum):
     "Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Single = "single"
 
 
-class CampaignOptinTypesWebform(str, Enum):
+class CampaignOptinTypesWebform(_UnknownFallbackEnum):
     "Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Single = "single"
     Double = "double"
 
 
-class ClickTrackMessageResourceType(str, Enum):
+class ClickTrackMessageResourceType(_UnknownFallbackEnum):
     "Type of the resource that represents the message in the API"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Newsletters = "newsletters"
     Autoresponders = "autoresponders"
     RssNewsletters = "rss-newsletters"
@@ -290,9 +317,10 @@ class ClickTrackMessageResourceType(str, Enum):
     Sms = "sms"
 
 
-class ClickTrackMessageType(str, Enum):
+class ClickTrackMessageType(_UnknownFallbackEnum):
     "The message type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Broadcast = "broadcast"
     Automation = "automation"
     Autoresponder = "autoresponder"
@@ -301,15 +329,17 @@ class ClickTrackMessageType(str, Enum):
     Sms = "sms"
 
 
-class ConditionMessageOperatorOperatorType(str, Enum):
+class ConditionMessageOperatorOperatorType(_UnknownFallbackEnum):
     "ConditionMessageOperatorOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     MessageOperator = "message_operator"
 
 
-class ConditionStringOperatorOperator(str, Enum):
+class ConditionStringOperatorOperator(_UnknownFallbackEnum):
     "ConditionStringOperatorOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Is = "is"
     IsNot = "is_not"
     Contains = "contains"
@@ -320,15 +350,17 @@ class ConditionStringOperatorOperator(str, Enum):
     NotEnds = "not_ends"
 
 
-class ConditionStringOperatorOperatorType(str, Enum):
+class ConditionStringOperatorOperatorType(_UnknownFallbackEnum):
     "ConditionStringOperatorOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     StringOperator = "string_operator"
 
 
-class ConditionTypeConditionType(str, Enum):
+class ConditionTypeConditionType(_UnknownFallbackEnum):
     "ConditionTypeConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -363,17 +395,19 @@ class ConditionTypeConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class ContactActivityActivity(str, Enum):
+class ContactActivityActivity(_UnknownFallbackEnum):
     "The type of activity"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Send = "send"
     Open = "open"
     Click = "click"
 
 
-class ContactActivityResourceResourceType(str, Enum):
+class ContactActivityResourceResourceType(_UnknownFallbackEnum):
     "ContactActivityResourceResourceType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Newsletters = "newsletters"
     Splittests = "splittests"
     Autoresponders = "autoresponders"
@@ -381,9 +415,10 @@ class ContactActivityResourceResourceType(str, Enum):
     Sms = "sms"
 
 
-class ContactDetailsOrigin(str, Enum):
+class ContactDetailsOrigin(_UnknownFallbackEnum):
     "ContactDetailsOrigin enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Import = "import"
     Email = "email"
     Www = "www"
@@ -402,9 +437,10 @@ class ContactDetailsOrigin(str, Enum):
     PremiumNewsletter = "premium_newsletter"
 
 
-class ContactGeolocationContinentCode(str, Enum):
+class ContactGeolocationContinentCode(_UnknownFallbackEnum):
     "ContactGeolocationContinentCode enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Oc = "OC"
     An = "AN"
     Sa = "SA"
@@ -414,9 +450,10 @@ class ContactGeolocationContinentCode(str, Enum):
     Af = "AF"
 
 
-class ContactListElementOrigin(str, Enum):
+class ContactListElementOrigin(_UnknownFallbackEnum):
     "ContactListElementOrigin enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Import = "import"
     Email = "email"
     Www = "www"
@@ -435,9 +472,10 @@ class ContactListElementOrigin(str, Enum):
     PremiumNewsletter = "premium_newsletter"
 
 
-class ContactOrigin(str, Enum):
+class ContactOrigin(_UnknownFallbackEnum):
     "ContactOrigin enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Import = "import"
     Email = "email"
     Www = "www"
@@ -456,9 +494,10 @@ class ContactOrigin(str, Enum):
     PremiumNewsletter = "premium_newsletter"
 
 
-class CreateAccountSummaryReportType(str, Enum):
+class CreateAccountSummaryReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -476,9 +515,10 @@ class CreateAccountSummaryReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateBouncesReportType(str, Enum):
+class CreateBouncesReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -496,9 +536,10 @@ class CreateBouncesReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateISPMessageStatsReportType(str, Enum):
+class CreateISPMessageStatsReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -516,9 +557,10 @@ class CreateISPMessageStatsReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateImportErrorReportType(str, Enum):
+class CreateImportErrorReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -536,9 +578,10 @@ class CreateImportErrorReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateListSummaryReportType(str, Enum):
+class CreateListSummaryReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -556,9 +599,10 @@ class CreateListSummaryReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateMessageActivityReportType(str, Enum):
+class CreateMessageActivityReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -576,9 +620,10 @@ class CreateMessageActivityReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateMessageClicksReportType(str, Enum):
+class CreateMessageClicksReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -596,9 +641,10 @@ class CreateMessageClicksReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateMessageStatsReportType(str, Enum):
+class CreateMessageStatsReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -616,9 +662,10 @@ class CreateMessageStatsReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateStandardSubscriberActivityReportType(str, Enum):
+class CreateStandardSubscriberActivityReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -636,9 +683,10 @@ class CreateStandardSubscriberActivityReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateSubscriptionRejectionsReportType(str, Enum):
+class CreateSubscriptionRejectionsReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -656,9 +704,10 @@ class CreateSubscriptionRejectionsReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateTransactionalEmailBounceReportType(str, Enum):
+class CreateTransactionalEmailBounceReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -676,16 +725,18 @@ class CreateTransactionalEmailBounceReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateTransactionalEmailContentType(str, Enum):
+class CreateTransactionalEmailContentType(_UnknownFallbackEnum):
     "The message content type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Direct = "direct"
     Template = "template"
 
 
-class CreateUnconfirmedContactsStatsReportType(str, Enum):
+class CreateUnconfirmedContactsStatsReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -703,9 +754,10 @@ class CreateUnconfirmedContactsStatsReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateUnsubscribeContactsListsReportType(str, Enum):
+class CreateUnsubscribeContactsListsReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -723,9 +775,10 @@ class CreateUnsubscribeContactsListsReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateUserActivityReportType(str, Enum):
+class CreateUserActivityReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -743,9 +796,10 @@ class CreateUserActivityReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CreateWebinarParticipantsReportType(str, Enum):
+class CreateWebinarParticipantsReportType(_UnknownFallbackEnum):
     "The custom report type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -763,9 +817,10 @@ class CreateWebinarParticipantsReportType(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class CrmConditionConditionType(str, Enum):
+class CrmConditionConditionType(_UnknownFallbackEnum):
     "CrmConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -800,27 +855,30 @@ class CrmConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class CustomEventAttributeDetailsType(str, Enum):
+class CustomEventAttributeDetailsType(_UnknownFallbackEnum):
     "Type of attribute"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Number = "number"
     Datetime = "datetime"
     Boolean = "boolean"
 
 
-class CustomEventAttributeType(str, Enum):
+class CustomEventAttributeType(_UnknownFallbackEnum):
     "Type of attribute"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Number = "number"
     Datetime = "datetime"
     Boolean = "boolean"
 
 
-class CustomEventConditionConditionType(str, Enum):
+class CustomEventConditionConditionType(_UnknownFallbackEnum):
     "CustomEventConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -855,16 +913,18 @@ class CustomEventConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class CustomEventConditionOccurrence(str, Enum):
+class CustomEventConditionOccurrence(_UnknownFallbackEnum):
     "Whether the custom event occurred or not"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Occurred = "occurred"
     NotOccurred = "not_occurred"
 
 
-class CustomFieldConditionConditionType(str, Enum):
+class CustomFieldConditionConditionType(_UnknownFallbackEnum):
     "CustomFieldConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -899,18 +959,20 @@ class CustomFieldConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class CustomFieldConditionOperatorType(str, Enum):
+class CustomFieldConditionOperatorType(_UnknownFallbackEnum):
     "Depends on the type of custom field, read more in [custom field condition documentation in segments (search contacts) reference manual](https://apidocs.getresponse.com/v3/case-study/segments-manual#get-by-custom-fields-search-contacts)"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     StringOperatorList = "string_operator_list"
     StringOperator = "string_operator"
     NumericOperator = "numeric_operator"
     DateOperator = "date_operator"
 
 
-class CustomFieldDateOperatorEnum(str, Enum):
+class CustomFieldDateOperatorEnum(_UnknownFallbackEnum):
     'Allowed operators for `"operatorType":"date_operator"`'
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateTo = "date_to"
     DateFrom = "date_from"
     Custom = "custom"
@@ -919,9 +981,10 @@ class CustomFieldDateOperatorEnum(str, Enum):
     NotAssigned = "not_assigned"
 
 
-class CustomFieldFormatEnum(str, Enum):
+class CustomFieldFormatEnum(_UnknownFallbackEnum):
     "CustomFieldFormatEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Text = "text"
     Textarea = "textarea"
     Radio = "radio"
@@ -930,9 +993,10 @@ class CustomFieldFormatEnum(str, Enum):
     MultiSelect = "multi_select"
 
 
-class CustomFieldNumericOperatorEnum(str, Enum):
+class CustomFieldNumericOperatorEnum(_UnknownFallbackEnum):
     'Allowed operators for `"operatorType":"numeric_operator"`'
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericLt = "numeric_lt"
     NumericGt = "numeric_gt"
     NumericEq = "numeric_eq"
@@ -943,9 +1007,10 @@ class CustomFieldNumericOperatorEnum(str, Enum):
     NotAssigned = "not_assigned"
 
 
-class CustomFieldStringOperatorEnum(str, Enum):
+class CustomFieldStringOperatorEnum(_UnknownFallbackEnum):
     'Allowed operators for `"operatorType":"string_operator"` and `"operatorType":"string_operator_list"`'
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Is = "is"
     IsNot = "is_not"
     Contains = "contains"
@@ -958,9 +1023,10 @@ class CustomFieldStringOperatorEnum(str, Enum):
     NotAssigned = "not_assigned"
 
 
-class CustomFieldTypeEnum(str, Enum):
+class CustomFieldTypeEnum(_UnknownFallbackEnum):
     "CustomFieldTypeEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Number = "number"
     Date = "date"
@@ -973,9 +1039,10 @@ class CustomFieldTypeEnum(str, Enum):
     Url = "url"
 
 
-class CustomFieldValueForOperatorTypeDateAndOperatorSpecificDate(str, Enum):
+class CustomFieldValueForOperatorTypeDateAndOperatorSpecificDate(_UnknownFallbackEnum):
     'Allowed values for `"operatorType":"date_operator"` with `"operator":"specific_date"`'
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Today = "today"
     Yesterday = "yesterday"
     Last7Days = "last_7_days"
@@ -988,9 +1055,10 @@ class CustomFieldValueForOperatorTypeDateAndOperatorSpecificDate(str, Enum):
     Last2Months = "last_2_months"
 
 
-class CustomFieldValueType(str, Enum):
+class CustomFieldValueType(_UnknownFallbackEnum):
     "Type of returning value, it returns `type` options extended by a `string` option if the `format` was not defined"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Number = "number"
     Date = "date"
@@ -1003,9 +1071,10 @@ class CustomFieldValueType(str, Enum):
     Url = "url"
 
 
-class CustomReportDaysOfWeekEnum(str, Enum):
+class CustomReportDaysOfWeekEnum(_UnknownFallbackEnum):
     "CustomReportDaysOfWeekEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Monday = "monday"
     Tuesday = "tuesday"
     Wednesday = "wednesday"
@@ -1015,27 +1084,30 @@ class CustomReportDaysOfWeekEnum(str, Enum):
     Sunday = "sunday"
 
 
-class CustomReportFileStatusesEnum(str, Enum):
+class CustomReportFileStatusesEnum(_UnknownFallbackEnum):
     "CustomReportFileStatusesEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Pending = "pending"
     InProgress = "in-progress"
     Ready = "ready"
     Error = "error"
 
 
-class CustomReportFrequenciesEnum(str, Enum):
+class CustomReportFrequenciesEnum(_UnknownFallbackEnum):
     "CustomReportFrequenciesEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Monthly = "monthly"
     Weekly = "weekly"
     Daily = "daily"
     OneTime = "one_time"
 
 
-class CustomReportTypesEnum(str, Enum):
+class CustomReportTypesEnum(_UnknownFallbackEnum):
     "CustomReportTypesEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     SubscriptionRejections = "subscription_rejections"
     MessageStats = "message_stats"
     UnsubscribeContactsListsReport = "unsubscribe_contacts_lists_report"
@@ -1053,16 +1125,18 @@ class CustomReportTypesEnum(str, Enum):
     MessageActivityReport = "message_activity_report"
 
 
-class DirectContentContentType(str, Enum):
+class DirectContentContentType(_UnknownFallbackEnum):
     "The message content type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Direct = "direct"
     Template = "template"
 
 
-class ECommerceAbandonedCartConditionConditionType(str, Enum):
+class ECommerceAbandonedCartConditionConditionType(_UnknownFallbackEnum):
     "ECommerceAbandonedCartConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1097,9 +1171,10 @@ class ECommerceAbandonedCartConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class ECommerceAbandonedCartConditionDateOperator(str, Enum):
+class ECommerceAbandonedCartConditionDateOperator(_UnknownFallbackEnum):
     "Set a date range. For the date_from and last_n_days, custom field value is required. Examples can be found here: [API Docs](https://apidocs.getresponse.com/v3/case-study/segments-manual/#ecommerce-abandoned-cart-condition-type)."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateFrom = "date_from"
     Anytime = "anytime"
     Never = "never"
@@ -1113,9 +1188,10 @@ class ECommerceAbandonedCartConditionDateOperator(str, Enum):
     Custom = "custom"
 
 
-class ECommerceBrandPurchasedConditionConditionType(str, Enum):
+class ECommerceBrandPurchasedConditionConditionType(_UnknownFallbackEnum):
     "ECommerceBrandPurchasedConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1150,22 +1226,25 @@ class ECommerceBrandPurchasedConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class ECommerceBrandPurchasedConditionOperator(str, Enum):
+class ECommerceBrandPurchasedConditionOperator(_UnknownFallbackEnum):
     "ECommerceBrandPurchasedConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Is = "is"
     NotIs = "not_is"
 
 
-class ECommerceBrandPurchasedConditionOperatorType(str, Enum):
+class ECommerceBrandPurchasedConditionOperatorType(_UnknownFallbackEnum):
     "ECommerceBrandPurchasedConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     EqualOperator = "equal_operator"
 
 
-class ECommerceNumberOfPurchasesConditionConditionType(str, Enum):
+class ECommerceNumberOfPurchasesConditionConditionType(_UnknownFallbackEnum):
     "ECommerceNumberOfPurchasesConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1200,9 +1279,10 @@ class ECommerceNumberOfPurchasesConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class ECommerceNumberOfPurchasesConditionOperator(str, Enum):
+class ECommerceNumberOfPurchasesConditionOperator(_UnknownFallbackEnum):
     "ECommerceNumberOfPurchasesConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericLt = "numeric_lt"
     NumericGt = "numeric_gt"
     NumericEq = "numeric_eq"
@@ -1211,15 +1291,17 @@ class ECommerceNumberOfPurchasesConditionOperator(str, Enum):
     NumericGtEq = "numeric_gt_eq"
 
 
-class ECommerceNumberOfPurchasesConditionOperatorType(str, Enum):
+class ECommerceNumberOfPurchasesConditionOperatorType(_UnknownFallbackEnum):
     "ECommerceNumberOfPurchasesConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericOperator = "numeric_operator"
 
 
-class ECommerceProductPurchasedConditionConditionType(str, Enum):
+class ECommerceProductPurchasedConditionConditionType(_UnknownFallbackEnum):
     "ECommerceProductPurchasedConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1254,22 +1336,25 @@ class ECommerceProductPurchasedConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class ECommerceProductPurchasedConditionOperator(str, Enum):
+class ECommerceProductPurchasedConditionOperator(_UnknownFallbackEnum):
     "ECommerceProductPurchasedConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Is = "is"
     IsNot = "is_not"
 
 
-class ECommerceProductPurchasedConditionOperatorType(str, Enum):
+class ECommerceProductPurchasedConditionOperatorType(_UnknownFallbackEnum):
     "ECommerceProductPurchasedConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     EqualOperator = "equal_operator"
 
 
-class ECommerceTotalSpentConditionConditionType(str, Enum):
+class ECommerceTotalSpentConditionConditionType(_UnknownFallbackEnum):
     "ECommerceTotalSpentConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1304,9 +1389,10 @@ class ECommerceTotalSpentConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class ECommerceTotalSpentConditionOperator(str, Enum):
+class ECommerceTotalSpentConditionOperator(_UnknownFallbackEnum):
     "ECommerceTotalSpentConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericLt = "numeric_lt"
     NumericGt = "numeric_gt"
     NumericEq = "numeric_eq"
@@ -1315,15 +1401,17 @@ class ECommerceTotalSpentConditionOperator(str, Enum):
     NumericGtEq = "numeric_gt_eq"
 
 
-class ECommerceTotalSpentConditionOperatorType(str, Enum):
+class ECommerceTotalSpentConditionOperatorType(_UnknownFallbackEnum):
     "ECommerceTotalSpentConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericOperator = "numeric_operator"
 
 
-class EmailConditionConditionType(str, Enum):
+class EmailConditionConditionType(_UnknownFallbackEnum):
     "EmailConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1358,9 +1446,10 @@ class EmailConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class EmailConditionOperator(str, Enum):
+class EmailConditionOperator(_UnknownFallbackEnum):
     "EmailConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Is = "is"
     IsNot = "is_not"
     Contains = "contains"
@@ -1371,15 +1460,17 @@ class EmailConditionOperator(str, Enum):
     NotEnds = "not_ends"
 
 
-class EmailConditionOperatorType(str, Enum):
+class EmailConditionOperatorType(_UnknownFallbackEnum):
     "EmailConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     StringOperator = "string_operator"
 
 
-class EngagementScoreConditionConditionType(str, Enum):
+class EngagementScoreConditionConditionType(_UnknownFallbackEnum):
     "EngagementScoreConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1414,9 +1505,10 @@ class EngagementScoreConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class EngagementScoreConditionOperator(str, Enum):
+class EngagementScoreConditionOperator(_UnknownFallbackEnum):
     "The operator used in engagement score comparison"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericLt = "numeric_lt"
     NumericGt = "numeric_gt"
     NumericEq = "numeric_eq"
@@ -1425,94 +1517,106 @@ class EngagementScoreConditionOperator(str, Enum):
     NumericGtEq = "numeric_gt_eq"
 
 
-class FileGroup(str, Enum):
+class FileGroup(_UnknownFallbackEnum):
     "The file group"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Audio = "audio"
     Video = "video"
     Photo = "photo"
     Document = "document"
 
 
-class FilePropertyName(str, Enum):
+class FilePropertyName(_UnknownFallbackEnum):
     "FilePropertyName enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Width = "width"
     Height = "height"
 
 
-class FormDetailsStatus(str, Enum):
+class FormDetailsStatus(_UnknownFallbackEnum):
     "FormDetailsStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
     Draft = "draft"
 
 
-class FormSettingsAlreadySubscribedType(str, Enum):
+class FormSettingsAlreadySubscribedType(_UnknownFallbackEnum):
     "What to do when the address already exists in the campaign"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     StayOnPage = "stay_on_page"
     Default = "default"
     CustomUrl = "custom_url"
 
 
-class FormSettingsForwardDataRequestType(str, Enum):
+class FormSettingsForwardDataRequestType(_UnknownFallbackEnum):
     "How to forward form data to a thank-you page. [Learn more](https://www.getresponse.com/help/building-contact-lists/forms-and-pop-ups/can-i-forward-subscriber-data-to-a-custom-thank-you-page.html). `null` means that the data forwarding is turned off."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Get = "GET"
     Post = "POST"
 
 
-class FormSettingsOptin(str, Enum):
+class FormSettingsOptin(_UnknownFallbackEnum):
     "`single` - Single opt-in means that the contact will be added without confirming their subscription first. `double` - Double opt-in means that the contact will receive a subscription confirmation email."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Single = "single"
     Double = "double"
 
 
-class FormSettingsThankYouType(str, Enum):
+class FormSettingsThankYouType(_UnknownFallbackEnum):
     "What should happen when a new contact subscribes via the form."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     StayOnPage = "stay_on_page"
     Default = "default"
     CustomUrl = "custom_url"
 
 
-class FormStatus(str, Enum):
+class FormStatus(_UnknownFallbackEnum):
     "FormStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
     Draft = "draft"
 
 
-class FormVariantDetailsStatus(str, Enum):
+class FormVariantDetailsStatus(_UnknownFallbackEnum):
     "FormVariantDetailsStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
     Disabled = "disabled"
 
 
-class FormVariantDetailsWinner(str, Enum):
+class FormVariantDetailsWinner(_UnknownFallbackEnum):
     "Is this variant the winner in the A/B test"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Yes = "yes"
     No = "no"
 
 
-class FormVariantStatus(str, Enum):
+class FormVariantStatus(_UnknownFallbackEnum):
     "FormVariantStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
     Disabled = "disabled"
 
 
-class GdprConditionConditionType(str, Enum):
+class GdprConditionConditionType(_UnknownFallbackEnum):
     "GdprConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1547,16 +1651,18 @@ class GdprConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class GdprConditionConsentStatus(str, Enum):
+class GdprConditionConsentStatus(_UnknownFallbackEnum):
     "Specify whether you want to search for contacts who have given or not given consent."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Given = "given"
     NotGiven = "not_given"
 
 
-class GeolocationConditionConditionType(str, Enum):
+class GeolocationConditionConditionType(_UnknownFallbackEnum):
     "GeolocationConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1591,9 +1697,10 @@ class GeolocationConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class GeolocationConditionOperator(str, Enum):
+class GeolocationConditionOperator(_UnknownFallbackEnum):
     "GeolocationConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Is = "is"
     IsNot = "is_not"
     Contains = "contains"
@@ -1604,15 +1711,17 @@ class GeolocationConditionOperator(str, Enum):
     NotEnds = "not_ends"
 
 
-class GeolocationConditionOperatorType(str, Enum):
+class GeolocationConditionOperatorType(_UnknownFallbackEnum):
     "GeolocationConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     StringOperator = "string_operator"
 
 
-class GeolocationConditionScope(str, Enum):
+class GeolocationConditionScope(_UnknownFallbackEnum):
     "Specify the search parameters"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Country = "country"
     CountryCode = "country_code"
     Region = "region"
@@ -1623,9 +1732,10 @@ class GeolocationConditionScope(str, Enum):
     DmaCode = "dma_code"
 
 
-class GetAbTestSubjectListQueryStage(str, Enum):
+class GetAbTestSubjectListQueryStage(_UnknownFallbackEnum):
     "GetAbTestSubjectListQueryStage enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Preparing = "preparing"
     Testing = "testing"
     Finished = "finished"
@@ -1635,86 +1745,96 @@ class GetAbTestSubjectListQueryStage(str, Enum):
     Completed = "completed"
 
 
-class GetAutoresponderListQueryStatus(str, Enum):
+class GetAutoresponderListQueryStatus(_UnknownFallbackEnum):
     "GetAutoresponderListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Enabled = "enabled"
     Disabled = "disabled"
 
 
-class GetAutoresponderStatisticsCollectionQueryGroupBy(str, Enum):
+class GetAutoresponderStatisticsCollectionQueryGroupBy(_UnknownFallbackEnum):
     "GetAutoresponderStatisticsCollectionQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Total = "total"
     Hour = "hour"
     Day = "day"
     Month = "month"
 
 
-class GetAutoresponderThumbnailSize(str, Enum):
+class GetAutoresponderThumbnailSize(_UnknownFallbackEnum):
     "GetAutoresponderThumbnailSize enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Default = "default"
     Small = "small"
 
 
-class GetCampaignStatisticsBalanceQueryGroupBy(str, Enum):
+class GetCampaignStatisticsBalanceQueryGroupBy(_UnknownFallbackEnum):
     "GetCampaignStatisticsBalanceQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Hour = "hour"
     Day = "day"
     Month = "month"
     Total = "total"
 
 
-class GetCampaignStatisticsListSizeQueryGroupBy(str, Enum):
+class GetCampaignStatisticsListSizeQueryGroupBy(_UnknownFallbackEnum):
     "GetCampaignStatisticsListSizeQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Hour = "hour"
     Day = "day"
     Month = "month"
     Total = "total"
 
 
-class GetCampaignStatisticsLocationsQueryGroupBy(str, Enum):
+class GetCampaignStatisticsLocationsQueryGroupBy(_UnknownFallbackEnum):
     "GetCampaignStatisticsLocationsQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Hour = "hour"
     Day = "day"
     Month = "month"
     Total = "total"
 
 
-class GetCampaignStatisticsOriginsQueryGroupBy(str, Enum):
+class GetCampaignStatisticsOriginsQueryGroupBy(_UnknownFallbackEnum):
     "GetCampaignStatisticsOriginsQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Hour = "hour"
     Day = "day"
     Month = "month"
     Total = "total"
 
 
-class GetCampaignStatisticsRemovalsQueryGroupBy(str, Enum):
+class GetCampaignStatisticsRemovalsQueryGroupBy(_UnknownFallbackEnum):
     "GetCampaignStatisticsRemovalsQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Hour = "hour"
     Day = "day"
     Month = "month"
     Total = "total"
 
 
-class GetCampaignStatisticsSubscriptionsQueryGroupBy(str, Enum):
+class GetCampaignStatisticsSubscriptionsQueryGroupBy(_UnknownFallbackEnum):
     "GetCampaignStatisticsSubscriptionsQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Hour = "hour"
     Day = "day"
     Month = "month"
     Total = "total"
 
 
-class GetContactListQueryOrigin(str, Enum):
+class GetContactListQueryOrigin(_UnknownFallbackEnum):
     "GetContactListQueryOrigin enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Import = "import"
     Email = "email"
     Www = "www"
@@ -1733,9 +1853,10 @@ class GetContactListQueryOrigin(str, Enum):
     PremiumNewsletter = "premium_newsletter"
 
 
-class GetFormListQueryStatus(str, Enum):
+class GetFormListQueryStatus(_UnknownFallbackEnum):
     "GetFormListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Enabled = "enabled"
     Disabled = "disabled"
     Published = "published"
@@ -1743,180 +1864,203 @@ class GetFormListQueryStatus(str, Enum):
     Draft = "draft"
 
 
-class GetLpsGeneralPerformanceStatsQueryDevice(str, Enum):
+class GetLpsGeneralPerformanceStatsQueryDevice(_UnknownFallbackEnum):
     "GetLpsGeneralPerformanceStatsQueryDevice enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Desktop = "desktop"
     Mobile = "mobile"
 
 
-class GetLpsListQueryStatus(str, Enum):
+class GetLpsListQueryStatus(_UnknownFallbackEnum):
     "GetLpsListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class GetNewsletterActivitiesQueryActivity(str, Enum):
+class GetNewsletterActivitiesQueryActivity(_UnknownFallbackEnum):
     "GetNewsletterActivitiesQueryActivity enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Send = "send"
     Open = "open"
     Click = "click"
 
 
-class GetNewsletterListQueryStatus(str, Enum):
+class GetNewsletterListQueryStatus(_UnknownFallbackEnum):
     "GetNewsletterListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Enabled = "enabled"
     Disabled = "disabled"
 
 
-class GetNewsletterListQueryType(str, Enum):
+class GetNewsletterListQueryType(_UnknownFallbackEnum):
     "GetNewsletterListQueryType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Draft = "draft"
     Broadcast = "broadcast"
     Splittest = "splittest"
     Automation = "automation"
 
 
-class GetNewsletterStatisticsCollectionQueryGroupBy(str, Enum):
+class GetNewsletterStatisticsCollectionQueryGroupBy(_UnknownFallbackEnum):
     "GetNewsletterStatisticsCollectionQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Total = "total"
     Hour = "hour"
     Day = "day"
     Month = "month"
 
 
-class GetNewsletterThumbnailSize(str, Enum):
+class GetNewsletterThumbnailSize(_UnknownFallbackEnum):
     "GetNewsletterThumbnailSize enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Default = "default"
     Small = "small"
 
 
-class GetPopupGeneralPerformanceQueryDevice(str, Enum):
+class GetPopupGeneralPerformanceQueryDevice(_UnknownFallbackEnum):
     "GetPopupGeneralPerformanceQueryDevice enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Desktop = "desktop"
     Mobile = "mobile"
 
 
-class GetPopupsListQueryStatus(str, Enum):
+class GetPopupsListQueryStatus(_UnknownFallbackEnum):
     "GetPopupsListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class GetRssNewsletterStatisticsCollectionQueryGroupBy(str, Enum):
+class GetRssNewsletterStatisticsCollectionQueryGroupBy(_UnknownFallbackEnum):
     "GetRssNewsletterStatisticsCollectionQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Total = "total"
     Hour = "hour"
     Day = "day"
     Month = "month"
 
 
-class GetRssNewslettersListQueryStatus(str, Enum):
+class GetRssNewslettersListQueryStatus(_UnknownFallbackEnum):
     "GetRssNewslettersListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Enabled = "enabled"
     Disabled = "disabled"
 
 
-class GetSingleAutoresponderStatisticsQueryGroupBy(str, Enum):
+class GetSingleAutoresponderStatisticsQueryGroupBy(_UnknownFallbackEnum):
     "GetSingleAutoresponderStatisticsQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Total = "total"
     Hour = "hour"
     Day = "day"
     Month = "month"
 
 
-class GetSingleNewsletterStatisticsQueryGroupBy(str, Enum):
+class GetSingleNewsletterStatisticsQueryGroupBy(_UnknownFallbackEnum):
     "GetSingleNewsletterStatisticsQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Total = "total"
     Hour = "hour"
     Day = "day"
     Month = "month"
 
 
-class GetSingleRssNewsletterStatisticsCollectionQueryGroupBy(str, Enum):
+class GetSingleRssNewsletterStatisticsCollectionQueryGroupBy(_UnknownFallbackEnum):
     "GetSingleRssNewsletterStatisticsCollectionQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Total = "total"
     Hour = "hour"
     Day = "day"
     Month = "month"
 
 
-class GetSmsListQuerySendingStatus(str, Enum):
+class GetSmsListQuerySendingStatus(_UnknownFallbackEnum):
     "GetSmsListQuerySendingStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Scheduled = "scheduled"
     Sending = "sending"
     Sent = "sent"
 
 
-class GetSmsListQueryType(str, Enum):
+class GetSmsListQueryType(_UnknownFallbackEnum):
     "GetSmsListQueryType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Sms = "sms"
     Draft = "draft"
 
 
-class GetSplittestListQueryStatus(str, Enum):
+class GetSplittestListQueryStatus(_UnknownFallbackEnum):
     "GetSplittestListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
 
 
-class GetTransactionalEmailsStatisticsQueryGroupBy(str, Enum):
+class GetTransactionalEmailsStatisticsQueryGroupBy(_UnknownFallbackEnum):
     "GetTransactionalEmailsStatisticsQueryGroupBy enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Total = "total"
     Day = "day"
 
 
-class GetWbeGeneralPerformanceStatsQueryDevice(str, Enum):
+class GetWbeGeneralPerformanceStatsQueryDevice(_UnknownFallbackEnum):
     "GetWbeGeneralPerformanceStatsQueryDevice enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Desktop = "desktop"
     Mobile = "mobile"
 
 
-class GetWebinarListQueryStatus(str, Enum):
+class GetWebinarListQueryStatus(_UnknownFallbackEnum):
     "GetWebinarListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Upcoming = "upcoming"
     Finished = "finished"
     Published = "published"
     Unpublished = "unpublished"
 
 
-class GetWebinarListQueryType(str, Enum):
+class GetWebinarListQueryType(_UnknownFallbackEnum):
     "GetWebinarListQueryType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     All = "all"
     Live = "live"
     OnDemand = "on_demand"
 
 
-class GetWebsitesListQueryStatus(str, Enum):
+class GetWebsitesListQueryStatus(_UnknownFallbackEnum):
     "GetWebsitesListQueryStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class GoalConditionConditionType(str, Enum):
+class GoalConditionConditionType(_UnknownFallbackEnum):
     "GoalConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -1951,9 +2095,10 @@ class GoalConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class GoalConditionOperator(str, Enum):
+class GoalConditionOperator(_UnknownFallbackEnum):
     "The relational and existence operator. For the relational operator, the value field is required."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericLt = "numeric_lt"
     NumericGt = "numeric_gt"
     NumericEq = "numeric_eq"
@@ -1964,15 +2109,17 @@ class GoalConditionOperator(str, Enum):
     NotAssigned = "not_assigned"
 
 
-class GoalConditionOperatorType(str, Enum):
+class GoalConditionOperatorType(_UnknownFallbackEnum):
     "GoalConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericOperator = "numeric_operator"
 
 
-class ImageDetailsExtension(str, Enum):
+class ImageDetailsExtension(_UnknownFallbackEnum):
     "File extension"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Jpg = "jpg"
     Gif = "gif"
     Png = "png"
@@ -1980,9 +2127,10 @@ class ImageDetailsExtension(str, Enum):
     Bmp = "bmp"
 
 
-class ImportStatus(str, Enum):
+class ImportStatus(_UnknownFallbackEnum):
     "ImportStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Uploaded = "uploaded"
     Review = "review"
     Approved = "approved"
@@ -1992,39 +2140,44 @@ class ImportStatus(str, Enum):
     ToReview = "to_review"
 
 
-class LandingPageMetaNoindex(str, Enum):
+class LandingPageMetaNoindex(_UnknownFallbackEnum):
     "To entirely prevent your page content from being listed in the Google web index, even if other sites link to it use a noindex meta tag"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Yes = "yes"
     No = "no"
 
 
-class LandingPageOptin(str, Enum):
+class LandingPageOptin(_UnknownFallbackEnum):
     "The opt-in type (double or single)"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Single = "single"
     Double = "double"
 
 
-class LandingPageThankYouPageType(str, Enum):
+class LandingPageThankYouPageType(_UnknownFallbackEnum):
     "What should happen after a contact subscribes"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     StayOnPage = "stay_on_page"
     Default = "default"
     CustomUrl = "custom_url"
 
 
-class LandingPageUserDomainStatus(str, Enum):
+class LandingPageUserDomainStatus(_UnknownFallbackEnum):
     "The DNS status for the user's private domain. Can be `null` if a private domain isn't assigned."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
     Waiting = "waiting"
 
 
-class LastClickDateConditionConditionType(str, Enum):
+class LastClickDateConditionConditionType(_UnknownFallbackEnum):
     "LastClickDateConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2059,24 +2212,27 @@ class LastClickDateConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class LastClickDateConditionOperator(str, Enum):
+class LastClickDateConditionOperator(_UnknownFallbackEnum):
     "LastClickDateConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateTo = "date_to"
     DateFrom = "date_from"
     SpecificDate = "specific_date"
     Custom = "custom"
 
 
-class LastClickDateConditionOperatorType(str, Enum):
+class LastClickDateConditionOperatorType(_UnknownFallbackEnum):
     "LastClickDateConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateOperator = "date_operator"
 
 
-class LastOpenDateConditionConditionType(str, Enum):
+class LastOpenDateConditionConditionType(_UnknownFallbackEnum):
     "LastOpenDateConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2111,24 +2267,27 @@ class LastOpenDateConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class LastOpenDateConditionOperator(str, Enum):
+class LastOpenDateConditionOperator(_UnknownFallbackEnum):
     "LastOpenDateConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateTo = "date_to"
     DateFrom = "date_from"
     SpecificDate = "specific_date"
     Custom = "custom"
 
 
-class LastOpenDateConditionOperatorType(str, Enum):
+class LastOpenDateConditionOperatorType(_UnknownFallbackEnum):
     "LastOpenDateConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateOperator = "date_operator"
 
 
-class LastSendDateConditionConditionType(str, Enum):
+class LastSendDateConditionConditionType(_UnknownFallbackEnum):
     "LastSendDateConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2163,24 +2322,27 @@ class LastSendDateConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class LastSendDateConditionOperator(str, Enum):
+class LastSendDateConditionOperator(_UnknownFallbackEnum):
     "LastSendDateConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateTo = "date_to"
     DateFrom = "date_from"
     SpecificDate = "specific_date"
     Custom = "custom"
 
 
-class LastSendDateConditionOperatorType(str, Enum):
+class LastSendDateConditionOperatorType(_UnknownFallbackEnum):
     "LastSendDateConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateOperator = "date_operator"
 
 
-class LinkClickedConditionConditionType(str, Enum):
+class LinkClickedConditionConditionType(_UnknownFallbackEnum):
     "LinkClickedConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2215,15 +2377,17 @@ class LinkClickedConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class LinkClickedConditionOperatorType(str, Enum):
+class LinkClickedConditionOperatorType(_UnknownFallbackEnum):
     "LinkClickedConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     MessageOperator = "message_operator"
 
 
-class LinkNotClickedConditionConditionType(str, Enum):
+class LinkNotClickedConditionConditionType(_UnknownFallbackEnum):
     "LinkNotClickedConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2258,9 +2422,10 @@ class LinkNotClickedConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class LinkNotClickedConditionDateOperator(str, Enum):
+class LinkNotClickedConditionDateOperator(_UnknownFallbackEnum):
     "It allows you to set a date range. For some of them `value` will be required. Examples can be found here: [API Docs](https://apidocs.getresponse.com/v3/case-study/segments-manual#not-opened-action)."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateFrom = "date_from"
     Never = "never"
     Today = "today"
@@ -2272,51 +2437,58 @@ class LinkNotClickedConditionDateOperator(str, Enum):
     ThisMonth = "this_month"
 
 
-class LinkNotClickedConditionOperatorType(str, Enum):
+class LinkNotClickedConditionOperatorType(_UnknownFallbackEnum):
     "LinkNotClickedConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ComplexMessageOperator = "complex_message_operator"
 
 
-class LpsDetailsStatus(str, Enum):
+class LpsDetailsStatus(_UnknownFallbackEnum):
     "The landing page status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class LpsListItemStatus(str, Enum):
+class LpsListItemStatus(_UnknownFallbackEnum):
     "The landing page status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class LpsPageStatus(str, Enum):
+class LpsPageStatus(_UnknownFallbackEnum):
     "The status of a page associated with the landing page (i.e., 404 page or thank you page)"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
 
 
-class LpsStatus(str, Enum):
+class LpsStatus(_UnknownFallbackEnum):
     "The landing page status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class MessageActivityReportActivityTypesEnum(str, Enum):
+class MessageActivityReportActivityTypesEnum(_UnknownFallbackEnum):
     "MessageActivityReportActivityTypesEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Click = "click"
     Open = "open"
     Send = "send"
 
 
-class MessageEditorEnum(str, Enum):
+class MessageEditorEnum(_UnknownFallbackEnum):
     "Indicates how the message was created: `custom` means a custom-made message, `text` means plain text content, `getresponse` means that the message was created using the GetResponse editor."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Custom = "custom"
     Text = "text"
     Getresponse = "getresponse"
@@ -2324,17 +2496,19 @@ class MessageEditorEnum(str, Enum):
     Html2 = "html2"
 
 
-class MessageFlagsArrayItem(str, Enum):
+class MessageFlagsArrayItem(_UnknownFallbackEnum):
     "MessageFlagsArrayItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Openrate = "openrate"
     Clicktrack = "clicktrack"
     GoogleAnalytics = "google_analytics"
 
 
-class MessageNotSentConditionConditionType(str, Enum):
+class MessageNotSentConditionConditionType(_UnknownFallbackEnum):
     "MessageNotSentConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2369,15 +2543,17 @@ class MessageNotSentConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class MessageNotSentConditionOperatorType(str, Enum):
+class MessageNotSentConditionOperatorType(_UnknownFallbackEnum):
     "MessageNotSentConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     MessageOperator = "message_operator"
 
 
-class MessageSentConditionConditionType(str, Enum):
+class MessageSentConditionConditionType(_UnknownFallbackEnum):
     "MessageSentConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2412,31 +2588,35 @@ class MessageSentConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class MessageSentConditionOperatorType(str, Enum):
+class MessageSentConditionOperatorType(_UnknownFallbackEnum):
     "MessageSentConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     MessageOperator = "message_operator"
 
 
-class MessageTypeOperator(str, Enum):
+class MessageTypeOperator(_UnknownFallbackEnum):
     "The type of message."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Autoresponder = "autoresponder"
     Newsletter = "newsletter"
     Splittest = "splittest"
     Automation = "automation"
 
 
-class MetaFieldValueType(str, Enum):
+class MetaFieldValueType(_UnknownFallbackEnum):
     "The value type enumerable"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Integer = "integer"
 
 
-class NameConditionConditionType(str, Enum):
+class NameConditionConditionType(_UnknownFallbackEnum):
     "NameConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2471,9 +2651,10 @@ class NameConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class NameConditionOperator(str, Enum):
+class NameConditionOperator(_UnknownFallbackEnum):
     "NameConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Is = "is"
     IsNot = "is_not"
     Contains = "contains"
@@ -2484,23 +2665,26 @@ class NameConditionOperator(str, Enum):
     NotEnds = "not_ends"
 
 
-class NameConditionOperatorType(str, Enum):
+class NameConditionOperatorType(_UnknownFallbackEnum):
     "NameConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     StringOperator = "string_operator"
 
 
-class NewAbtestsSubjectFlagsItem(str, Enum):
+class NewAbtestsSubjectFlagsItem(_UnknownFallbackEnum):
     "Tracking options enabled for the newsletter"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Clicktrack = "clicktrack"
     GoogleAnalytics = "google_analytics"
     EcommerceTracking = "ecommerce_tracking"
 
 
-class NewContactOrigin(str, Enum):
+class NewContactOrigin(_UnknownFallbackEnum):
     "NewContactOrigin enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Import = "import"
     Email = "email"
     Www = "www"
@@ -2519,9 +2703,10 @@ class NewContactOrigin(str, Enum):
     PremiumNewsletter = "premium_newsletter"
 
 
-class NewCustomFieldValueType(str, Enum):
+class NewCustomFieldValueType(_UnknownFallbackEnum):
     "Type of returning value, it returns `type` options extended by a `string` option if the `format` was not defined"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Number = "number"
     Date = "date"
@@ -2534,74 +2719,84 @@ class NewCustomFieldValueType(str, Enum):
     Url = "url"
 
 
-class NewMessageEditorEnumOutput(str, Enum):
+class NewMessageEditorEnumOutput(_UnknownFallbackEnum):
     "How the message was created: `editor_v3` - created by GetResponse editor, `text` means plain text content, `html` means custom HTML content, `getresponse` is a deprecated, legacy GetResponse editor."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     EditorV3 = "editor_v3"
     Getresponse = "getresponse"
     Text = "text"
     Html = "html"
 
 
-class NewMetaFieldValueType(str, Enum):
+class NewMetaFieldValueType(_UnknownFallbackEnum):
     "The value type enumerable"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Integer = "integer"
 
 
-class NewNewsletterType(str, Enum):
+class NewNewsletterType(_UnknownFallbackEnum):
     "The newsletter type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Broadcast = "broadcast"
     Draft = "draft"
 
 
-class NewSearchContactsSectionLogicOperator(str, Enum):
+class NewSearchContactsSectionLogicOperator(_UnknownFallbackEnum):
     "Match 'any' (`or` value) or 'all' (`and` value) of the following conditions"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Or = "or"
     And = "and"
 
 
-class NewSearchContactsSubscribersTypeItem(str, Enum):
+class NewSearchContactsSubscribersTypeItem(_UnknownFallbackEnum):
     "NewSearchContactsSubscribersTypeItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Subscribed = "subscribed"
 
 
-class NewsletterActivityActivity(str, Enum):
+class NewsletterActivityActivity(_UnknownFallbackEnum):
     "The type of activity"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Send = "send"
     Open = "open"
     Click = "click"
 
 
-class NewsletterDetailsType(str, Enum):
+class NewsletterDetailsType(_UnknownFallbackEnum):
     "The newsletter type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Broadcast = "broadcast"
     Draft = "draft"
 
 
-class NewsletterListElementType(str, Enum):
+class NewsletterListElementType(_UnknownFallbackEnum):
     "The newsletter type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Broadcast = "broadcast"
     Draft = "draft"
 
 
-class NewsletterType(str, Enum):
+class NewsletterType(_UnknownFallbackEnum):
     "The newsletter type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Broadcast = "broadcast"
     Draft = "draft"
 
 
-class NotOpenedConditionConditionType(str, Enum):
+class NotOpenedConditionConditionType(_UnknownFallbackEnum):
     "NotOpenedConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2636,9 +2831,10 @@ class NotOpenedConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class NotOpenedConditionDateOperator(str, Enum):
+class NotOpenedConditionDateOperator(_UnknownFallbackEnum):
     "It allows you to set a date range. For some of them `value` will be required. Examples can be found here: [API Docs](https://apidocs.getresponse.com/v3/case-study/segments-manual#not-opened-action)."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateFrom = "date_from"
     Never = "never"
     Today = "today"
@@ -2650,15 +2846,17 @@ class NotOpenedConditionDateOperator(str, Enum):
     ThisMonth = "this_month"
 
 
-class NotOpenedConditionOperatorType(str, Enum):
+class NotOpenedConditionOperatorType(_UnknownFallbackEnum):
     "NotOpenedConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ComplexMessageOperator = "complex_message_operator"
 
 
-class OpenedConditionConditionType(str, Enum):
+class OpenedConditionConditionType(_UnknownFallbackEnum):
     "OpenedConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2693,43 +2891,49 @@ class OpenedConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class OpenedConditionOperatorType(str, Enum):
+class OpenedConditionOperatorType(_UnknownFallbackEnum):
     "OpenedConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     MessageOperator = "message_operator"
 
 
-class PopupDetailsStatus(str, Enum):
+class PopupDetailsStatus(_UnknownFallbackEnum):
     "The form or popup status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class PopupDetailsType(str, Enum):
+class PopupDetailsType(_UnknownFallbackEnum):
     "The form or popup type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Popup = "popup"
     Inline = "inline"
 
 
-class PopupListItemStatus(str, Enum):
+class PopupListItemStatus(_UnknownFallbackEnum):
     "The form or popup status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class PopupListItemType(str, Enum):
+class PopupListItemType(_UnknownFallbackEnum):
     "The form or popup type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Popup = "popup"
     Inline = "inline"
 
 
-class RelationalNumericOperatorEnum(str, Enum):
+class RelationalNumericOperatorEnum(_UnknownFallbackEnum):
     "The relational operators."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericLt = "numeric_lt"
     NumericGt = "numeric_gt"
     NumericEq = "numeric_eq"
@@ -2738,45 +2942,50 @@ class RelationalNumericOperatorEnum(str, Enum):
     NumericGtEq = "numeric_gt_eq"
 
 
-class RssNewsletterListSendAsapSettingsFilter(str, Enum):
+class RssNewsletterListSendAsapSettingsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterListSendDailySettingsFilter(str, Enum):
+class RssNewsletterListSendDailySettingsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterListSendMonthlySettingsFilter(str, Enum):
+class RssNewsletterListSendMonthlySettingsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterListSendWeeklySettingsFilter(str, Enum):
+class RssNewsletterListSendWeeklySettingsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterListSendWeeklySettingsSendAtWeekDay(str, Enum):
+class RssNewsletterListSendWeeklySettingsSendAtWeekDay(_UnknownFallbackEnum):
     "The day of the week when the message should be sent"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Monday = "Monday"
     Tuesday = "Tuesday"
     Wednesday = "Wednesday"
@@ -2786,63 +2995,70 @@ class RssNewsletterListSendWeeklySettingsSendAtWeekDay(str, Enum):
     Sunday = "Sunday"
 
 
-class RssNewsletterSendAsapSettingsFilter(str, Enum):
+class RssNewsletterSendAsapSettingsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterSendDailySettingsFilter(str, Enum):
+class RssNewsletterSendDailySettingsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterSendMonthlySettingsFilter(str, Enum):
+class RssNewsletterSendMonthlySettingsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterSendSettingsDetailsFilter(str, Enum):
+class RssNewsletterSendSettingsDetailsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterSendSettingsListingFilter(str, Enum):
+class RssNewsletterSendSettingsListingFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterSendWeeklySettingsFilter(str, Enum):
+class RssNewsletterSendWeeklySettingsFilter(_UnknownFallbackEnum):
     "The filter settings for an RSS post"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Recent = "recent"
     Engaged = "engaged"
     Shared = "shared"
     Commented = "commented"
 
 
-class RssNewsletterSendWeeklySettingsSendAtWeekDay(str, Enum):
+class RssNewsletterSendWeeklySettingsSendAtWeekDay(_UnknownFallbackEnum):
     "The day of the week when the message should be sent"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Monday = "Monday"
     Tuesday = "Tuesday"
     Wednesday = "Wednesday"
@@ -2852,9 +3068,10 @@ class RssNewsletterSendWeeklySettingsSendAtWeekDay(str, Enum):
     Sunday = "Sunday"
 
 
-class ScoringConditionConditionType(str, Enum):
+class ScoringConditionConditionType(_UnknownFallbackEnum):
     "ScoringConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -2889,9 +3106,10 @@ class ScoringConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class ScoringConditionOperator(str, Enum):
+class ScoringConditionOperator(_UnknownFallbackEnum):
     "The relational operator. Required for the operatorType=numeric_operator."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericLt = "numeric_lt"
     NumericGt = "numeric_gt"
     NumericEq = "numeric_eq"
@@ -2900,30 +3118,34 @@ class ScoringConditionOperator(str, Enum):
     NumericGtEq = "numeric_gt_eq"
 
 
-class ScoringConditionOperatorType(str, Enum):
+class ScoringConditionOperatorType(_UnknownFallbackEnum):
     "ScoringConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     NumericOperator = "numeric_operator"
     NotExists = "not_exists"
 
 
-class SearchContactSectionLogicOperator(str, Enum):
+class SearchContactSectionLogicOperator(_UnknownFallbackEnum):
     "SearchContactSectionLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SearchContactSectionSubscriberCycleItem(str, Enum):
+class SearchContactSectionSubscriberCycleItem(_UnknownFallbackEnum):
     "SearchContactSectionSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SearchContactSectionSubscriptionDate(str, Enum):
+class SearchContactSectionSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -2937,45 +3159,51 @@ class SearchContactSectionSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SearchContactsBySearchFormSectionLogicOperator(str, Enum):
+class SearchContactsBySearchFormSectionLogicOperator(_UnknownFallbackEnum):
     "Match 'any' (`or` value) or 'all' (`and` value) of the following conditions"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Or = "or"
     And = "and"
 
 
-class SearchContactsBySearchFormSubscribersTypeItem(str, Enum):
+class SearchContactsBySearchFormSubscribersTypeItem(_UnknownFallbackEnum):
     "SearchContactsBySearchFormSubscribersTypeItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Subscribed = "subscribed"
     Undelivered = "undelivered"
     Removed = "removed"
     Unconfirmed = "unconfirmed"
 
 
-class SearchContactsConditionsDetailsSectionLogicOperator(str, Enum):
+class SearchContactsConditionsDetailsSectionLogicOperator(_UnknownFallbackEnum):
     "Match 'any' (`or` value) or 'all' (`and` value) of the following conditions"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Or = "or"
     And = "and"
 
 
-class SearchContactsDetailsSectionLogicOperator(str, Enum):
+class SearchContactsDetailsSectionLogicOperator(_UnknownFallbackEnum):
     "Match 'any' (`or` value) or 'all' (`and` value) of the following conditions"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Or = "or"
     And = "and"
 
 
-class SearchContactsDetailsSubscribersTypeItem(str, Enum):
+class SearchContactsDetailsSubscribersTypeItem(_UnknownFallbackEnum):
     "SearchContactsDetailsSubscribersTypeItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Subscribed = "subscribed"
 
 
-class SearchedContactDetailsOrigin(str, Enum):
+class SearchedContactDetailsOrigin(_UnknownFallbackEnum):
     "SearchedContactDetailsOrigin enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Import = "import"
     Email = "email"
     Www = "www"
@@ -2993,9 +3221,10 @@ class SearchedContactDetailsOrigin(str, Enum):
     PremiumNewsletter = "premium_newsletter"
 
 
-class SearchedContactDetailsReason(str, Enum):
+class SearchedContactDetailsReason(_UnknownFallbackEnum):
     "SearchedContactDetailsReason enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Api = "api"
     Automation = "automation"
     Blacklisted = "blacklisted"
@@ -3007,23 +3236,26 @@ class SearchedContactDetailsReason(str, Enum):
     User = "user"
 
 
-class SectionAllTimeSubscriptionDateLogicOperator(str, Enum):
+class SectionAllTimeSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionAllTimeSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionAllTimeSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionAllTimeSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionAllTimeSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionAllTimeSubscriptionDateSubscriptionDate(str, Enum):
+class SectionAllTimeSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3037,23 +3269,26 @@ class SectionAllTimeSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionCustomSubscriptionDateLogicOperator(str, Enum):
+class SectionCustomSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionCustomSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionCustomSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionCustomSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionCustomSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionCustomSubscriptionDateSubscriptionDate(str, Enum):
+class SectionCustomSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3067,23 +3302,26 @@ class SectionCustomSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionLast2MonthsSubscriptionDateLogicOperator(str, Enum):
+class SectionLast2MonthsSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionLast2MonthsSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionLast2MonthsSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionLast2MonthsSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionLast2MonthsSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionLast2MonthsSubscriptionDateSubscriptionDate(str, Enum):
+class SectionLast2MonthsSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3097,23 +3335,26 @@ class SectionLast2MonthsSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionLast30DaysSubscriptionDateLogicOperator(str, Enum):
+class SectionLast30DaysSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionLast30DaysSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionLast30DaysSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionLast30DaysSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionLast30DaysSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionLast30DaysSubscriptionDateSubscriptionDate(str, Enum):
+class SectionLast30DaysSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3127,23 +3368,26 @@ class SectionLast30DaysSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionLast7DaysSubscriptionDateLogicOperator(str, Enum):
+class SectionLast7DaysSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionLast7DaysSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionLast7DaysSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionLast7DaysSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionLast7DaysSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionLast7DaysSubscriptionDateSubscriptionDate(str, Enum):
+class SectionLast7DaysSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3157,23 +3401,26 @@ class SectionLast7DaysSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionLastMonthSubscriptionDateLogicOperator(str, Enum):
+class SectionLastMonthSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionLastMonthSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionLastMonthSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionLastMonthSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionLastMonthSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionLastMonthSubscriptionDateSubscriptionDate(str, Enum):
+class SectionLastMonthSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3187,23 +3434,26 @@ class SectionLastMonthSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionLastWeekSubscriptionDateLogicOperator(str, Enum):
+class SectionLastWeekSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionLastWeekSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionLastWeekSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionLastWeekSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionLastWeekSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionLastWeekSubscriptionDateSubscriptionDate(str, Enum):
+class SectionLastWeekSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3217,23 +3467,26 @@ class SectionLastWeekSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionThisMonthSubscriptionDateLogicOperator(str, Enum):
+class SectionThisMonthSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionThisMonthSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionThisMonthSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionThisMonthSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionThisMonthSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionThisMonthSubscriptionDateSubscriptionDate(str, Enum):
+class SectionThisMonthSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3247,23 +3500,26 @@ class SectionThisMonthSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionThisWeekSubscriptionDateLogicOperator(str, Enum):
+class SectionThisWeekSubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionThisWeekSubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionThisWeekSubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionThisWeekSubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionThisWeekSubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionThisWeekSubscriptionDateSubscriptionDate(str, Enum):
+class SectionThisWeekSubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3277,23 +3533,26 @@ class SectionThisWeekSubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionTodaySubscriptionDateLogicOperator(str, Enum):
+class SectionTodaySubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionTodaySubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionTodaySubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionTodaySubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionTodaySubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionTodaySubscriptionDateSubscriptionDate(str, Enum):
+class SectionTodaySubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3307,23 +3566,26 @@ class SectionTodaySubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SectionYesterdaySubscriptionDateLogicOperator(str, Enum):
+class SectionYesterdaySubscriptionDateLogicOperator(_UnknownFallbackEnum):
     "SectionYesterdaySubscriptionDateLogicOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     And = "and"
     Or = "or"
 
 
-class SectionYesterdaySubscriptionDateSubscriberCycleItem(str, Enum):
+class SectionYesterdaySubscriptionDateSubscriberCycleItem(_UnknownFallbackEnum):
     "SectionYesterdaySubscriptionDateSubscriberCycleItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     ReceivingAutoresponder = "receiving_autoresponder"
     NotReceivingAutoresponder = "not_receiving_autoresponder"
 
 
-class SectionYesterdaySubscriptionDateSubscriptionDate(str, Enum):
+class SectionYesterdaySubscriptionDateSubscriptionDate(_UnknownFallbackEnum):
     "Matches the matching period"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     AllTime = "all_time"
     Today = "today"
     Yesterday = "yesterday"
@@ -3337,51 +3599,58 @@ class SectionYesterdaySubscriptionDateSubscriptionDate(str, Enum):
     Custom = "custom"
 
 
-class SendSmsToContactsRecipientsType(str, Enum):
+class SendSmsToContactsRecipientsType(_UnknownFallbackEnum):
     "The recipient type. To send a text message to contacts in your list, select `contacts`. To message contacts who are not in any of your lists, select `importedNumbers`"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Contacts = "contacts"
     Importednumbers = "importedNumbers"
 
 
-class SendSmsToImportedNumbersRecipientsType(str, Enum):
+class SendSmsToImportedNumbersRecipientsType(_UnknownFallbackEnum):
     "The recipient type. To send a text message to contacts in your list, select `contacts`. To message contacts who are not in any of your lists, select `importedNumbers`"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Contacts = "contacts"
     Importednumbers = "importedNumbers"
 
 
-class SmsAutomationDetailsStatus(str, Enum):
+class SmsAutomationDetailsStatus(_UnknownFallbackEnum):
     "The status of of the automated SMS message"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Ready = "ready"
     InUse = "in_use"
 
 
-class SmsAutomationListItemStatus(str, Enum):
+class SmsAutomationListItemStatus(_UnknownFallbackEnum):
     "The status of of the automated SMS message"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Ready = "ready"
     InUse = "in_use"
 
 
-class SmsDetailsRecipientsType(str, Enum):
+class SmsDetailsRecipientsType(_UnknownFallbackEnum):
     "Type of SMS message recipients"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Contacts = "contacts"
     Importednumbers = "importedNumbers"
 
 
-class SmsDetailsType(str, Enum):
+class SmsDetailsType(_UnknownFallbackEnum):
     "The SMS message type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Sms = "sms"
     Draft = "draft"
 
 
-class SmsLinkClickedConditionConditionType(str, Enum):
+class SmsLinkClickedConditionConditionType(_UnknownFallbackEnum):
     "SmsLinkClickedConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -3416,9 +3685,10 @@ class SmsLinkClickedConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class SmsLinkNotClickedConditionConditionType(str, Enum):
+class SmsLinkNotClickedConditionConditionType(_UnknownFallbackEnum):
     "SmsLinkNotClickedConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -3453,31 +3723,35 @@ class SmsLinkNotClickedConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class SmsListItemRecipientsType(str, Enum):
+class SmsListItemRecipientsType(_UnknownFallbackEnum):
     "Type of SMS message recipients"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Contacts = "contacts"
     Importednumbers = "importedNumbers"
 
 
-class SmsListItemType(str, Enum):
+class SmsListItemType(_UnknownFallbackEnum):
     "The SMS message type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Sms = "sms"
     Draft = "draft"
 
 
-class SmsSenderNameStatusesEnum(str, Enum):
+class SmsSenderNameStatusesEnum(_UnknownFallbackEnum):
     "SmsSenderNameStatusesEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Pending = "pending"
     Active = "active"
     Rejected = "rejected"
 
 
-class SmsSentConditionConditionType(str, Enum):
+class SmsSentConditionConditionType(_UnknownFallbackEnum):
     "SmsSentConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -3512,24 +3786,27 @@ class SmsSentConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class SmsSentConditionDeliveryStatus(str, Enum):
+class SmsSentConditionDeliveryStatus(_UnknownFallbackEnum):
     "Specify the delivery status. Omit this field if the delivery status is not relevant."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Delivered = "delivered"
     Undelivered = "undelivered"
     Any = "any"
 
 
-class SortOrderEnum(str, Enum):
+class SortOrderEnum(_UnknownFallbackEnum):
     "SortOrderEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Asc = "ASC"
     Desc = "DESC"
 
 
-class SpecificDateEnum(str, Enum):
+class SpecificDateEnum(_UnknownFallbackEnum):
     "The specific date."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Today = "today"
     Yesterday = "yesterday"
     Last7Days = "last_7_days"
@@ -3541,24 +3818,27 @@ class SpecificDateEnum(str, Enum):
     LastMonth = "last_month"
 
 
-class SplittestChooseWinning(str, Enum):
+class SplittestChooseWinning(_UnknownFallbackEnum):
     "The method of choosing the winning A/B test"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Automatic = "automatic"
     Manual = "manual"
 
 
-class SplittestNewsletterStatus(str, Enum):
+class SplittestNewsletterStatus(_UnknownFallbackEnum):
     "The status of the newsletter"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Sampled = "sampled"
     Chosen = "chosen"
     Rejected = "rejected"
 
 
-class SplittestStage(str, Enum):
+class SplittestStage(_UnknownFallbackEnum):
     "A/B test stage"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Queued = "queued"
     ScheduleSampling = "schedule_sampling"
     EvaluateSampling = "evaluate_sampling"
@@ -3572,16 +3852,18 @@ class SplittestStage(str, Enum):
     Finished = "finished"
 
 
-class SplittestStatus(str, Enum):
+class SplittestStatus(_UnknownFallbackEnum):
     "A/B test status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
 
 
-class SplittestType(str, Enum):
+class SplittestType(_UnknownFallbackEnum):
     "A/B test type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Content = "content"
     Subject = "subject"
     Day = "day"
@@ -3589,45 +3871,51 @@ class SplittestType(str, Enum):
     FromField = "from_field"
 
 
-class SplittestWinningCriteria(str, Enum):
+class SplittestWinningCriteria(_UnknownFallbackEnum):
     "A/B test winning criteria"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Open = "open"
     Click = "click"
 
 
-class StatusEnum(str, Enum):
+class StatusEnum(_UnknownFallbackEnum):
     "StatusEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Enabled = "enabled"
     Disabled = "disabled"
 
 
-class StringBooleanEnum(str, Enum):
+class StringBooleanEnum(_UnknownFallbackEnum):
     "StringBooleanEnum enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     True_ = "true"
     False_ = "false"
 
 
-class SubscribersTypeEnumForSearchingSubscribersTypeItem(str, Enum):
+class SubscribersTypeEnumForSearchingSubscribersTypeItem(_UnknownFallbackEnum):
     "SubscribersTypeEnumForSearchingSubscribersTypeItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Subscribed = "subscribed"
     Undelivered = "undelivered"
     Removed = "removed"
     Unconfirmed = "unconfirmed"
 
 
-class SubscribersTypeEnumForSegmentsSubscribersTypeItem(str, Enum):
+class SubscribersTypeEnumForSegmentsSubscribersTypeItem(_UnknownFallbackEnum):
     "SubscribersTypeEnumForSegmentsSubscribersTypeItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Subscribed = "subscribed"
 
 
-class SubscriptionDateConditionConditionType(str, Enum):
+class SubscriptionDateConditionConditionType(_UnknownFallbackEnum):
     "SubscriptionDateConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -3662,24 +3950,27 @@ class SubscriptionDateConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class SubscriptionDateConditionOperator(str, Enum):
+class SubscriptionDateConditionOperator(_UnknownFallbackEnum):
     "SubscriptionDateConditionOperator enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateTo = "date_to"
     DateFrom = "date_from"
     SpecificDate = "specific_date"
     Custom = "custom"
 
 
-class SubscriptionDateConditionOperatorType(str, Enum):
+class SubscriptionDateConditionOperatorType(_UnknownFallbackEnum):
     "SubscriptionDateConditionOperatorType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     DateOperator = "date_operator"
 
 
-class SubscriptionMethodConditionConditionType(str, Enum):
+class SubscriptionMethodConditionConditionType(_UnknownFallbackEnum):
     "SubscriptionMethodConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -3714,9 +4005,10 @@ class SubscriptionMethodConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class SubscriptionMethodConditionMethod(str, Enum):
+class SubscriptionMethodConditionMethod(_UnknownFallbackEnum):
     "SubscriptionMethodConditionMethod enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Webform = "webform"
     Import = "import"
     LandingPage = "landing_page"
@@ -3735,18 +4027,20 @@ class SubscriptionMethodConditionMethod(str, Enum):
     PremiumNewsletter = "premium_newsletter"
 
 
-class SubscriptionMethodConditionWebformType(str, Enum):
+class SubscriptionMethodConditionWebformType(_UnknownFallbackEnum):
     "The property required for the webform subscription method. If it equals webforms, webformsv2 or popups, additonal property value is needed."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     All = "all"
     Webforms = "webforms"
     Webformsv2 = "webformsv2"
     Popups = "popups"
 
 
-class TagConditionConditionType(str, Enum):
+class TagConditionConditionType(_UnknownFallbackEnum):
     "TagConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -3781,29 +4075,33 @@ class TagConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class TagConditionOperator(str, Enum):
+class TagConditionOperator(_UnknownFallbackEnum):
     "This operator verifies whether the property you are looking for exists or not"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Exists = "exists"
     NotExists = "not_exists"
 
 
-class TagConditionOperatorType(str, Enum):
+class TagConditionOperatorType(_UnknownFallbackEnum):
     "The operator for the existence of a property"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Exists = "exists"
 
 
-class TemplateContentContentType(str, Enum):
+class TemplateContentContentType(_UnknownFallbackEnum):
     "The message content type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Direct = "direct"
     Template = "template"
 
 
-class TransactionalEmailRecipientDetailsStatus(str, Enum):
+class TransactionalEmailRecipientDetailsStatus(_UnknownFallbackEnum):
     "TransactionalEmailRecipientDetailsStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Unknown = "unknown"
     Sent = "sent"
     Rejected = "rejected"
@@ -3812,9 +4110,10 @@ class TransactionalEmailRecipientDetailsStatus(str, Enum):
     ReportedSpam = "reported_spam"
 
 
-class TransactionalEmailRecipientStatus(str, Enum):
+class TransactionalEmailRecipientStatus(_UnknownFallbackEnum):
     "TransactionalEmailRecipientStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Unknown = "unknown"
     Sent = "sent"
     Rejected = "rejected"
@@ -3823,9 +4122,10 @@ class TransactionalEmailRecipientStatus(str, Enum):
     ReportedSpam = "reported_spam"
 
 
-class TransactionalEmailRecipientToStatus(str, Enum):
+class TransactionalEmailRecipientToStatus(_UnknownFallbackEnum):
     "TransactionalEmailRecipientToStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Unknown = "unknown"
     Sent = "sent"
     Rejected = "rejected"
@@ -3834,41 +4134,46 @@ class TransactionalEmailRecipientToStatus(str, Enum):
     ReportedSpam = "reported_spam"
 
 
-class UpdateAccountBlocklistAdditionalFlags(str, Enum):
+class UpdateAccountBlocklistAdditionalFlags(_UnknownFallbackEnum):
     "UpdateAccountBlocklistAdditionalFlags enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Add = "add"
     Delete = "delete"
     Noresponse = "noResponse"
 
 
-class UpdateAccountNumberOfEmployees(str, Enum):
+class UpdateAccountNumberOfEmployees(_UnknownFallbackEnum):
     "Numbers of employees"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     V_50 = "50"
     V_250 = "250"
     V_500 = "500"
     More = "more"
 
 
-class UpdateAccountTimeFormat(str, Enum):
+class UpdateAccountTimeFormat(_UnknownFallbackEnum):
     "Account time notation"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     V_12h = "12h"
     V_24h = "24h"
 
 
-class UpdateCampaignBlocklistAdditionalFlags(str, Enum):
+class UpdateCampaignBlocklistAdditionalFlags(_UnknownFallbackEnum):
     "UpdateCampaignBlocklistAdditionalFlags enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Add = "add"
     Delete = "delete"
     Noresponse = "noResponse"
 
 
-class UpdateContactOrigin(str, Enum):
+class UpdateContactOrigin(_UnknownFallbackEnum):
     "UpdateContactOrigin enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Import = "import"
     Email = "email"
     Www = "www"
@@ -3887,37 +4192,42 @@ class UpdateContactOrigin(str, Enum):
     PremiumNewsletter = "premium_newsletter"
 
 
-class UpdateMetaFieldValueType(str, Enum):
+class UpdateMetaFieldValueType(_UnknownFallbackEnum):
     "The value type enumerable"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     String = "string"
     Integer = "integer"
 
 
-class UpdateSearchContactsSectionLogicOperator(str, Enum):
+class UpdateSearchContactsSectionLogicOperator(_UnknownFallbackEnum):
     "Match 'any' (`or` value) or 'all' (`and` value) of the following conditions"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Or = "or"
     And = "and"
 
 
-class UpdateSearchContactsSubscribersTypeItem(str, Enum):
+class UpdateSearchContactsSubscribersTypeItem(_UnknownFallbackEnum):
     "UpdateSearchContactsSubscribersTypeItem enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Subscribed = "subscribed"
 
 
-class UpdateWorkflowStatus(str, Enum):
+class UpdateWorkflowStatus(_UnknownFallbackEnum):
     "An 'incomplete' status means that the workflow is a 'draft' in the web panel"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
     Incomplete = "incomplete"
 
 
-class WebinarConditionConditionType(str, Enum):
+class WebinarConditionConditionType(_UnknownFallbackEnum):
     "WebinarConditionConditionType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Name = "name"
     Email = "email"
     Custom = "custom"
@@ -3952,9 +4262,10 @@ class WebinarConditionConditionType(str, Enum):
     CustomEvent = "custom_event"
 
 
-class WebinarConditionContactType(str, Enum):
+class WebinarConditionContactType(_UnknownFallbackEnum):
     "WebinarConditionContactType enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Host = "host"
     Listener = "listener"
     Presenter = "presenter"
@@ -3962,54 +4273,61 @@ class WebinarConditionContactType(str, Enum):
     All = "all"
 
 
-class WebinarConditionWebinarCondition(str, Enum):
+class WebinarConditionWebinarCondition(_UnknownFallbackEnum):
     "WebinarConditionWebinarCondition enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Participated = "participated"
     NotParticipated = "not_participated"
 
 
-class WebinarStatus(str, Enum):
+class WebinarStatus(_UnknownFallbackEnum):
     "WebinarStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Upcoming = "upcoming"
     Finished = "finished"
     Published = "published"
     Unpublished = "unpublished"
 
 
-class WebinarType(str, Enum):
+class WebinarType(_UnknownFallbackEnum):
     "The webinar type"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     All = "all"
     Live = "live"
     OnDemand = "on_demand"
 
 
-class WebsiteDetailsStatus(str, Enum):
+class WebsiteDetailsStatus(_UnknownFallbackEnum):
     "The website status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class WebsitePageStatus(str, Enum):
+class WebsitePageStatus(_UnknownFallbackEnum):
     "The website page status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
 
 
-class WebsiteStatus(str, Enum):
+class WebsiteStatus(_UnknownFallbackEnum):
     "The website status"
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Published = "published"
     Unpublished = "unpublished"
 
 
-class WorkflowStatus(str, Enum):
+class WorkflowStatus(_UnknownFallbackEnum):
     "WorkflowStatus enum."
 
+    UNKNOWN = ""  # any wire value this client doesn't recognize resolves here, see _missing_
     Active = "active"
     Inactive = "inactive"
     Incomplete = "incomplete"

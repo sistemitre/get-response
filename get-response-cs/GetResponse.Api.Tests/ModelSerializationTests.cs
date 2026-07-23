@@ -31,6 +31,58 @@ public sealed class ModelSerializationTests
     }
 
     [Fact]
+    public void Deserializes_Empty_String_As_Null_For_Nullable_Enum_Property()
+    {
+        // GetResponse sometimes returns "" instead of omitting the field for an optional enum
+        // with no value (e.g. geolocation.continentCode when the location can't be resolved).
+        const string json = "{\"continentCode\":\"\"}";
+
+        var geolocation = JsonSerializer.Deserialize<ContactGeolocation>(json, GetResponseClient.JsonOptions);
+
+        Assert.NotNull(geolocation);
+        Assert.Null(geolocation!.ContinentCode);
+    }
+
+    [Fact]
+    public void Deserializes_Explicit_Null_As_Null_For_Nullable_Enum_Property()
+    {
+        const string json = "{\"continentCode\":null}";
+
+        var geolocation = JsonSerializer.Deserialize<ContactGeolocation>(json, GetResponseClient.JsonOptions);
+
+        Assert.NotNull(geolocation);
+        Assert.Null(geolocation!.ContinentCode);
+    }
+
+    [Fact]
+    public void Deserializes_Unrecognized_String_As_Unknown_For_NonNullable_Enum_Property()
+    {
+        // Non-nullable/required enum properties keep the existing forward-compatible fallback:
+        // an unrecognized wire value (a brand-new value the live API added, or "") maps to the
+        // enum's Unknown member instead of throwing.
+        const string json = "{\"conditionType\":\"\",\"operatorType\":\"is\",\"operator\":{}}";
+
+        var condition = JsonSerializer.Deserialize<AutoresponderDayCondition>(json, GetResponseClient.JsonOptions);
+
+        Assert.NotNull(condition);
+        Assert.Equal(AutoresponderDayConditionConditionType.Unknown, condition!.ConditionType);
+    }
+
+    [Fact]
+    public void Serializes_Unset_Nullable_Enum_Property_As_Omitted_Not_Unknown()
+    {
+        // Guards the write-DTO risk this fix deliberately avoided: UpdateContact.Origin left
+        // unset must stay omitted (so the server leaves the field untouched on a partial
+        // update), not get serialized as a literal "Unknown" wire value.
+        var update = new UpdateContact { Name = "Jane" };
+
+        var json = JsonSerializer.Serialize(update, GetResponseClient.JsonOptions);
+        using var doc = JsonDocument.Parse(json);
+
+        Assert.False(doc.RootElement.TryGetProperty("origin", out _));
+    }
+
+    [Fact]
     public void Serializes_CreateBody_As_CamelCase_With_Nulls_Omitted()
     {
         var shop = new NewShop { Name = "My Shop", Locale = "en", Currency = "USD" };
