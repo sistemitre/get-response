@@ -11,15 +11,18 @@
 #          repo `get-response`, workflow `release.yml`, environment `pypi`.
 #        - nuget.org -> username menu -> Trusted Publishing -> add a policy: repository owner
 #          `sistemitre`, repository `get-response`, workflow `release.yml`, environment `nuget`.
-#   2. npm can't bootstrap via OIDC (a brand-new package name must be published once with a
-#      token first) -- create a Granular Access Token (npmjs.com -> Access Tokens -> Generate
-#      New Token), read+write, and add it as repo secret `NPM_TOKEN`. Once `getresponse` exists
-#      on npm, add a Trusted Publisher on its package settings page and switch this job to OIDC
-#      too, removing `NPM_TOKEN`.
+#   2. `@sistemitre/getresponse` is scoped to the org, so it publishes as private by default --
+#      `npm publish --access public` below is required, not optional. It also can't bootstrap
+#      via OIDC (a brand-new package must be published once with a token first) -- create a
+#      Granular Access Token (npmjs.com -> Access Tokens -> Generate New Token) with 2FA bypass
+#      for write actions enabled, read+write, and add it as repo secret `NPM_TOKEN`. Once the
+#      package exists on npm, add a Trusted Publisher on its package settings page and switch
+#      this job to OIDC too, removing `NPM_TOKEN`.
 #   3. Create the `pypi`, `nuget`, and `npm` GitHub Environments (Settings -> Environments) so
 #      the `environment:` on each job below has something to match against.
 #   4. Verify the three package names are actually available (or already owned by this team)
-#      before the first real run: `getresponse` on PyPI and npm, `GetResponse.Api` on NuGet.
+#      before the first real run: `getresponse` on PyPI, `@sistemitre/getresponse` on npm,
+#      `GetResponse.Api` on NuGet.
 
 name: Release
 
@@ -209,4 +212,4 @@ jobs:
         working-directory: get-response-ts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish
+        run: npm publish --access public

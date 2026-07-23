@@ -16,7 +16,7 @@ with something complete and kept in sync with the spec by construction, not by h
 |---|---|---|
 | Python | [`get-response-py/`](get-response-py/) — `getresponse` on PyPI | `pip install getresponse` |
 | C# | [`get-response-cs/GetResponse.Api/`](get-response-cs/GetResponse.Api/) — `GetResponse.Api` on NuGet | `dotnet add package GetResponse.Api` |
-| TypeScript/Node | [`get-response-ts/`](get-response-ts/) — `getresponse` on npm | `npm install getresponse` |
+| TypeScript/Node | [`get-response-ts/`](get-response-ts/) — `@sistemitre/getresponse` on npm | `npm install @sistemitre/getresponse` |
 
 Each has its own README with a full quickstart, pagination, error handling, and rate
 limiting — read those to actually use a client. This README is about the repo as a whole.

@@ -6,7 +6,7 @@ Interact completely with the GetResponse v3 API. Three deliverables:
 
 - **Python package** in `get-response-py/`
 - **C# .NET solution** in `get-response-cs/` (solution) with project `get-response-cs/GetResponse.Api/` (NuGet package)
-- **TypeScript/Node package** in `get-response-ts/` (npm package `getresponse`)
+- **TypeScript/Node package** in `get-response-ts/` (npm package `@sistemitre/getresponse`)
 
 Both are built from the official OpenAPI spec:
 `https://apireference.getresponse.com/open-api.json` — vendored at `openapi/open-api.json`.
