@@ -57,10 +57,11 @@ Every `emit()` writes two kinds of files, and treats them completely differently
 - **Scaffold-once** — everything else: build/project files (`pyproject.toml`,
   `package.json`, `GetResponse.sln`, both `.csproj` files, lint/format configs), the
   hand-written core runtime (HTTP transport, auth, pagination, error mapping, the opt-in
-  rate limiter), the root client's constructors/lifecycle, READMEs, and test suites. Each
-  is written **only if it doesn't already exist** — a fresh checkout gets them scaffolded
-  once; every later regenerate leaves them untouched. **Hand-editing these is expected and
-  safe** — that's the whole point.
+  rate limiter, Python's `_compat.py`, C#'s `Internal/EnumWireValues.cs`), the root
+  client's constructors/lifecycle, READMEs, and test suites. Each is written **only if it
+  doesn't already exist** — a fresh checkout gets them scaffolded once; every later
+  regenerate leaves them untouched. **Hand-editing these is expected and safe** — that's
+  the whole point.
   - The C# `.sln` and both `.csproj` files are scaffolded via the real `dotnet` CLI
     (`dotnet new sln`/`classlib`/`xunit`, `dotnet sln add`, `dotnet add package`/
     `reference`) rather than a Python string template, gated by the same exists-check —
@@ -68,6 +69,28 @@ Every `emit()` writes two kinds of files, and treats them completely differently
     `emit_csharp.py`. A few properties (`TargetFrameworks` multi-targeting, NuGet package
     metadata) have no CLI flag and get a one-time XML patch right after scaffolding, same
     as a human setting this up by hand would do.
+
+**Unrecognized enum wire values**: GetResponse occasionally sends a wire value a generated
+enum doesn't have a member for — either literally `""` instead of omitting an optional
+field with no value, or a genuinely new value added to the live API after this client was
+generated. Python and C# each get an `Unknown`/`UNKNOWN` sentinel member instead of raising:
+- **Python**: every generated enum subclasses `_UnknownFallbackEnum` (in `_compat.py`,
+  scaffold-once), which overrides `_missing_` to resolve any unrecognized value to
+  `UNKNOWN`. Optional fields stay `Optional[...]`, so a genuinely absent field or explicit
+  JSON `null` still resolves to Python `None` — `UNKNOWN` and `None` mean two different
+  things (API sent something we don't recognize vs. field wasn't there at all).
+- **C#**: `EnumMemberJsonConverter<T>` (non-nullable enum properties) keeps its existing
+  fallback to the enum's `Unknown = 0` member. A separate `NullableEnumMemberJsonConverter<T>`
+  (nullable enum properties) maps unrecognized values to C# `null` instead — deliberately
+  *not* unified into "always non-nullable with `Unknown` as the null substitute," because
+  the generator also emits write-only DTOs (e.g. `UpdateContact`) that get serialized back
+  out as PATCH-style request bodies, relying on `JsonIgnoreCondition.WhenWritingNull` to
+  omit fields the caller didn't set. A non-nullable property can never be `null`, so that
+  omission would silently break and every unset enum field would be serialized as the
+  literal string `"Unknown"` on every write.
+- **TypeScript**: no equivalent exists or is needed — models are plain interfaces with zero
+  runtime validation (`JSON.parse(...) as T`), so an unrecognized wire value simply flows
+  through untouched; nothing throws.
 
 **Keeping the root client in sync despite being scaffold-once**: `GetResponseClient` needs
 one property per resource tag, but the tag list can change when the spec does. Each
