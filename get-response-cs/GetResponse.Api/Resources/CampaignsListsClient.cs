@@ -97,84 +97,84 @@ public sealed class CampaignsListsClient
     }
 
     /// <summary>The results are indexed with the campaign ID.</summary>
-    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsOriginsAsync(string queryCampaignId, GetCampaignStatisticsOriginsQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsOriginsAsync(string queryCampaignId, GetCampaignStatisticsOriginsQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsOriginsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/origins", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
     }
 
     /// <summary>The results are indexed with the location name (PL, EN, etc.).</summary>
-    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsLocationsAsync(string queryCampaignId, GetCampaignStatisticsLocationsQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsLocationsAsync(string queryCampaignId, GetCampaignStatisticsLocationsQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsLocationsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/locations", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
     }
 
     /// <summary>Returns the number of the total added and removed subscribers, grouped by default or by time period.</summary>
-    public async Task<IReadOnlyList<CampaignListSizesStatisticsElement>> GetCampaignStatisticsListSizeAsync(string queryCampaignId, GetCampaignStatisticsListSizeQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<CampaignListSizesStatisticsElement>> GetCampaignStatisticsListSizeAsync(string queryCampaignId, GetCampaignStatisticsListSizeQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsListSizeQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
         };
         var result = await _http.SendAsync<IReadOnlyList<CampaignListSizesStatisticsElement>>(HttpMethod.Get, "/campaigns/statistics/list-size", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
     }
 
     /// <summary>Returns the number and origin of subscriptions, grouped by a specified campaigns for each day on which any changes were made. Dates in the YYYY-MM-DD format are used as keys in the response.</summary>
-    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsSubscriptionsAsync(string queryCampaignId, GetCampaignStatisticsSubscriptionsQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsSubscriptionsAsync(string queryCampaignId, GetCampaignStatisticsSubscriptionsQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsSubscriptionsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/subscriptions", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
     }
 
     /// <summary>Returns the number and reason for removed contacts. Dates in the YYYY-MM-DD format are used as keys in the response.</summary>
-    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsRemovalsAsync(string queryCampaignId, GetCampaignStatisticsRemovalsQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsRemovalsAsync(string queryCampaignId, GetCampaignStatisticsRemovalsQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsRemovalsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/removals", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
     }
 
     /// <summary>Returns the balance of subscriptions. Dates in the YYYY-MM-DD format are used as keys in the response.</summary>
-    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsBalanceAsync(string queryCampaignId, GetCampaignStatisticsBalanceQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<JsonElement>> GetCampaignStatisticsBalanceAsync(string queryCampaignId, GetCampaignStatisticsBalanceQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsBalanceQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/balance", null, query, null, false, ct).ConfigureAwait(false);
         return result!;

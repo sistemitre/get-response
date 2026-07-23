@@ -59,9 +59,9 @@ export class CartsResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Search carts created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search carts created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search cart by external ID */
       queryExternalId?: string;
       /** Sort by date */

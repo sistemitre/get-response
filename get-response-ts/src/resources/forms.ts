@@ -34,9 +34,9 @@ export class FormsResource {
       /** Search forms assigned to this list (campaign). You can pass multiple comma-separated values, eg. `Xd1P,sC7r` */
       queryCampaignId?: string;
       /** Search forms created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search forms created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search forms by name */
       queryName?: string;
       /** Search by status. **Note:** `disabled` includes both `unpublished` and `draft` and `enabled` equals `published` */

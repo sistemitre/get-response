@@ -56,9 +56,9 @@ export class AutorespondersResource {
       /** Search autoresponder by campaign ID */
       queryCampaignId?: string;
       /** Search autoresponder created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search autoresponder created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search autoresponder by name */
       queryName?: string;
       /** Search autoresponder by status */
@@ -121,9 +121,9 @@ export class AutorespondersResource {
       /** The list of campaign resource IDs (string separated with '') */
       queryCampaignId?: string;
       /** Count data from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Count data to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Group results by time interval */
       queryGroupBy?: M.GetAutoresponderStatisticsCollectionQueryGroupBy;
     },
@@ -177,9 +177,9 @@ export class AutorespondersResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Count data from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Count data to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Group results by time interval */
       queryGroupBy?: M.GetSingleAutoresponderStatisticsQueryGroupBy;
     },

@@ -29,7 +29,7 @@ public sealed class ProductsClient
     }
 
     /// <summary>Sending a **GET** request to this URL returns a collection of product resources that belong to the given shop. You can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by: * name * vendor * category * categoryId * externalId * variantName * metaFieldNames * metaFieldValues * createdOn The `metaFieldNames` and `metaFieldValues` fields can be a list of values separated by a comma [,]. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<Product>> GetProductListAsync(string shopId, string? queryName = null, string? queryVendor = null, string? queryCategory = null, string? queryCategoryId = null, string? queryExternalId = null, string? queryVariantName = null, string? queryMetaFieldNames = null, string? queryMetaFieldValues = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<Product>> GetProductListAsync(string shopId, string? queryName = null, string? queryVendor = null, string? queryCategory = null, string? queryCategoryId = null, string? queryExternalId = null, string? queryVariantName = null, string? queryMetaFieldNames = null, string? queryMetaFieldValues = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["shopId"] = shopId };
         var query = new List<KeyValuePair<string, string?>>
@@ -42,8 +42,8 @@ public sealed class ProductsClient
             new("query[variantName]", queryVariantName),
             new("query[metaFieldNames]", queryMetaFieldNames),
             new("query[metaFieldValues]", queryMetaFieldValues),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("fields", fields),

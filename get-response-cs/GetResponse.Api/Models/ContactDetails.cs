@@ -72,7 +72,7 @@ public sealed record ContactDetails
 
     /// <summary>The contact's IP address. IPv4 and IPv6 formats are accepted.</summary>
     [JsonPropertyName("ipAddress")]
-    public JsonElement? IpAddress { get; init; }
+    public string? IpAddress { get; init; }
 
     /// <summary>The geolocation value. Read-only.</summary>
     [JsonPropertyName("geolocation")]

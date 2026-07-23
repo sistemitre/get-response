@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
 
 from .._core import _Core
 from ..models import (
@@ -57,8 +57,8 @@ class TagsResource:
         self,
         *,
         query_name: str | None = None,
-        query_created_at_from: dict[str, Any] | None = None,
-        query_created_at_to: dict[str, Any] | None = None,
+        query_created_at_from: datetime | None = None,
+        query_created_at_to: datetime | None = None,
         sort_created_at: SortOrderEnum | None = None,
         sort_name: SortOrderEnum | None = None,
         fields: str | None = None,

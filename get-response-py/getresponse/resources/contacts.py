@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 from .._core import _Core
@@ -65,8 +66,8 @@ class ContactsResource:
         self,
         contact_id: str,
         *,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         fields: str | None = None,
         per_page: int | None = None,
         page: int | None = None,
@@ -120,10 +121,10 @@ class ContactsResource:
         query_name: str | None = None,
         query_campaign_id: str | None = None,
         query_origin: GetContactListQueryOrigin | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
-        query_changed_on_from: dict[str, Any] | None = None,
-        query_changed_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
+        query_changed_on_from: datetime | None = None,
+        query_changed_on_to: datetime | None = None,
         sort_email: SortOrderEnum | None = None,
         sort_name: SortOrderEnum | None = None,
         sort_created_on: SortOrderEnum | None = None,
@@ -168,8 +169,8 @@ class ContactsResource:
         *,
         query_email: str | None = None,
         query_name: str | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         sort_email: SortOrderEnum | None = None,
         sort_name: SortOrderEnum | None = None,
         sort_created_on: SortOrderEnum | None = None,

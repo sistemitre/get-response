@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
 
 from .._core import _Core
 from ..models import (
@@ -41,8 +41,8 @@ class LegacyLandingPagesResource:
         query_meta_title: str | None = None,
         query_user_domain: str | None = None,
         query_campaign_id: str | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         sort_created_on: SortOrderEnum | None = None,
         sort_domain: SortOrderEnum | None = None,
         sort_campaign_id: SortOrderEnum | None = None,

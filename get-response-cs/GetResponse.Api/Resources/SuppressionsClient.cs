@@ -52,13 +52,13 @@ public sealed class SuppressionsClient
     }
 
     /// <summary>Get suppression lists</summary>
-    public async Task<IReadOnlyList<Suppression>> GetSuppressionsListAsync(string? queryName = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<Suppression>> GetSuppressionsListAsync(string? queryName = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[name]", queryName),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("fields", fields),

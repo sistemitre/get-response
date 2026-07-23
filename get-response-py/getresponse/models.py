@@ -5252,7 +5252,7 @@ class ContactDetails(BaseModel):
     href: str = Field(alias="href")
     "Direct hyperlink to a resource"
     note: str | None = Field(default=None, alias="note")
-    ip_address: dict[str, Any] | None = Field(default=None, alias="ipAddress")
+    ip_address: str | None = Field(default=None, alias="ipAddress")
     "The contact's IP address. IPv4 and IPv6 formats are accepted."
     geolocation: ContactGeolocation | None = Field(default=None, alias="geolocation")
     tags: list[ContactTag] | None = Field(default=None, alias="tags")
@@ -5304,7 +5304,7 @@ class ContactListElement(BaseModel):
     href: str = Field(alias="href")
     "Direct hyperlink to a resource"
     note: str | None = Field(default=None, alias="note")
-    ip_address: dict[str, Any] | None = Field(default=None, alias="ipAddress")
+    ip_address: str | None = Field(default=None, alias="ipAddress")
     "The contact's IP address. IPv4 and IPv6 formats are accepted."
 
 
@@ -7216,7 +7216,7 @@ class NewContact(BaseModel):
     "Engagement Score is a feature that presents a visual estimate of a contact's engagement with mailings. The score is based on the contact's interactions with your e-mails. Via API, it's returned in the form of numbers ranging from 1 (Not Engaged) to 5 (Highly Engaged)."
     href: str = Field(alias="href")
     "Direct hyperlink to a resource"
-    ip_address: dict[str, Any] | None = Field(default=None, alias="ipAddress")
+    ip_address: str | None = Field(default=None, alias="ipAddress")
     "The contact's IP address. IPv4 and IPv6 formats are accepted."
     tags: list[NewContactTag] | None = Field(default=None, alias="tags")
     custom_field_values: list[NewContactCustomFieldValue] | None = Field(

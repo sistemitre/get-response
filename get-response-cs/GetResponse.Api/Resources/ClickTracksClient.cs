@@ -41,12 +41,12 @@ public sealed class ClickTracksClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<ClickTrackResource>> GetClickTrackListAsync(string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<ClickTrackResource>> GetClickTrackListAsync(DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),

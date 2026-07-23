@@ -63,9 +63,9 @@ export class ProductsResource {
       /** Search products by category name */
       queryCategory?: string;
       /** Search products created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search products created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search products by external ID */
       queryExternalId?: string;
       /** Search products by meta field name (the list of names must be separated by a comma [,]) */

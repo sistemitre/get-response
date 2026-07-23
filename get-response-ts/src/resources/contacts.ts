@@ -53,8 +53,8 @@ export class ContactsResource {
       page?: number;
       /** Requested number of results per page */
       perPage?: number;
-      queryCreatedOnFrom?: Record<string, unknown>;
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
+      queryCreatedOnTo?: string;
     },
     signal?: AbortSignal,
   ): Promise<M.ContactActivity[]> => {
@@ -119,13 +119,13 @@ export class ContactsResource {
       /** Search contacts by campaign ID */
       queryCampaignId?: string;
       /** Return only contacts whose data was changed on or after the given date. Use ISO 8601 format */
-      queryChangedOnFrom?: Record<string, unknown>;
+      queryChangedOnFrom?: string;
       /** Return only contacts whose data was changed on or before the given date. Use ISO 8601 format */
-      queryChangedOnTo?: Record<string, unknown>;
+      queryChangedOnTo?: string;
       /** Return only contacts created on or after the given date. Use ISO 8601 format */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Return only contacts created on or before the given date. Use ISO 8601 format */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search contacts by email */
       queryEmail?: string;
       /** Search contacts by name */
@@ -182,9 +182,9 @@ export class ContactsResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Return only contacts created on or after the given date. Use ISO 8601 format */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Return only contacts created on or before the given date. Use ISO 8601 format */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search contacts by email */
       queryEmail?: string;
       /** Search contacts by name */

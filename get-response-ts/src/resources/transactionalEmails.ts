@@ -47,9 +47,9 @@ export class TransactionalEmailsResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Search transactional emails sent from this date */
-      querySentOnFrom?: Record<string, unknown>;
+      querySentOnFrom?: string;
       /** Search transactional emails sent to this date */
-      querySentOnTo?: Record<string, unknown>;
+      querySentOnTo?: string;
       /** Search transactional emails with a specific tag ID */
       queryTagId?: string;
       /** Search tagged/untagged transactional emails */
@@ -85,9 +85,9 @@ export class TransactionalEmailsResource {
       /** Search tagged/untagged transactional emails */
       queryTagged?: M.StringBooleanEnum;
       /** Count data from this date */
-      queryTimeFrameFrom?: Record<string, unknown>;
+      queryTimeFrameFrom?: string;
       /** Count data to this date */
-      queryTimeFrameTo?: Record<string, unknown>;
+      queryTimeFrameTo?: string;
     },
     signal?: AbortSignal,
   ): Promise<M.TransactionalEmailStatistics[]> => {

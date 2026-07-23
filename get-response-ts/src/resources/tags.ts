@@ -48,9 +48,9 @@ export class TagsResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Search tags created from this date */
-      queryCreatedAtFrom?: Record<string, unknown>;
+      queryCreatedAtFrom?: string;
       /** Search tags created to this date */
-      queryCreatedAtTo?: Record<string, unknown>;
+      queryCreatedAtTo?: string;
       /** Search tags by name */
       queryName?: string;
       /** Sort tags by creation date */

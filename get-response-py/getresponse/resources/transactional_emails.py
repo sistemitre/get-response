@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
 
 from .._core import _Core
 from ..models import (
@@ -51,8 +51,8 @@ class TransactionalEmailsResource:
     async def get_transactional_emails_list(
         self,
         *,
-        query_sent_on_from: dict[str, Any] | None = None,
-        query_sent_on_to: dict[str, Any] | None = None,
+        query_sent_on_from: datetime | None = None,
+        query_sent_on_to: datetime | None = None,
         query_tagged: StringBooleanEnum | None = None,
         query_tag_id: str | None = None,
         fields: str | None = None,
@@ -81,8 +81,8 @@ class TransactionalEmailsResource:
         self,
         *,
         query_group_by: GetTransactionalEmailsStatisticsQueryGroupBy,
-        query_time_frame_from: dict[str, Any] | None = None,
-        query_time_frame_to: dict[str, Any] | None = None,
+        query_time_frame_from: datetime | None = None,
+        query_time_frame_to: datetime | None = None,
         query_tagged: StringBooleanEnum | None = None,
         query_tag_id: str | None = None,
         fields: str | None = None,

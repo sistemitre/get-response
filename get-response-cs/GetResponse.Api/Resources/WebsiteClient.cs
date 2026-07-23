@@ -29,13 +29,13 @@ public sealed class WebsiteClient
     }
 
     /// <summary>Get details for website statistics</summary>
-    public async Task<WebsiteStats> GetWbeGeneralPerformanceStatsAsync(string websiteId, string? queryDateFrom = null, string? queryDateTo = null, string? queryLocation = null, GetWbeGeneralPerformanceStatsQueryDevice? queryDevice = null, string? queryPage = null, string? fields = null, CancellationToken ct = default)
+    public async Task<WebsiteStats> GetWbeGeneralPerformanceStatsAsync(string websiteId, DateTimeOffset? queryDateFrom = null, DateTimeOffset? queryDateTo = null, string? queryLocation = null, GetWbeGeneralPerformanceStatsQueryDevice? queryDevice = null, string? queryPage = null, string? fields = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["websiteId"] = websiteId };
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[date][from]", queryDateFrom),
-            new("query[date][to]", queryDateTo),
+            new("query[date][from]", queryDateFrom?.ToString("O")),
+            new("query[date][to]", queryDateTo?.ToString("O")),
             new("query[location]", queryLocation),
             new("query[device]", (queryDevice is null ? null : EnumWireValues<GetWbeGeneralPerformanceStatsQueryDevice>.ToWireValue[queryDevice.Value])),
             new("query[page]", queryPage),

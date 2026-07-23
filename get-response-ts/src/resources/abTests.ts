@@ -32,9 +32,9 @@ export class AbTestsResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Search A/B tests created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search A/B tests created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search A/B tests by name */
       queryName?: string;
       /** Search A/B tests by status */

@@ -56,9 +56,9 @@ export class RssNewslettersResource {
       /** The list of campaign resource IDs (string separated with ',') */
       queryCampaignId?: string;
       /** Count data from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Count data to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Group results by time interval */
       queryGroupBy?: M.GetRssNewsletterStatisticsCollectionQueryGroupBy;
       /** The list of RSS newsletter resource IDs (string separated with ',') */
@@ -99,9 +99,9 @@ export class RssNewslettersResource {
       /** Search RSS newsletters by campaign ID */
       queryCampaignId?: string;
       /** Search RSS newsletters created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search RSS newsletters created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search RSS newsletters by status */
       queryStatus?: M.GetRssNewslettersListQueryStatus;
       /** Search RSS newsletters by subject */
@@ -140,9 +140,9 @@ export class RssNewslettersResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Count data from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Count data to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Group results by time interval */
       queryGroupBy?: M.GetSingleRssNewsletterStatisticsCollectionQueryGroupBy;
     },

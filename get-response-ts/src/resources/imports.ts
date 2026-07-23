@@ -42,9 +42,9 @@ export class ImportsResource {
       /** Search imports by campaignId */
       queryCampaignId?: string;
       /** Search imports created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search imports created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Sort imports by inserted contact count */
       sortAddedContacts?: M.SortOrderEnum;
       /** Sort imports by campaign name */

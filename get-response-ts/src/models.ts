@@ -3748,7 +3748,7 @@ export interface ContactDetails {
   href: string;
   note?: string;
   /** The contact's IP address. IPv4 and IPv6 formats are accepted. */
-  ipAddress?: Record<string, unknown>;
+  ipAddress?: string;
   geolocation?: ContactGeolocation;
   /** The list of contact tags, limited to 500 tags. */
   tags?: ContactTag[];
@@ -3792,7 +3792,7 @@ export interface ContactListElement {
   href: string;
   note?: string;
   /** The contact's IP address. IPv4 and IPv6 formats are accepted. */
-  ipAddress?: Record<string, unknown>;
+  ipAddress?: string;
 }
 
 /** ContactTag model. */
@@ -5361,7 +5361,7 @@ export interface NewContact {
   /** Direct hyperlink to a resource */
   href: string;
   /** The contact's IP address. IPv4 and IPv6 formats are accepted. */
-  ipAddress?: Record<string, unknown>;
+  ipAddress?: string;
   tags?: NewContactTag[];
   customFieldValues?: NewContactCustomFieldValue[];
 }

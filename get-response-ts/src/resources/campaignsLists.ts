@@ -89,8 +89,8 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsBalance = async (
     params?: {
       queryCampaignId: string;
-      queryCreatedOnFrom?: Record<string, unknown>;
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
+      queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsBalanceQueryGroupBy;
     },
     signal?: AbortSignal,
@@ -112,8 +112,8 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsListSize = async (
     params?: {
       queryCampaignId: string;
-      queryCreatedOnFrom?: Record<string, unknown>;
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
+      queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsListSizeQueryGroupBy;
     },
     signal?: AbortSignal,
@@ -139,8 +139,8 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsLocations = async (
     params?: {
       queryCampaignId: string;
-      queryCreatedOnFrom?: Record<string, unknown>;
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
+      queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsLocationsQueryGroupBy;
     },
     signal?: AbortSignal,
@@ -162,8 +162,8 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsOrigins = async (
     params?: {
       queryCampaignId: string;
-      queryCreatedOnFrom?: Record<string, unknown>;
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
+      queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsOriginsQueryGroupBy;
     },
     signal?: AbortSignal,
@@ -185,8 +185,8 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsRemovals = async (
     params?: {
       queryCampaignId: string;
-      queryCreatedOnFrom?: Record<string, unknown>;
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
+      queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsRemovalsQueryGroupBy;
     },
     signal?: AbortSignal,
@@ -208,8 +208,8 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsSubscriptions = async (
     params?: {
       queryCampaignId: string;
-      queryCreatedOnFrom?: Record<string, unknown>;
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
+      queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsSubscriptionsQueryGroupBy;
     },
     signal?: AbortSignal,

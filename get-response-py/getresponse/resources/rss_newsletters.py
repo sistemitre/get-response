@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
 
 from .._core import _Core
 from ..models import (
@@ -65,8 +65,8 @@ class RssNewslettersResource:
         query_group_by: GetRssNewsletterStatisticsCollectionQueryGroupBy | None = None,
         query_rss_newsletter_id: str | None = None,
         query_campaign_id: str | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         fields: str | None = None,
         per_page: int | None = None,
         page: int | None = None,
@@ -95,8 +95,8 @@ class RssNewslettersResource:
         *,
         query_subject: str | None = None,
         query_status: GetRssNewslettersListQueryStatus | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         query_campaign_id: str | None = None,
         sort_created_on: SortOrderEnum | None = None,
         fields: str | None = None,
@@ -128,8 +128,8 @@ class RssNewslettersResource:
         rss_newsletter_id: str,
         *,
         query_group_by: GetSingleRssNewsletterStatisticsCollectionQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         fields: str | None = None,
         per_page: int | None = None,
         page: int | None = None,

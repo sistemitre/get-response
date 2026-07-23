@@ -56,13 +56,13 @@ public sealed class TagsClient
     }
 
     /// <summary>Provides a list of tags. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<Tag>> GetTagsListAsync(string? queryName = null, string? queryCreatedAtFrom = null, string? queryCreatedAtTo = null, SortOrderEnum? sortCreatedAt = null, SortOrderEnum? sortName = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<Tag>> GetTagsListAsync(string? queryName = null, DateTimeOffset? queryCreatedAtFrom = null, DateTimeOffset? queryCreatedAtTo = null, SortOrderEnum? sortCreatedAt = null, SortOrderEnum? sortName = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[name]", queryName),
-            new("query[createdAt][from]", queryCreatedAtFrom),
-            new("query[createdAt][to]", queryCreatedAtTo),
+            new("query[createdAt][from]", queryCreatedAtFrom?.ToString("O")),
+            new("query[createdAt][to]", queryCreatedAtTo?.ToString("O")),
             new("sort[createdAt]", (sortCreatedAt is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedAt.Value])),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("fields", fields),

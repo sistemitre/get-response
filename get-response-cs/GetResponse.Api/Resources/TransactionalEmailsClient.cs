@@ -41,12 +41,12 @@ public sealed class TransactionalEmailsClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<TransactionalEmailListElement>> GetTransactionalEmailsListAsync(string? querySentOnFrom = null, string? querySentOnTo = null, StringBooleanEnum? queryTagged = null, string? queryTagId = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<TransactionalEmailListElement>> GetTransactionalEmailsListAsync(DateTimeOffset? querySentOnFrom = null, DateTimeOffset? querySentOnTo = null, StringBooleanEnum? queryTagged = null, string? queryTagId = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[sentOn][from]", querySentOnFrom),
-            new("query[sentOn][to]", querySentOnTo),
+            new("query[sentOn][from]", querySentOnFrom?.ToString("O")),
+            new("query[sentOn][to]", querySentOnTo?.ToString("O")),
             new("query[tagged]", (queryTagged is null ? null : EnumWireValues<StringBooleanEnum>.ToWireValue[queryTagged.Value])),
             new("query[tagId]", queryTagId),
             new("fields", fields),
@@ -65,13 +65,13 @@ public sealed class TransactionalEmailsClient
     }
 
     /// <summary>Get the overall statistics of transactional emails</summary>
-    public async Task<IReadOnlyList<TransactionalEmailStatistics>> GetTransactionalEmailsStatisticsAsync(GetTransactionalEmailsStatisticsQueryGroupBy queryGroupBy, string? queryTimeFrameFrom = null, string? queryTimeFrameTo = null, StringBooleanEnum? queryTagged = null, string? queryTagId = null, string? fields = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<TransactionalEmailStatistics>> GetTransactionalEmailsStatisticsAsync(GetTransactionalEmailsStatisticsQueryGroupBy queryGroupBy, DateTimeOffset? queryTimeFrameFrom = null, DateTimeOffset? queryTimeFrameTo = null, StringBooleanEnum? queryTagged = null, string? queryTagId = null, string? fields = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", EnumWireValues<GetTransactionalEmailsStatisticsQueryGroupBy>.ToWireValue[queryGroupBy]),
-            new("query[timeFrame][from]", queryTimeFrameFrom),
-            new("query[timeFrame][to]", queryTimeFrameTo),
+            new("query[timeFrame][from]", queryTimeFrameFrom?.ToString("O")),
+            new("query[timeFrame][to]", queryTimeFrameTo?.ToString("O")),
             new("query[tagged]", (queryTagged is null ? null : EnumWireValues<StringBooleanEnum>.ToWireValue[queryTagged.Value])),
             new("query[tagId]", queryTagId),
             new("fields", fields),
