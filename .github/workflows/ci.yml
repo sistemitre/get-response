@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Install npm deps (needed before regenerating: the TS emitter formats its own output with prettier/eslint)
+      - name: "Install npm deps (needed before regenerating: the TS emitter formats its own output with prettier/eslint)"
         working-directory: get-response-ts
         run: npm ci
 
