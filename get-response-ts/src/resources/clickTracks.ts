@@ -32,9 +32,9 @@ export class ClickTracksResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Search click tracks from messages created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search click tracks from messages created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Sort by message date */
       sortCreatedOn?: M.SortOrderEnum;
     },

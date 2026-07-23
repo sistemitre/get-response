@@ -56,14 +56,14 @@ public sealed class RssNewslettersClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetSingleRssNewsletterStatisticsCollectionAsync(string rssNewsletterId, GetSingleRssNewsletterStatisticsCollectionQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetSingleRssNewsletterStatisticsCollectionAsync(string rssNewsletterId, GetSingleRssNewsletterStatisticsCollectionQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["rssNewsletterId"] = rssNewsletterId };
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetSingleRssNewsletterStatisticsCollectionQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),
@@ -73,14 +73,14 @@ public sealed class RssNewslettersClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<RssNewsletterListItem>> GetRssNewslettersListAsync(string? querySubject = null, GetRssNewslettersListQueryStatus? queryStatus = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? queryCampaignId = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<RssNewsletterListItem>> GetRssNewslettersListAsync(string? querySubject = null, GetRssNewslettersListQueryStatus? queryStatus = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? queryCampaignId = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[subject]", querySubject),
             new("query[status]", (queryStatus is null ? null : EnumWireValues<GetRssNewslettersListQueryStatus>.ToWireValue[queryStatus.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("query[campaignId]", queryCampaignId),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("fields", fields),
@@ -99,15 +99,15 @@ public sealed class RssNewslettersClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetRssNewsletterStatisticsCollectionAsync(GetRssNewsletterStatisticsCollectionQueryGroupBy? queryGroupBy = null, string? queryRssNewsletterId = null, string? queryCampaignId = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetRssNewsletterStatisticsCollectionAsync(GetRssNewsletterStatisticsCollectionQueryGroupBy? queryGroupBy = null, string? queryRssNewsletterId = null, string? queryCampaignId = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetRssNewsletterStatisticsCollectionQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
             new("query[rssNewsletterId]", queryRssNewsletterId),
             new("query[campaignId]", queryCampaignId),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),

@@ -41,7 +41,7 @@ public sealed class LegacyLandingPagesClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<BaseLandingPage>> GetLandingPageListAsync(string? queryDomain = null, StatusEnum? queryStatus = null, string? querySubdomain = null, string? queryMetaTitle = null, string? queryUserDomain = null, string? queryCampaignId = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortDomain = null, SortOrderEnum? sortCampaignId = null, SortOrderEnum? sortMetaTitle = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<BaseLandingPage>> GetLandingPageListAsync(string? queryDomain = null, StatusEnum? queryStatus = null, string? querySubdomain = null, string? queryMetaTitle = null, string? queryUserDomain = null, string? queryCampaignId = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortDomain = null, SortOrderEnum? sortCampaignId = null, SortOrderEnum? sortMetaTitle = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
@@ -51,8 +51,8 @@ public sealed class LegacyLandingPagesClient
             new("query[metaTitle]", queryMetaTitle),
             new("query[userDomain]", queryUserDomain),
             new("query[campaignId]", queryCampaignId),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("sort[domain]", (sortDomain is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortDomain.Value])),
             new("sort[campaignId]", (sortCampaignId is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCampaignId.Value])),

@@ -53,13 +53,13 @@ public sealed class FormsClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<Form>> GetFormListAsync(string? queryName = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? queryCampaignId = null, GetFormListQueryStatus? queryStatus = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortName = null, SortOrderEnum? sortVisitors = null, SortOrderEnum? sortUniqueVisitors = null, SortOrderEnum? sortSubscribed = null, SortOrderEnum? sortSubscriptionRate = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<Form>> GetFormListAsync(string? queryName = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? queryCampaignId = null, GetFormListQueryStatus? queryStatus = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortName = null, SortOrderEnum? sortVisitors = null, SortOrderEnum? sortUniqueVisitors = null, SortOrderEnum? sortSubscribed = null, SortOrderEnum? sortSubscriptionRate = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[name]", queryName),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("query[campaignId]", queryCampaignId),
             new("query[status]", (queryStatus is null ? null : EnumWireValues<GetFormListQueryStatus>.ToWireValue[queryStatus.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),

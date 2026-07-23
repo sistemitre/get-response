@@ -189,13 +189,25 @@ class _Builder:
             ref_name = schema["$ref"].split("/")[-1]
             return self._resolve_named_ref(ref_name)
         if "oneOf" in schema or "anyOf" in schema:
-            return TypeRef(kind="object")
+            return self._resolve_union(schema.get("oneOf") or schema["anyOf"], ctx_name)
         if "enum" in schema:
             name = self._register_enum(
                 ctx_name, schema["enum"], _normalize_doc(schema.get("description"))
             )
             return TypeRef(kind="enum", model=name)
         return self._resolve_scalar_or_array(schema, ctx_name)
+
+    def _resolve_union(self, branches: list[dict[str, Any]], ctx_name: str) -> TypeRef:
+        """Resolve a `oneOf`/`anyOf` list of branches."""
+        resolved = []
+        for b in branches:
+            if not isinstance(b, dict) or ("$ref" in b or "enum" in b or "oneOf" in b or "anyOf" in b):
+                return TypeRef(kind="object")
+            resolved.append(self._resolve_scalar_or_array(b, ctx_name))
+        kinds = {r.kind for r in resolved}
+        if len(kinds) == 1 and resolved[0].kind not in ("object", "any"):
+            return resolved[0]
+        return TypeRef(kind="object")
 
     def _resolve_named_ref(self, ref_name: str) -> TypeRef:
         """Resolve a `$ref` to a component schema, using pre-registered models/enums."""
@@ -205,7 +217,7 @@ class _Builder:
             return TypeRef(kind="enum", model=ref_name)
         target = self.schemas[ref_name]
         if "oneOf" in target or "anyOf" in target:
-            return TypeRef(kind="object")
+            return self._resolve_union(target.get("oneOf") or target["anyOf"], ref_name)
         # A named schema that isn't a registered model/enum: a bare scalar or array
         # alias (e.g. a component schema that is just `{"type": "string"}`), or a
         # free-form object. Resolve it structurally without registering a model.

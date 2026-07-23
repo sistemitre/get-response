@@ -68,7 +68,7 @@ public sealed record NewContact
 
     /// <summary>The contact's IP address. IPv4 and IPv6 formats are accepted.</summary>
     [JsonPropertyName("ipAddress")]
-    public JsonElement? IpAddress { get; init; }
+    public string? IpAddress { get; init; }
 
     /// <summary>The tags value.</summary>
     [JsonPropertyName("tags")]

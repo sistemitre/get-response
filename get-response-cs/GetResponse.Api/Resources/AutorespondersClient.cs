@@ -56,14 +56,14 @@ public sealed class AutorespondersClient
     }
 
     /// <summary>&gt; This requst returns the statistics summary for a single given autoresponder. As in all statistics, you can change the date and time range (hourly daily monthly or total). Keep in mind that all statistics date ranges are given in standard UTC period type objects. ([See ISO 8601 standard](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals)) (https://app.getresponse.com/statistics.html?t=followup#total). You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetSingleAutoresponderStatisticsAsync(string autoresponderId, GetSingleAutoresponderStatisticsQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetSingleAutoresponderStatisticsAsync(string autoresponderId, GetSingleAutoresponderStatisticsQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["autoresponderId"] = autoresponderId };
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetSingleAutoresponderStatisticsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),
@@ -84,15 +84,15 @@ public sealed class AutorespondersClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<JsonElement>> GetAutoresponderListAsync(string? querySubject = null, string? queryName = null, GetAutoresponderListQueryStatus? queryStatus = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? queryCampaignId = null, SortOrderEnum? sortName = null, SortOrderEnum? sortSubject = null, SortOrderEnum? sortDayOfCycle = null, SortOrderEnum? sortDelivered = null, SortOrderEnum? sortOpenRate = null, SortOrderEnum? sortClickRate = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<JsonElement>> GetAutoresponderListAsync(string? querySubject = null, string? queryName = null, GetAutoresponderListQueryStatus? queryStatus = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? queryCampaignId = null, SortOrderEnum? sortName = null, SortOrderEnum? sortSubject = null, SortOrderEnum? sortDayOfCycle = null, SortOrderEnum? sortDelivered = null, SortOrderEnum? sortOpenRate = null, SortOrderEnum? sortClickRate = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[subject]", querySubject),
             new("query[name]", queryName),
             new("query[status]", (queryStatus is null ? null : EnumWireValues<GetAutoresponderListQueryStatus>.ToWireValue[queryStatus.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("query[campaignId]", queryCampaignId),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[subject]", (sortSubject is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortSubject.Value])),
@@ -117,15 +117,15 @@ public sealed class AutorespondersClient
     }
 
     /// <summary>&gt; This returns the statistics summary for selected autoresponders. You can select them by specifying the autoresponder or campaign IDs. As in all statistics, you can change the date and time range (hourly daily monthly or total). Keep in mind that all statistics date ranges are given in standard UTC period type objects. ([See ISO 8601 standard](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals)) (https://app.getresponse.com/statistics.html?t=followup#total). You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetAutoresponderStatisticsCollectionAsync(GetAutoresponderStatisticsCollectionQueryGroupBy? queryGroupBy = null, string? queryAutoreponderId = null, string? queryCampaignId = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetAutoresponderStatisticsCollectionAsync(GetAutoresponderStatisticsCollectionQueryGroupBy? queryGroupBy = null, string? queryAutoreponderId = null, string? queryCampaignId = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetAutoresponderStatisticsCollectionQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
             new("query[autoreponderId]", queryAutoreponderId),
             new("query[campaignId]", queryCampaignId),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),

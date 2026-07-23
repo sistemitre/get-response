@@ -63,9 +63,9 @@ export class NewslettersResource {
       /** Search newsletter activities by activity type */
       queryActivity?: M.GetNewsletterActivitiesQueryActivity;
       /** Search newsletter activities from this date. Default value is 14 days earlier. You can get activities for last 30 days only. */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search newsletter activities to this date. Default value is now */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Sort by date */
       sortCreatedOn?: M.SortOrderEnum;
     },
@@ -103,9 +103,9 @@ export class NewslettersResource {
       /** Search newsletters by campaign ID */
       queryCampaignId?: string;
       /** Search newsletters created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search newsletters created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search newsletters by name */
       queryName?: string;
       /** Search for newsletters sent from this date */
@@ -160,9 +160,9 @@ export class NewslettersResource {
       /** The list of campaign resource IDs (string separated with '') */
       queryCampaignId?: string;
       /** Count data from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Count data to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Group results by time interval */
       queryGroupBy?: M.GetNewsletterStatisticsCollectionQueryGroupBy;
       /** The list of newsletter resource IDs (string separated with '') */
@@ -214,9 +214,9 @@ export class NewslettersResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Count data from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Count data to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Group results by time interval */
       queryGroupBy?: M.GetSingleNewsletterStatisticsQueryGroupBy;
     },

@@ -48,14 +48,14 @@ public sealed class NewslettersClient
     }
 
     /// <summary>**DEPRECATED**: This method is deprecated and scheduled for removal. To synchronise newsletter activities please use [custom reports](https://apireference.getresponse.com/#operation/createCustomReport) with type `message_activity_reports`. This is the preferred approach due to better performance. By default, activities from the **last 14 days** are listed only. You can get activities for last 30 days only. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<NewsletterActivity>> GetNewsletterActivitiesAsync(string newsletterId, GetNewsletterActivitiesQueryActivity? queryActivity = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<NewsletterActivity>> GetNewsletterActivitiesAsync(string newsletterId, GetNewsletterActivitiesQueryActivity? queryActivity = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["newsletterId"] = newsletterId };
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[activity]", (queryActivity is null ? null : EnumWireValues<GetNewsletterActivitiesQueryActivity>.ToWireValue[queryActivity.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),
@@ -73,14 +73,14 @@ public sealed class NewslettersClient
     }
 
     /// <summary>&gt; This makes it possible to easily fetch statistics for a single newsletter. You can group the data hourly, daily, monthly and as a total sum. Remember that all statistics date ranges are given in standard UTC period type objects. ([See ISO 8601 standard](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals)). You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetSingleNewsletterStatisticsAsync(string newsletterId, GetSingleNewsletterStatisticsQueryGroupBy? queryGroupBy = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetSingleNewsletterStatisticsAsync(string newsletterId, GetSingleNewsletterStatisticsQueryGroupBy? queryGroupBy = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["newsletterId"] = newsletterId };
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetSingleNewsletterStatisticsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),
@@ -101,15 +101,15 @@ public sealed class NewslettersClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<NewsletterListElement>> GetNewsletterListAsync(string? querySubject = null, string? queryName = null, GetNewsletterListQueryStatus? queryStatus = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, DateTimeOffset? querySendOnFrom = null, DateTimeOffset? querySendOnTo = null, GetNewsletterListQueryType? queryType = null, string? queryCampaignId = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortSendOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<NewsletterListElement>> GetNewsletterListAsync(string? querySubject = null, string? queryName = null, GetNewsletterListQueryStatus? queryStatus = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, DateTimeOffset? querySendOnFrom = null, DateTimeOffset? querySendOnTo = null, GetNewsletterListQueryType? queryType = null, string? queryCampaignId = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortSendOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[subject]", querySubject),
             new("query[name]", queryName),
             new("query[status]", (queryStatus is null ? null : EnumWireValues<GetNewsletterListQueryStatus>.ToWireValue[queryStatus.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("query[sendOn][from]", querySendOnFrom?.ToString("O")),
             new("query[sendOn][to]", querySendOnTo?.ToString("O")),
             new("query[type]", (queryType is null ? null : EnumWireValues<GetNewsletterListQueryType>.ToWireValue[queryType.Value])),
@@ -139,15 +139,15 @@ public sealed class NewslettersClient
     }
 
     /// <summary>&gt;This makes it possible to fetch newsletter statistics based on the list of campaign or newsletter IDs (you can pass them in the query parameter - see the description below). Remember that all the statistics date ranges are returned in standard UTC period type objects. ([See ISO 8601 standard](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals)). You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetNewsletterStatisticsCollectionAsync(GetNewsletterStatisticsCollectionQueryGroupBy? queryGroupBy = null, string? queryNewsletterId = null, string? queryCampaignId = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<MessageStatisticsListElement>> GetNewsletterStatisticsCollectionAsync(GetNewsletterStatisticsCollectionQueryGroupBy? queryGroupBy = null, string? queryNewsletterId = null, string? queryCampaignId = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetNewsletterStatisticsCollectionQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
             new("query[newsletterId]", queryNewsletterId),
             new("query[campaignId]", queryCampaignId),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),

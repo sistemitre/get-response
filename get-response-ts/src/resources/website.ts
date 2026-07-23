@@ -13,9 +13,9 @@ export class WebsiteResource {
       /** List of fields that should be returned. Id is always returned. Fields should be separated by comma */
       fields?: string;
       /** Show a single website statistics from this date */
-      queryDateFrom?: Record<string, unknown>;
+      queryDateFrom?: string;
       /** Show a single website statistics to this date */
-      queryDateTo?: Record<string, unknown>;
+      queryDateTo?: string;
       /** Website statistics by device */
       queryDevice?: M.GetWbeGeneralPerformanceStatsQueryDevice;
       /** Website statistics by location */

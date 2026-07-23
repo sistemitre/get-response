@@ -80,15 +80,15 @@ public sealed class SearchContactsClient
     }
 
     /// <summary>Makes it possible to retrieve a collection of short representations of search-contact (known as custom filters in the panel). Every item represents a basic filter object. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<BaseSearchContactsDetails>> GetSearchContactsListAsync(SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, string? queryName = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<BaseSearchContactsDetails>> GetSearchContactsListAsync(SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, string? queryName = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("query[name]", queryName),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),

@@ -29,13 +29,13 @@ public sealed class ContactsClient
     }
 
     /// <summary>By default, only activities from the last 14 days are returned. To get earlier data, use `query[createdOn]` parameter. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<ContactActivity>> GetActivitiesAsync(string contactId, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<ContactActivity>> GetActivitiesAsync(string contactId, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["contactId"] = contactId };
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),
@@ -45,15 +45,15 @@ public sealed class ContactsClient
     }
 
     /// <summary>Provides all contacts from a single campaign. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<ContactListElement>> GetContactsFromCampaignAsync(string campaignId, string? queryEmail = null, string? queryName = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, SortOrderEnum? sortEmail = null, SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<ContactListElement>> GetContactsFromCampaignAsync(string campaignId, string? queryEmail = null, string? queryName = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, SortOrderEnum? sortEmail = null, SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["campaignId"] = campaignId };
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[email]", queryEmail),
             new("query[name]", queryName),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("sort[email]", (sortEmail is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortEmail.Value])),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
@@ -114,7 +114,7 @@ public sealed class ContactsClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<ContactListElement>> GetContactListAsync(string? queryEmail = null, string? queryName = null, string? queryCampaignId = null, GetContactListQueryOrigin? queryOrigin = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, string? queryChangedOnFrom = null, string? queryChangedOnTo = null, SortOrderEnum? sortEmail = null, SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortChangedOn = null, SortOrderEnum? sortCampaignId = null, string? additionalFlags = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<ContactListElement>> GetContactListAsync(string? queryEmail = null, string? queryName = null, string? queryCampaignId = null, GetContactListQueryOrigin? queryOrigin = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, DateTimeOffset? queryChangedOnFrom = null, DateTimeOffset? queryChangedOnTo = null, SortOrderEnum? sortEmail = null, SortOrderEnum? sortName = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortChangedOn = null, SortOrderEnum? sortCampaignId = null, string? additionalFlags = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
@@ -122,10 +122,10 @@ public sealed class ContactsClient
             new("query[name]", queryName),
             new("query[campaignId]", queryCampaignId),
             new("query[origin]", (queryOrigin is null ? null : EnumWireValues<GetContactListQueryOrigin>.ToWireValue[queryOrigin.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
-            new("query[changedOn][from]", queryChangedOnFrom),
-            new("query[changedOn][to]", queryChangedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[changedOn][from]", queryChangedOnFrom?.ToString("O")),
+            new("query[changedOn][to]", queryChangedOnTo?.ToString("O")),
             new("sort[email]", (sortEmail is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortEmail.Value])),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),

@@ -29,7 +29,7 @@ public sealed class MetaFieldsClient
     }
 
     /// <summary>Sending a **GET** request to this URL returns a collection of meta field resources that belong to the given shop. You can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by: * name * value * description * createdOn You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<MetaField>> GetMetaFieldsAsync(string shopId, string? queryName = null, string? queryDescription = null, string? queryValue = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<MetaField>> GetMetaFieldsAsync(string shopId, string? queryName = null, string? queryDescription = null, string? queryValue = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var pathParams = new Dictionary<string, string?> { ["shopId"] = shopId };
         var query = new List<KeyValuePair<string, string?>>
@@ -37,8 +37,8 @@ public sealed class MetaFieldsClient
             new("query[name]", queryName),
             new("query[description]", queryDescription),
             new("query[value]", queryValue),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),

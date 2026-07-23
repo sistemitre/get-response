@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
 
 from .._core import _Core
 from ..models import (
@@ -35,8 +35,8 @@ class FormsResource:
         self,
         *,
         query_name: str | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         query_campaign_id: str | None = None,
         query_status: GetFormListQueryStatus | None = None,
         sort_created_on: SortOrderEnum | None = None,

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 from .._core import _Core
@@ -65,8 +66,8 @@ class AutorespondersResource:
         query_subject: str | None = None,
         query_name: str | None = None,
         query_status: GetAutoresponderListQueryStatus | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         query_campaign_id: str | None = None,
         sort_name: SortOrderEnum | None = None,
         sort_subject: SortOrderEnum | None = None,
@@ -112,8 +113,8 @@ class AutorespondersResource:
         query_group_by: GetAutoresponderStatisticsCollectionQueryGroupBy | None = None,
         query_autoreponder_id: str | None = None,
         query_campaign_id: str | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         fields: str | None = None,
         per_page: int | None = None,
         page: int | None = None,
@@ -155,8 +156,8 @@ class AutorespondersResource:
         autoresponder_id: str,
         *,
         query_group_by: GetSingleAutoresponderStatisticsQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         fields: str | None = None,
         per_page: int | None = None,
         page: int | None = None,

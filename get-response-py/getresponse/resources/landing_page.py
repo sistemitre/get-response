@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
 
 from .._core import _Core
 from ..models import (
@@ -21,8 +21,8 @@ class LandingPageResource:
         self,
         lps_id: str,
         *,
-        query_date_from: dict[str, Any] | None = None,
-        query_date_to: dict[str, Any] | None = None,
+        query_date_from: datetime | None = None,
+        query_date_to: datetime | None = None,
         query_location: str | None = None,
         query_device: GetLpsGeneralPerformanceStatsQueryDevice | None = None,
         query_page: str | None = None,

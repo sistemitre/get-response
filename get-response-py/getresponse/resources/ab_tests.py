@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
 
 from .._core import _Core
 from ..models import (
@@ -35,8 +35,8 @@ class AbTestsResource:
         query_name: str | None = None,
         query_type: str | None = None,
         query_status: GetSplittestListQueryStatus | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         sort_name: SortOrderEnum | None = None,
         sort_created_on: SortOrderEnum | None = None,
         fields: str | None = None,

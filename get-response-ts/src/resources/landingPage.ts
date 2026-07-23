@@ -13,9 +13,9 @@ export class LandingPageResource {
       /** List of fields that should be returned. Id is always returned. Fields should be separated by comma */
       fields?: string;
       /** Show a single landing page statistics from this date */
-      queryDateFrom?: Record<string, unknown>;
+      queryDateFrom?: string;
       /** Show a single landing page statistics to this date */
-      queryDateTo?: Record<string, unknown>;
+      queryDateTo?: string;
       /** Landing page statistics by device */
       queryDevice?: M.GetLpsGeneralPerformanceStatsQueryDevice;
       /** Landing page statistics by location */

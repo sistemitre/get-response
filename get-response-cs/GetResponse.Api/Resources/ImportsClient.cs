@@ -41,13 +41,13 @@ public sealed class ImportsClient
     }
 
     /// <summary>You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.</summary>
-    public async Task<IReadOnlyList<Import>> GetImportListAsync(string? queryCampaignId = null, string? queryCreatedOnFrom = null, string? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortFinishedOn = null, SortOrderEnum? sortCampaignName = null, SortOrderEnum? sortUploadedContacts = null, SortOrderEnum? sortUpdatedContacts = null, SortOrderEnum? sortAddedContacts = null, SortOrderEnum? sortInvalidContacts = null, SortOrderEnum? sortStatus = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
+    public async Task<IReadOnlyList<Import>> GetImportListAsync(string? queryCampaignId = null, DateTimeOffset? queryCreatedOnFrom = null, DateTimeOffset? queryCreatedOnTo = null, SortOrderEnum? sortCreatedOn = null, SortOrderEnum? sortFinishedOn = null, SortOrderEnum? sortCampaignName = null, SortOrderEnum? sortUploadedContacts = null, SortOrderEnum? sortUpdatedContacts = null, SortOrderEnum? sortAddedContacts = null, SortOrderEnum? sortInvalidContacts = null, SortOrderEnum? sortStatus = null, string? fields = null, int? perPage = null, int? page = null, CancellationToken ct = default)
     {
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[campaignId]", queryCampaignId),
-            new("query[createdOn][from]", queryCreatedOnFrom),
-            new("query[createdOn][to]", queryCreatedOnTo),
+            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
+            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("sort[finishedOn]", (sortFinishedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortFinishedOn.Value])),
             new("sort[campaignName]", (sortCampaignName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCampaignName.Value])),

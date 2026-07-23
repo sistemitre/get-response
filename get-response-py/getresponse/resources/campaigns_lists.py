@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 from .._core import _Core
@@ -99,8 +100,8 @@ class CampaignsListsResource:
         *,
         query_campaign_id: str,
         query_group_by: GetCampaignStatisticsBalanceQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
     ) -> list[dict[str, Any]]:
         "Returns the balance of subscriptions. Dates in the YYYY-MM-DD format are used as keys in the response."
         return await self._core.request(
@@ -122,8 +123,8 @@ class CampaignsListsResource:
         *,
         query_campaign_id: str,
         query_group_by: GetCampaignStatisticsListSizeQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
     ) -> list[CampaignListSizesStatisticsElement]:
         "Returns the number of the total added and removed subscribers, grouped by default or by time period."
         return await self._core.request(
@@ -145,8 +146,8 @@ class CampaignsListsResource:
         *,
         query_campaign_id: str,
         query_group_by: GetCampaignStatisticsLocationsQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
     ) -> list[dict[str, Any]]:
         "The results are indexed with the location name (PL, EN, etc.)."
         return await self._core.request(
@@ -168,8 +169,8 @@ class CampaignsListsResource:
         *,
         query_campaign_id: str,
         query_group_by: GetCampaignStatisticsOriginsQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
     ) -> list[dict[str, Any]]:
         "The results are indexed with the campaign ID."
         return await self._core.request(
@@ -191,8 +192,8 @@ class CampaignsListsResource:
         *,
         query_campaign_id: str,
         query_group_by: GetCampaignStatisticsRemovalsQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
     ) -> list[dict[str, Any]]:
         "Returns the number and reason for removed contacts. Dates in the YYYY-MM-DD format are used as keys in the response."
         return await self._core.request(
@@ -214,8 +215,8 @@ class CampaignsListsResource:
         *,
         query_campaign_id: str,
         query_group_by: GetCampaignStatisticsSubscriptionsQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
     ) -> list[dict[str, Any]]:
         "Returns the number and origin of subscriptions, grouped by a specified campaigns for each day on which any changes were made. Dates in the YYYY-MM-DD format are used as keys in the response."
         return await self._core.request(

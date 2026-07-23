@@ -117,9 +117,9 @@ export class SearchContactsResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Count data from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Count data to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search by name */
       queryName?: string;
       /** Sort by creation date */

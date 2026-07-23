@@ -59,9 +59,9 @@ export class MetaFieldsResource {
       /** Requested number of results per page */
       perPage?: number;
       /** Search meta fields created from this date */
-      queryCreatedOnFrom?: Record<string, unknown>;
+      queryCreatedOnFrom?: string;
       /** Search meta fields created to this date */
-      queryCreatedOnTo?: Record<string, unknown>;
+      queryCreatedOnTo?: string;
       /** Search meta fields by description */
       queryDescription?: string;
       /** Search meta fields by name */

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any
 
 from .._core import _Core
 from ..models import (
@@ -80,8 +79,8 @@ class NewslettersResource:
         newsletter_id: str,
         *,
         query_activity: GetNewsletterActivitiesQueryActivity | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         sort_created_on: SortOrderEnum | None = None,
         per_page: int | None = None,
         page: int | None = None,
@@ -109,8 +108,8 @@ class NewslettersResource:
         query_subject: str | None = None,
         query_name: str | None = None,
         query_status: GetNewsletterListQueryStatus | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         query_send_on_from: datetime | None = None,
         query_send_on_to: datetime | None = None,
         query_type: GetNewsletterListQueryType | None = None,
@@ -152,8 +151,8 @@ class NewslettersResource:
         query_group_by: GetNewsletterStatisticsCollectionQueryGroupBy | None = None,
         query_newsletter_id: str | None = None,
         query_campaign_id: str | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         fields: str | None = None,
         per_page: int | None = None,
         page: int | None = None,
@@ -195,8 +194,8 @@ class NewslettersResource:
         newsletter_id: str,
         *,
         query_group_by: GetSingleNewsletterStatisticsQueryGroupBy | None = None,
-        query_created_on_from: dict[str, Any] | None = None,
-        query_created_on_to: dict[str, Any] | None = None,
+        query_created_on_from: datetime | None = None,
+        query_created_on_to: datetime | None = None,
         fields: str | None = None,
         per_page: int | None = None,
         page: int | None = None,
