@@ -70,19 +70,21 @@ so `dotnet restore`/`build`/`test`/`pack` work regardless of the machine's confi
 
 ## CI & Publishing
 
-Pipeline YAML lives in a sibling repo, `get-response-pipelines`, in the same Azure DevOps
-project — not in this repo — so pipeline definitions can be governed separately from
-source. See that repo's `README.md` for full setup. In short:
+GitHub Actions workflows live in `.github/workflows/` in this repo:
 
-- **CI** (`azure-pipelines-ci.yml`) runs on every push to `main` and on pull requests. It
-  regenerates all three packages and fails if that produces any diff against what's
-  committed here — the guard against someone editing the emitter or the vendored spec and
-  forgetting to regenerate — then lints/builds/tests all three.
-- **Publish** (`azure-pipelines.yml`) triggers only on a version tag (`vX.Y.Z`) pushed to
-  this repo. All three packages share one version, taken from the tag, and publish to
-  their public registries (nuget.org, PyPI, npm). To cut a release:
+- **CI** (`ci.yml`) runs on every push to `main` and on pull requests. It regenerates all
+  three packages and fails if that produces any diff against what's committed here — the
+  guard against someone editing the emitter or the vendored spec and forgetting to
+  regenerate — then lints/builds/tests all three.
+- **Release** (`release.yml`) triggers only on a version tag (`vX.Y.Z`) pushed to this repo.
+  All three packages share one version, taken from the tag, and publish to their public
+  registries (nuget.org, PyPI, npm) using repo secrets `NUGET_API_KEY`, `PYPI_API_TOKEN`,
+  `NPM_TOKEN`. To cut a release:
 
 ```
 git tag v1.2.0
 git push origin v1.2.0
 ```
+
+`main` is protected on GitHub: merges require a pull request with a passing `ci.yml` check,
+enforced for everyone including admins — no direct pushes.

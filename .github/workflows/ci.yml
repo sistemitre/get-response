@@ -1,0 +1,141 @@
+# CI for the get-response monorepo (Python + C# + TypeScript GetResponse clients, generated
+# from codegen/). Runs on every push to main and on pull requests targeting main.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # -----------------------------------------------------------------------------------
+  # Fails the run if regenerating produces any diff against what's committed -- catches
+  # someone editing the emitter or the vendored spec and forgetting to regenerate.
+  verify-generated-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python package (pulls in ruff/mypy/pytest)
+        working-directory: get-response-py
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'ga'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install npm deps (needed before regenerating: the TS emitter formats its own output with prettier/eslint)
+        working-directory: get-response-ts
+        run: npm ci
+
+      - name: Regenerate all three packages
+        run: python -m codegen.generate --python --csharp --typescript
+
+      - name: Fail on drift
+        run: |
+          set -e
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::Regenerating produced a diff -- committed generated code is stale. Run 'python -m codegen.generate --python --csharp --typescript' locally and commit the result."
+            git status --short
+            git --no-pager diff --stat
+            exit 1
+          fi
+          echo "Generated code matches the committed source. No drift."
+
+  # -----------------------------------------------------------------------------------
+  test-python:
+    needs: verify-generated-code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install
+        working-directory: get-response-py
+        run: |
+          set -e
+          python -m pip install --upgrade pip
+          python -m pip install '.[dev]'
+
+      - name: Lint, type-check, test
+        working-directory: get-response-py
+        run: |
+          set -e
+          python -m ruff check getresponse
+          python -m ruff format --check getresponse
+          python -m mypy getresponse
+          python -m pytest tests -q
+
+  # -----------------------------------------------------------------------------------
+  test-csharp:
+    needs: verify-generated-code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'ga'
+
+      - name: Restore
+        working-directory: get-response-cs
+        run: dotnet restore GetResponse.sln
+
+      - name: Build
+        working-directory: get-response-cs
+        run: dotnet build GetResponse.sln -c Release --no-restore
+
+      - name: Verify formatting
+        working-directory: get-response-cs
+        run: dotnet format GetResponse.sln --verify-no-changes
+
+      - name: Test
+        working-directory: get-response-cs
+        run: dotnet test GetResponse.sln -c Release --no-build
+
+  # -----------------------------------------------------------------------------------
+  test-typescript:
+    needs: verify-generated-code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install
+        working-directory: get-response-ts
+        run: npm ci
+
+      - name: Build, lint, test
+        working-directory: get-response-ts
+        run: |
+          set -e
+          npm run build
+          npm run lint
+          npx prettier --check src
+          npm test

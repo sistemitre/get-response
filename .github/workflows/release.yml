@@ -1,0 +1,192 @@
+# Publish pipeline for the three GetResponse API client packages, to their public registries
+# (nuget.org, PyPI, npm). Runs only when a `vX.Y.Z` tag is pushed -- everyday commits don't
+# trigger it (see ci.yml for that). All three packages share one version, taken from the tag,
+# matching the monorepo's "one spec, one generator" philosophy: a release is one coherent
+# snapshot of all three libraries, not three independently versioned ones. See
+# CLAUDE.md / README.md "Versioning" section for the SemVer policy.
+#
+# One-time setup required before this workflow can publish anything:
+#   1. Create an API token for each registry (if you haven't already):
+#        - nuget.org: account -> API Keys -> create, scoped to the GetResponse.Api package ID
+#          once it's been published the first time.
+#        - pypi.org: account -> API tokens -> create, scoped to the `getresponse` project once
+#          it exists.
+#        - npmjs.com: access tokens -> Generate New Token -> Automation (survives 2FA).
+#   2. Add each as a repository (or organization) secret: Settings -> Secrets and variables ->
+#      Actions -> New repository secret: `NUGET_API_KEY`, `PYPI_API_TOKEN`, `NPM_TOKEN`.
+#   3. Verify the three package names are actually available (or already owned by this team)
+#      before the first real run: `getresponse` on PyPI and npm, `GetResponse.Api` on NuGet.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  # -----------------------------------------------------------------------------------
+  publish-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Resolve release version from tag
+        id: version
+        run: |
+          set -e
+          TAG=$(git tag --points-at HEAD | grep -E '^v[0-9]' | head -1)
+          if [ -z "$TAG" ]; then
+            echo "::error::HEAD is not exactly on a vX.Y.Z tag -- refusing to publish."
+            exit 1
+          fi
+          VERSION="${TAG#v}"
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Releasing version $VERSION (tag $TAG)"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set version from tag
+        working-directory: get-response-py
+        run: sed -i "s/^version = .*/version = \"${{ steps.version.outputs.value }}\"/" pyproject.toml
+
+      - name: Install
+        working-directory: get-response-py
+        run: |
+          set -e
+          python -m pip install --upgrade pip
+          python -m pip install '.[dev]'
+
+      - name: Lint, type-check, test
+        working-directory: get-response-py
+        run: |
+          set -e
+          python -m ruff check getresponse
+          python -m ruff format --check getresponse
+          python -m mypy getresponse
+          python -m pytest tests -q
+
+      - name: Build sdist/wheel
+        working-directory: get-response-py
+        run: |
+          set -e
+          python -m pip install build twine
+          python -m build
+
+      - name: Publish to PyPI
+        working-directory: get-response-py
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: python -m twine upload dist/*
+
+  # -----------------------------------------------------------------------------------
+  publish-csharp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Resolve release version from tag
+        id: version
+        run: |
+          set -e
+          TAG=$(git tag --points-at HEAD | grep -E '^v[0-9]' | head -1)
+          if [ -z "$TAG" ]; then
+            echo "::error::HEAD is not exactly on a vX.Y.Z tag -- refusing to publish."
+            exit 1
+          fi
+          VERSION="${TAG#v}"
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Releasing version $VERSION (tag $TAG)"
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'ga'
+
+      - name: Restore
+        working-directory: get-response-cs
+        run: dotnet restore GetResponse.sln
+
+      - name: Build
+        working-directory: get-response-cs
+        run: dotnet build GetResponse.sln -c Release --no-restore
+
+      - name: Verify formatting
+        working-directory: get-response-cs
+        run: dotnet format GetResponse.sln --verify-no-changes
+
+      - name: Test
+        working-directory: get-response-cs
+        run: dotnet test GetResponse.sln -c Release --no-build
+
+      - name: Pack
+        working-directory: get-response-cs
+        run: |
+          set -e
+          dotnet pack GetResponse.Api/GetResponse.Api.csproj -c Release \
+            -p:Version=${{ steps.version.outputs.value }} -o "${{ runner.temp }}/nuget"
+
+      - name: Publish to nuget.org
+        run: |
+          set -e
+          dotnet nuget push "${{ runner.temp }}/nuget/*.nupkg" \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
+
+  # -----------------------------------------------------------------------------------
+  publish-typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Resolve release version from tag
+        id: version
+        run: |
+          set -e
+          TAG=$(git tag --points-at HEAD | grep -E '^v[0-9]' | head -1)
+          if [ -z "$TAG" ]; then
+            echo "::error::HEAD is not exactly on a vX.Y.Z tag -- refusing to publish."
+            exit 1
+          fi
+          VERSION="${TAG#v}"
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Releasing version $VERSION (tag $TAG)"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Set version from tag
+        working-directory: get-response-ts
+        run: npm version "${{ steps.version.outputs.value }}" --no-git-tag-version --allow-same-version
+
+      - name: Install
+        working-directory: get-response-ts
+        run: npm ci
+
+      - name: Build, lint, test
+        working-directory: get-response-ts
+        run: |
+          set -e
+          npm run build
+          npm run lint
+          npx prettier --check src
+          npm test
+
+      - name: Publish to npm
+        working-directory: get-response-ts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish

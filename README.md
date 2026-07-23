@@ -78,11 +78,10 @@ under the three package directories gets overwritten on the next regenerate.
 
 ## CI/CD
 
-Pipeline definitions live in a sibling repo, `get-response-pipelines`, in the same Azure
-DevOps project — not here — so pipeline governance stays separate from source. It runs CI
-(build/lint/test + a check that regenerating produces no drift) on every push and PR, and
-publishes all three packages to their public registries (nuget.org, PyPI, npm) when a
-`vX.Y.Z` tag is pushed here. See that repo's README for setup details.
+GitHub Actions workflows live in [`.github/workflows/`](.github/workflows/): `ci.yml` runs on
+every push and PR to `main` (build/lint/test + a check that regenerating produces no drift),
+and `release.yml` publishes all three packages to their public registries (nuget.org, PyPI,
+npm) when a `vX.Y.Z` tag is pushed. `main` is protected — merges require `ci.yml` to pass.
 
 ## License
 
