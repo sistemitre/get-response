@@ -1305,7 +1305,7 @@ def _write_once(path: Path, content: str) -> None:
     """
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content, encoding="utf-8")
+        path.write_text(content, encoding="utf-8", newline="\n")
 
 
 def _run_formatters(root: Path) -> None:
@@ -1353,7 +1353,7 @@ def emit(api: Api, out_dir: str = "get-response-ts") -> None:
     resources_dir.mkdir(parents=True, exist_ok=True)
     test_dir.mkdir(parents=True, exist_ok=True)
 
-    (src / "models.ts").write_text(_render_models_ts(api), encoding="utf-8")
+    (src / "models.ts").write_text(_render_models_ts(api), encoding="utf-8", newline="\n")
 
     tags = sorted({op.tag for op in api.operations})
     by_tag: dict[str, list[Operation]] = {tag: [] for tag in tags}
@@ -1362,11 +1362,15 @@ def emit(api: Api, out_dir: str = "get-response-ts") -> None:
 
     for tag in tags:
         (resources_dir / f"{_tag_camel(tag)}.ts").write_text(
-            _render_resource_file(tag, by_tag[tag]), encoding="utf-8"
+            _render_resource_file(tag, by_tag[tag]), encoding="utf-8", newline="\n"
         )
-    (resources_dir / "index.ts").write_text(_render_resources_index(tags), encoding="utf-8")
+    (resources_dir / "index.ts").write_text(
+        _render_resources_index(tags), encoding="utf-8", newline="\n"
+    )
 
-    (src / "resourceGroups.ts").write_text(_render_resource_groups_ts(tags), encoding="utf-8")
+    (src / "resourceGroups.ts").write_text(
+        _render_resource_groups_ts(tags), encoding="utf-8", newline="\n"
+    )
 
     # Scaffold-once: written only on first generate, then hand-maintained forever.
     _write_once(root / "package.json", _PACKAGE_JSON)

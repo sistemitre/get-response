@@ -1420,7 +1420,7 @@ def _write_once(path: Path, content: str) -> None:
     then left alone on every later regeneration so hand edits survive.
     """
     if not path.exists():
-        path.write_text(content, encoding="utf-8")
+        path.write_text(content, encoding="utf-8", newline="\n")
 
 
 def emit(api: Api, out_dir: str = "get-response-py") -> None:
@@ -1450,19 +1450,23 @@ def emit(api: Api, out_dir: str = "get-response-py") -> None:
     _write_once(pkg / "_ratelimit.py", _RATELIMIT_PY)
     _write_once(pkg / "_core.py", _CORE_PY)
 
-    (pkg / "models.py").write_text(_render_models_py(api), encoding="utf-8")
+    (pkg / "models.py").write_text(_render_models_py(api), encoding="utf-8", newline="\n")
 
     tags = sorted({op.tag for op in api.operations})
     by_tag: dict[str, list[Operation]] = {tag: [] for tag in tags}
     for op in api.operations:
         by_tag[op.tag].append(op)
 
-    (resources_dir / "__init__.py").write_text(_render_resources_init(tags), encoding="utf-8")
+    (resources_dir / "__init__.py").write_text(
+        _render_resources_init(tags), encoding="utf-8", newline="\n"
+    )
     for tag in tags:
         module = _render_resource_module(tag, by_tag[tag])
-        (resources_dir / f"{_tag_snake(tag)}.py").write_text(module, encoding="utf-8")
+        (resources_dir / f"{_tag_snake(tag)}.py").write_text(module, encoding="utf-8", newline="\n")
 
-    (pkg / "_resource_groups.py").write_text(_render_resource_groups_py(tags), encoding="utf-8")
+    (pkg / "_resource_groups.py").write_text(
+        _render_resource_groups_py(tags), encoding="utf-8", newline="\n"
+    )
 
     _write_once(pkg / "client.py", _CLIENT_PY)
 
