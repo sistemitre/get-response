@@ -58,8 +58,8 @@ public sealed class FormsClient
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[name]", queryName),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
             new("query[campaignId]", queryCampaignId),
             new("query[status]", (queryStatus is null ? null : EnumWireValues<GetFormListQueryStatus>.ToWireValue[queryStatus.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),

@@ -47,8 +47,8 @@ public sealed class LandingPagesClient
         {
             new("query[name]", queryName),
             new("query[status]", (queryStatus is null ? null : EnumWireValues<GetLpsListQueryStatus>.ToWireValue[queryStatus.Value])),
-            new("stats[from]", statsFrom?.ToString("O")),
-            new("stats[to]", statsTo?.ToString("O")),
+            new("stats[from]", (statsFrom.HasValue ? ApiHttp.FormatQueryDate(statsFrom.Value) : null)),
+            new("stats[to]", (statsTo.HasValue ? ApiHttp.FormatQueryDate(statsTo.Value) : null)),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[createdAt]", (sortCreatedAt is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedAt.Value])),
             new("sort[updatedAt]", (sortUpdatedAt is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortUpdatedAt.Value])),

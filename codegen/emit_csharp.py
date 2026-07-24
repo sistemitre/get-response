@@ -285,7 +285,9 @@ def _query_value_expr(p: Param) -> str:
             return f'({name} ? "true" : "false")'
         return f'({name} is null ? null : ({name}.Value ? "true" : "false"))'
     if kind == "datetime":
-        return f'{name}.ToString("O")' if p.required else f'{name}?.ToString("O")'
+        if p.required:
+            return f"ApiHttp.FormatQueryDate({name})"
+        return f"({name}.HasValue ? ApiHttp.FormatQueryDate({name}.Value) : null)"
     if kind == "enum":
         enum_name = _type_name(p.type.model)  # type: ignore[arg-type]
         if p.required:
@@ -943,6 +945,15 @@ public sealed class ApiHttp
         }
         return request;
     }
+
+    /// <summary>
+    /// Formats a <see cref="DateTimeOffset"/> for a GetResponse query-string filter (e.g.
+    /// <c>query[createdOn][from]</c>): <c>yyyy-MM-ddTHH:mm:ss</c> plus the UTC offset without a
+    /// colon (<c>+0000</c>, not the round-trip <c>"O"</c> format's <c>+00:00</c> with 7-digit
+    /// sub-second precision) -- GetResponse expects PHP's <c>Y-m-d\\TH:i:sO</c> date format.
+    /// </summary>
+    public static string FormatQueryDate(DateTimeOffset value) =>
+        value.ToString("yyyy-MM-ddTHH:mm:ss") + value.ToString("zzz").Replace(":", "");
 
     private Uri BuildUri(
         string pathTemplate,

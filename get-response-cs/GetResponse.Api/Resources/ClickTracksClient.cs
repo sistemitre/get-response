@@ -45,8 +45,8 @@ public sealed class ClickTracksClient
     {
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),

@@ -46,8 +46,8 @@ public sealed class LegacyFormsClient
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[name]", queryName),
-            new("query[modifiedOn][from]", queryModifiedOnFrom?.ToString("O")),
-            new("query[modifiedOn][to]", queryModifiedOnTo?.ToString("O")),
+            new("query[modifiedOn][from]", (queryModifiedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryModifiedOnFrom.Value) : null)),
+            new("query[modifiedOn][to]", (queryModifiedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryModifiedOnTo.Value) : null)),
             new("query[campaignId]", queryCampaignId),
             new("sort[modifiedOn]", (sortModifiedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortModifiedOn.Value])),
             new("fields", fields),

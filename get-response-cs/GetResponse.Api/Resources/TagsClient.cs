@@ -61,8 +61,8 @@ public sealed class TagsClient
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[name]", queryName),
-            new("query[createdAt][from]", queryCreatedAtFrom?.ToString("O")),
-            new("query[createdAt][to]", queryCreatedAtTo?.ToString("O")),
+            new("query[createdAt][from]", (queryCreatedAtFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedAtFrom.Value) : null)),
+            new("query[createdAt][to]", (queryCreatedAtTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedAtTo.Value) : null)),
             new("sort[createdAt]", (sortCreatedAt is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedAt.Value])),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("fields", fields),

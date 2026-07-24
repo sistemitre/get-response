@@ -46,9 +46,9 @@ export class TransactionalEmailsResource {
       page?: number;
       /** Requested number of results per page */
       perPage?: number;
-      /** Search transactional emails sent from this date */
+      /** Search transactional emails sent from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       querySentOnFrom?: string;
-      /** Search transactional emails sent to this date */
+      /** Search transactional emails sent to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       querySentOnTo?: string;
       /** Search transactional emails with a specific tag ID */
       queryTagId?: string;
@@ -84,9 +84,9 @@ export class TransactionalEmailsResource {
       queryTagId?: string;
       /** Search tagged/untagged transactional emails */
       queryTagged?: M.StringBooleanEnum;
-      /** Count data from this date */
+      /** Count data from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryTimeFrameFrom?: string;
-      /** Count data to this date */
+      /** Count data to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryTimeFrameTo?: string;
     },
     signal?: AbortSignal,

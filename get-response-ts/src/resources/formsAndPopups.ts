@@ -51,9 +51,9 @@ export class FormsAndPopupsResource {
       sortUpdatedAt?: M.SortOrderEnum;
       /** Sort by number of views */
       sortViews?: M.SortOrderEnum;
-      /** Show statistics from this date */
+      /** Show statistics from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       statsFrom?: string;
-      /** Show statistics to this date */
+      /** Show statistics to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       statsTo?: string;
     },
     signal?: AbortSignal,

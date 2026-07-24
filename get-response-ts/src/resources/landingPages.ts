@@ -47,9 +47,9 @@ export class LandingPagesResource {
       sortUpdatedAt?: M.SortOrderEnum;
       /** Sort by number of page visits */
       sortVisits?: M.SortOrderEnum;
-      /** Show statistics for landing pages from this date */
+      /** Show statistics for landing pages from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       statsFrom?: string;
-      /** Show statistics for landing pages to this date */
+      /** Show statistics for landing pages to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       statsTo?: string;
     },
     signal?: AbortSignal,

@@ -47,9 +47,9 @@ export class CategoriesResource {
       queryName?: string;
       /** Search categories by their parent */
       queryParentId?: string;
-      /** Show categories starting from this date */
+      /** Show categories starting from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       searchCreatedAtFrom?: string;
-      /** Show categories starting to this date */
+      /** Show categories starting to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       searchCreatedAtTo?: string;
       /** Sort by date */
       sortCreatedAt?: M.SortOrderEnum;

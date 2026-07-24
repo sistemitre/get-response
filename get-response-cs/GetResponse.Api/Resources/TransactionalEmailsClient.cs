@@ -45,8 +45,8 @@ public sealed class TransactionalEmailsClient
     {
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[sentOn][from]", querySentOnFrom?.ToString("O")),
-            new("query[sentOn][to]", querySentOnTo?.ToString("O")),
+            new("query[sentOn][from]", (querySentOnFrom.HasValue ? ApiHttp.FormatQueryDate(querySentOnFrom.Value) : null)),
+            new("query[sentOn][to]", (querySentOnTo.HasValue ? ApiHttp.FormatQueryDate(querySentOnTo.Value) : null)),
             new("query[tagged]", (queryTagged is null ? null : EnumWireValues<StringBooleanEnum>.ToWireValue[queryTagged.Value])),
             new("query[tagId]", queryTagId),
             new("fields", fields),
@@ -70,8 +70,8 @@ public sealed class TransactionalEmailsClient
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", EnumWireValues<GetTransactionalEmailsStatisticsQueryGroupBy>.ToWireValue[queryGroupBy]),
-            new("query[timeFrame][from]", queryTimeFrameFrom?.ToString("O")),
-            new("query[timeFrame][to]", queryTimeFrameTo?.ToString("O")),
+            new("query[timeFrame][from]", (queryTimeFrameFrom.HasValue ? ApiHttp.FormatQueryDate(queryTimeFrameFrom.Value) : null)),
+            new("query[timeFrame][to]", (queryTimeFrameTo.HasValue ? ApiHttp.FormatQueryDate(queryTimeFrameTo.Value) : null)),
             new("query[tagged]", (queryTagged is null ? null : EnumWireValues<StringBooleanEnum>.ToWireValue[queryTagged.Value])),
             new("query[tagId]", queryTagId),
             new("fields", fields),

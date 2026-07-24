@@ -33,9 +33,9 @@ export class FormsResource {
       perPage?: number;
       /** Search forms assigned to this list (campaign). You can pass multiple comma-separated values, eg. `Xd1P,sC7r` */
       queryCampaignId?: string;
-      /** Search forms created from this date */
+      /** Search forms created from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Search forms created to this date */
+      /** Search forms created to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Search forms by name */
       queryName?: string;

@@ -148,7 +148,12 @@ def _encode_query(query: dict[str, Any] | None) -> dict[str, Any] | None:
         if isinstance(value, Enum):
             encoded[key] = value.value
         elif isinstance(value, datetime):
-            encoded[key] = value.isoformat()
+            # GetResponse expects Y-m-d\TH:i:sO (PHP date format): no sub-second precision,
+            # and the UTC offset without a colon (+0000, not +00:00) -- isoformat() produces
+            # neither. strftime's %z already omits the colon and %S excludes microseconds;
+            # a naive datetime (no tzinfo) formats with %z as an empty string, unchanged from
+            # isoformat()'s behavior for that case.
+            encoded[key] = value.strftime("%Y-%m-%dT%H:%M:%S%z")
         elif isinstance(value, bool):
             encoded[key] = "true" if value else "false"
         else:

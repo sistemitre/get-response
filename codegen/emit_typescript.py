@@ -241,7 +241,15 @@ def _render_method_ts(op: Operation) -> str:
     if query_params:
         sig_lines.append("    params?: {")
         for p in sorted(query_params, key=lambda p: (not p.required, p.wire_name)):
-            field_doc = _doc(p.doc)
+            doc_text = p.doc
+            if p.type.kind == "datetime":
+                note = (
+                    "GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. "
+                    "2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second "
+                    "precision (unlike Date.prototype.toISOString())"
+                )
+                doc_text = f"{doc_text} ({note})" if doc_text else note[0].upper() + note[1:]
+            field_doc = _doc(doc_text)
             if field_doc:
                 sig_lines.append(f"      {field_doc}")
             opt = "" if p.required else "?"

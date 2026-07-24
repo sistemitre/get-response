@@ -34,8 +34,8 @@ public sealed class ContactsClient
         var pathParams = new Dictionary<string, string?> { ["contactId"] = contactId };
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),
@@ -52,8 +52,8 @@ public sealed class ContactsClient
         {
             new("query[email]", queryEmail),
             new("query[name]", queryName),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
             new("sort[email]", (sortEmail is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortEmail.Value])),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
@@ -122,10 +122,10 @@ public sealed class ContactsClient
             new("query[name]", queryName),
             new("query[campaignId]", queryCampaignId),
             new("query[origin]", (queryOrigin is null ? null : EnumWireValues<GetContactListQueryOrigin>.ToWireValue[queryOrigin.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
-            new("query[changedOn][from]", queryChangedOnFrom?.ToString("O")),
-            new("query[changedOn][to]", queryChangedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
+            new("query[changedOn][from]", (queryChangedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryChangedOnFrom.Value) : null)),
+            new("query[changedOn][to]", (queryChangedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryChangedOnTo.Value) : null)),
             new("sort[email]", (sortEmail is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortEmail.Value])),
             new("sort[name]", (sortName is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortName.Value])),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),

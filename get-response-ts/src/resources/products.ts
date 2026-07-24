@@ -62,9 +62,9 @@ export class ProductsResource {
       queryCategoryId?: string;
       /** Search products by category name */
       queryCategory?: string;
-      /** Search products created from this date */
+      /** Search products created from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Search products created to this date */
+      /** Search products created to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Search products by external ID */
       queryExternalId?: string;

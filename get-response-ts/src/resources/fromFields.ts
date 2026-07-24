@@ -64,7 +64,7 @@ export class FromFieldsResource {
       queryIsActive?: boolean;
       /** Search only default 'From' address */
       queryIsDefault?: boolean;
-      /** Search 'From' address by name */
+      /** Search 'From' address by name (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryName?: string;
       /** Sort 'From' address by date */
       sortCreatedOn?: M.SortOrderEnum;

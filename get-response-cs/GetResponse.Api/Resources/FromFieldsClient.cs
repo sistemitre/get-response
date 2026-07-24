@@ -64,7 +64,7 @@ public sealed class FromFieldsClient
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[email]", queryEmail),
-            new("query[name]", queryName?.ToString("O")),
+            new("query[name]", (queryName.HasValue ? ApiHttp.FormatQueryDate(queryName.Value) : null)),
             new("query[isDefault]", (queryIsDefault is null ? null : (queryIsDefault.Value ? "true" : "false"))),
             new("query[isActive]", (queryIsActive is null ? null : (queryIsActive.Value ? "true" : "false"))),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),

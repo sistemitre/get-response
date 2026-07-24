@@ -34,8 +34,8 @@ public sealed class SmsClient
         var pathParams = new Dictionary<string, string?> { ["smsId"] = smsId };
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
             new("fields", fields),
         };
         var result = await _http.SendAsync<SmsStats>(HttpMethod.Get, "/statistics/sms/{smsId}", pathParams, query, null, false, ct).ConfigureAwait(false);

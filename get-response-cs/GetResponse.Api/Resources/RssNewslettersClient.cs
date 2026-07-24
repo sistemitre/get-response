@@ -62,8 +62,8 @@ public sealed class RssNewslettersClient
         var query = new List<KeyValuePair<string, string?>>
         {
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetSingleRssNewsletterStatisticsCollectionQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),
@@ -79,8 +79,8 @@ public sealed class RssNewslettersClient
         {
             new("query[subject]", querySubject),
             new("query[status]", (queryStatus is null ? null : EnumWireValues<GetRssNewslettersListQueryStatus>.ToWireValue[queryStatus.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
             new("query[campaignId]", queryCampaignId),
             new("sort[createdOn]", (sortCreatedOn is null ? null : EnumWireValues<SortOrderEnum>.ToWireValue[sortCreatedOn.Value])),
             new("fields", fields),
@@ -106,8 +106,8 @@ public sealed class RssNewslettersClient
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetRssNewsletterStatisticsCollectionQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
             new("query[rssNewsletterId]", queryRssNewsletterId),
             new("query[campaignId]", queryCampaignId),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
             new("fields", fields),
             new("perPage", perPage?.ToString(CultureInfo.InvariantCulture)),
             new("page", page?.ToString(CultureInfo.InvariantCulture)),

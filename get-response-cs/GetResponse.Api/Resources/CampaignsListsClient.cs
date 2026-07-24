@@ -103,8 +103,8 @@ public sealed class CampaignsListsClient
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsOriginsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/origins", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
@@ -117,8 +117,8 @@ public sealed class CampaignsListsClient
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsLocationsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/locations", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
@@ -131,8 +131,8 @@ public sealed class CampaignsListsClient
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsListSizeQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
         };
         var result = await _http.SendAsync<IReadOnlyList<CampaignListSizesStatisticsElement>>(HttpMethod.Get, "/campaigns/statistics/list-size", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
@@ -145,8 +145,8 @@ public sealed class CampaignsListsClient
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsSubscriptionsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/subscriptions", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
@@ -159,8 +159,8 @@ public sealed class CampaignsListsClient
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsRemovalsQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/removals", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
@@ -173,8 +173,8 @@ public sealed class CampaignsListsClient
         {
             new("query[campaignId]", queryCampaignId),
             new("query[groupBy]", (queryGroupBy is null ? null : EnumWireValues<GetCampaignStatisticsBalanceQueryGroupBy>.ToWireValue[queryGroupBy.Value])),
-            new("query[createdOn][from]", queryCreatedOnFrom?.ToString("O")),
-            new("query[createdOn][to]", queryCreatedOnTo?.ToString("O")),
+            new("query[createdOn][from]", (queryCreatedOnFrom.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnFrom.Value) : null)),
+            new("query[createdOn][to]", (queryCreatedOnTo.HasValue ? ApiHttp.FormatQueryDate(queryCreatedOnTo.Value) : null)),
         };
         var result = await _http.SendAsync<IReadOnlyList<JsonElement>>(HttpMethod.Get, "/campaigns/statistics/balance", null, query, null, false, ct).ConfigureAwait(false);
         return result!;
