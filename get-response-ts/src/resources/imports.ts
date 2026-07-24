@@ -41,9 +41,9 @@ export class ImportsResource {
       perPage?: number;
       /** Search imports by campaignId */
       queryCampaignId?: string;
-      /** Search imports created from this date */
+      /** Search imports created from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Search imports created to this date */
+      /** Search imports created to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Sort imports by inserted contact count */
       sortAddedContacts?: M.SortOrderEnum;

@@ -62,9 +62,9 @@ export class NewslettersResource {
       perPage?: number;
       /** Search newsletter activities by activity type */
       queryActivity?: M.GetNewsletterActivitiesQueryActivity;
-      /** Search newsletter activities from this date. Default value is 14 days earlier. You can get activities for last 30 days only. */
+      /** Search newsletter activities from this date. Default value is 14 days earlier. You can get activities for last 30 days only. (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Search newsletter activities to this date. Default value is now */
+      /** Search newsletter activities to this date. Default value is now (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Sort by date */
       sortCreatedOn?: M.SortOrderEnum;
@@ -102,15 +102,15 @@ export class NewslettersResource {
       perPage?: number;
       /** Search newsletters by campaign ID */
       queryCampaignId?: string;
-      /** Search newsletters created from this date */
+      /** Search newsletters created from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Search newsletters created to this date */
+      /** Search newsletters created to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Search newsletters by name */
       queryName?: string;
-      /** Search for newsletters sent from this date */
+      /** Search for newsletters sent from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       querySendOnFrom?: string;
-      /** Search for newsletters sent to this date */
+      /** Search for newsletters sent to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       querySendOnTo?: string;
       /** Search newsletters by status */
       queryStatus?: M.GetNewsletterListQueryStatus;
@@ -159,9 +159,9 @@ export class NewslettersResource {
       perPage?: number;
       /** The list of campaign resource IDs (string separated with '') */
       queryCampaignId?: string;
-      /** Count data from this date */
+      /** Count data from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Count data to this date */
+      /** Count data to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Group results by time interval */
       queryGroupBy?: M.GetNewsletterStatisticsCollectionQueryGroupBy;
@@ -213,9 +213,9 @@ export class NewslettersResource {
       page?: number;
       /** Requested number of results per page */
       perPage?: number;
-      /** Count data from this date */
+      /** Count data from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Count data to this date */
+      /** Count data to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Group results by time interval */
       queryGroupBy?: M.GetSingleNewsletterStatisticsQueryGroupBy;

@@ -12,9 +12,9 @@ export class WebsiteResource {
     params?: {
       /** List of fields that should be returned. Id is always returned. Fields should be separated by comma */
       fields?: string;
-      /** Show a single website statistics from this date */
+      /** Show a single website statistics from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryDateFrom?: string;
-      /** Show a single website statistics to this date */
+      /** Show a single website statistics to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryDateTo?: string;
       /** Website statistics by device */
       queryDevice?: M.GetWbeGeneralPerformanceStatsQueryDevice;

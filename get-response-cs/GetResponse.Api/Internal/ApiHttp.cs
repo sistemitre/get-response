@@ -169,6 +169,15 @@ public sealed class ApiHttp
         return request;
     }
 
+    /// <summary>
+    /// Formats a <see cref="DateTimeOffset"/> for a GetResponse query-string filter (e.g.
+    /// <c>query[createdOn][from]</c>): <c>yyyy-MM-ddTHH:mm:ss</c> plus the UTC offset without a
+    /// colon (<c>+0000</c>, not the round-trip <c>"O"</c> format's <c>+00:00</c> with 7-digit
+    /// sub-second precision) -- GetResponse expects PHP's <c>Y-m-d\TH:i:sO</c> date format.
+    /// </summary>
+    public static string FormatQueryDate(DateTimeOffset value) =>
+        value.ToString("yyyy-MM-ddTHH:mm:ss") + value.ToString("zzz").Replace(":", "");
+
     private Uri BuildUri(
         string pathTemplate,
         IReadOnlyDictionary<string, string?>? pathParams,

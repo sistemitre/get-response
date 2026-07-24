@@ -53,7 +53,9 @@ export class ContactsResource {
       page?: number;
       /** Requested number of results per page */
       perPage?: number;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnFrom?: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnTo?: string;
     },
     signal?: AbortSignal,
@@ -118,13 +120,13 @@ export class ContactsResource {
       perPage?: number;
       /** Search contacts by campaign ID */
       queryCampaignId?: string;
-      /** Return only contacts whose data was changed on or after the given date. Use ISO 8601 format */
+      /** Return only contacts whose data was changed on or after the given date. Use ISO 8601 format (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryChangedOnFrom?: string;
-      /** Return only contacts whose data was changed on or before the given date. Use ISO 8601 format */
+      /** Return only contacts whose data was changed on or before the given date. Use ISO 8601 format (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryChangedOnTo?: string;
-      /** Return only contacts created on or after the given date. Use ISO 8601 format */
+      /** Return only contacts created on or after the given date. Use ISO 8601 format (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Return only contacts created on or before the given date. Use ISO 8601 format */
+      /** Return only contacts created on or before the given date. Use ISO 8601 format (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Search contacts by email */
       queryEmail?: string;
@@ -181,9 +183,9 @@ export class ContactsResource {
       page?: number;
       /** Requested number of results per page */
       perPage?: number;
-      /** Return only contacts created on or after the given date. Use ISO 8601 format */
+      /** Return only contacts created on or after the given date. Use ISO 8601 format (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Return only contacts created on or before the given date. Use ISO 8601 format */
+      /** Return only contacts created on or before the given date. Use ISO 8601 format (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Search contacts by email */
       queryEmail?: string;

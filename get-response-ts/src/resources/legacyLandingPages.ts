@@ -33,9 +33,9 @@ export class LegacyLandingPagesResource {
       perPage?: number;
       /** Search landing pages by ID of the assigned campaign. Campaign ID must be encoded! You can get the campaign list with encoded IDs by calling the `/v3/campaigns` endpoint. You can search by multiple comma separated values eg. `o5lx,34er`. */
       queryCampaignId?: string;
-      /** Show landing pages created from this date */
+      /** Show landing pages created from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Show landing pages created to this date */
+      /** Show landing pages created to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Search landing pages by domain */
       queryDomain?: string;

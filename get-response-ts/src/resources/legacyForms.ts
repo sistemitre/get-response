@@ -33,9 +33,9 @@ export class LegacyFormsResource {
       perPage?: number;
       /** Search Legacy Forms by campaignId. Accepts multiple IDs separated with a comma */
       queryCampaignId?: string;
-      /** Search Legacy Forms modified from this date */
+      /** Search Legacy Forms modified from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryModifiedOnFrom?: string;
-      /** Search Legacy Forms modified to this date */
+      /** Search Legacy Forms modified to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryModifiedOnTo?: string;
       /** Search Legacy Forms by name */
       queryName?: string;

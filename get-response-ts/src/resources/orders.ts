@@ -67,9 +67,9 @@ export class OrdersResource {
       queryDescription?: string;
       /** Search order by external ID */
       queryExternalId?: string;
-      /** Show orders processed from this date */
+      /** Show orders processed from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryProcessedAtFrom?: string;
-      /** Show orders processed to this date */
+      /** Show orders processed to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryProcessedAtTo?: string;
       /** Search order by status */
       queryStatus?: string;

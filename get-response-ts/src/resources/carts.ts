@@ -58,9 +58,9 @@ export class CartsResource {
       page?: number;
       /** Requested number of results per page */
       perPage?: number;
-      /** Search carts created from this date */
+      /** Search carts created from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Search carts created to this date */
+      /** Search carts created to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Search cart by external ID */
       queryExternalId?: string;

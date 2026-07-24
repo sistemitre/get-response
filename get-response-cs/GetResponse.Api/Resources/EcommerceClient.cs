@@ -33,8 +33,8 @@ public sealed class EcommerceClient
     {
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[orderDate][from]", queryOrderDateFrom?.ToString("O")),
-            new("query[orderDate][to]", queryOrderDateTo?.ToString("O")),
+            new("query[orderDate][from]", (queryOrderDateFrom.HasValue ? ApiHttp.FormatQueryDate(queryOrderDateFrom.Value) : null)),
+            new("query[orderDate][to]", (queryOrderDateTo.HasValue ? ApiHttp.FormatQueryDate(queryOrderDateTo.Value) : null)),
             new("query[shopId]", queryShopId),
             new("fields", fields),
         };
@@ -47,8 +47,8 @@ public sealed class EcommerceClient
     {
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[orderDate][from]", queryOrderDateFrom?.ToString("O")),
-            new("query[orderDate][to]", queryOrderDateTo?.ToString("O")),
+            new("query[orderDate][from]", (queryOrderDateFrom.HasValue ? ApiHttp.FormatQueryDate(queryOrderDateFrom.Value) : null)),
+            new("query[orderDate][to]", (queryOrderDateTo.HasValue ? ApiHttp.FormatQueryDate(queryOrderDateTo.Value) : null)),
             new("query[shopId]", queryShopId),
             new("fields", fields),
         };

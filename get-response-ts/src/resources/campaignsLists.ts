@@ -89,7 +89,9 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsBalance = async (
     params?: {
       queryCampaignId: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnFrom?: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsBalanceQueryGroupBy;
     },
@@ -112,7 +114,9 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsListSize = async (
     params?: {
       queryCampaignId: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnFrom?: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsListSizeQueryGroupBy;
     },
@@ -139,7 +143,9 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsLocations = async (
     params?: {
       queryCampaignId: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnFrom?: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsLocationsQueryGroupBy;
     },
@@ -162,7 +168,9 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsOrigins = async (
     params?: {
       queryCampaignId: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnFrom?: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsOriginsQueryGroupBy;
     },
@@ -185,7 +193,9 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsRemovals = async (
     params?: {
       queryCampaignId: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnFrom?: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsRemovalsQueryGroupBy;
     },
@@ -208,7 +218,9 @@ export class CampaignsListsResource {
   readonly getCampaignStatisticsSubscriptions = async (
     params?: {
       queryCampaignId: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnFrom?: string;
+      /** GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString()) */
       queryCreatedOnTo?: string;
       queryGroupBy?: M.GetCampaignStatisticsSubscriptionsQueryGroupBy;
     },

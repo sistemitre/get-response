@@ -34,8 +34,8 @@ public sealed class LandingPageClient
         var pathParams = new Dictionary<string, string?> { ["lpsId"] = lpsId };
         var query = new List<KeyValuePair<string, string?>>
         {
-            new("query[date][from]", queryDateFrom?.ToString("O")),
-            new("query[date][to]", queryDateTo?.ToString("O")),
+            new("query[date][from]", (queryDateFrom.HasValue ? ApiHttp.FormatQueryDate(queryDateFrom.Value) : null)),
+            new("query[date][to]", (queryDateTo.HasValue ? ApiHttp.FormatQueryDate(queryDateTo.Value) : null)),
             new("query[location]", queryLocation),
             new("query[device]", (queryDevice is null ? null : EnumWireValues<GetLpsGeneralPerformanceStatsQueryDevice>.ToWireValue[queryDevice.Value])),
             new("query[page]", queryPage),

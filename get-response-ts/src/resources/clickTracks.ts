@@ -31,9 +31,9 @@ export class ClickTracksResource {
       page?: number;
       /** Requested number of results per page */
       perPage?: number;
-      /** Search click tracks from messages created from this date */
+      /** Search click tracks from messages created from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnFrom?: string;
-      /** Search click tracks from messages created to this date */
+      /** Search click tracks from messages created to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryCreatedOnTo?: string;
       /** Sort by message date */
       sortCreatedOn?: M.SortOrderEnum;

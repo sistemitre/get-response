@@ -11,9 +11,9 @@ export class EcommerceResource {
     params?: {
       /** List of fields that should be returned. Id is always returned. Fields should be separated by comma */
       fields?: string;
-      /** Show statistics for orders from this date */
+      /** Show statistics for orders from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryOrderDateFrom?: string;
-      /** Show statistics for orders to this date */
+      /** Show statistics for orders to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryOrderDateTo?: string;
       /** Search statistics by shop ID. You can get the shop ID by calling the `/v3/shops` endpoint. You can search for multiple shops using comma-separated values, for example, `pgIH, CNXF` */
       queryShopId?: string;
@@ -42,9 +42,9 @@ export class EcommerceResource {
     params?: {
       /** List of fields that should be returned. Id is always returned. Fields should be separated by comma */
       fields?: string;
-      /** Show statistics for orders from this date */
+      /** Show statistics for orders from this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryOrderDateFrom?: string;
-      /** Show statistics for orders to this date */
+      /** Show statistics for orders to this date (GetResponse date format: yyyy-MM-ddTHH:mm:ss+HHMM, e.g. 2024-01-15T10:30:00+0000 -- no colon in the offset, no sub-second precision (unlike Date.prototype.toISOString())) */
       queryOrderDateTo?: string;
       /** Search statistics by shop ID. You can get the shop ID by calling the `/v3/shops` endpoint. You can search for multiple shops using comma-separated values, for example, `pgIH, CNXF` */
       queryShopId?: string;
