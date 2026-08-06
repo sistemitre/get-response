@@ -1,11 +1,11 @@
 # CI for the get-response monorepo (Python + C# + TypeScript GetResponse clients, generated
-# from codegen/). Runs on every push to main and on pull requests targeting main.
+# from codegen/). Runs on pull requests targeting main. main is branch-protected (no direct
+# pushes), so every commit that lands there already passed this as a pull_request run --
+# no separate push trigger needed.
 
 name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
