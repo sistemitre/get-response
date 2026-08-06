@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 from collections.abc import AsyncIterator, Awaitable, Callable
-from typing import Any
+from typing import Any, TypeVar
 
 import httpx
 
 from ._core import DEFAULT_BASE_URL, _Core
 from ._ratelimit import RateLimitOptions
 from ._resource_groups import _ResourceGroups
+
+_T = TypeVar("_T")
 
 
 class GetResponseClient(_ResourceGroups):
@@ -55,11 +57,11 @@ class GetResponseClient(_ResourceGroups):
 
     async def paginate(
         self,
-        list_method: Callable[..., Awaitable[list[Any]]],
+        list_method: Callable[..., Awaitable[list[_T]]],
         *,
         per_page: int = 100,
         **kwargs: Any,
-    ) -> AsyncIterator[Any]:
+    ) -> AsyncIterator[_T]:
         """Walk every page of a `list_*` resource method, yielding items one by one.
 
         GetResponse also reports `TotalCount`/`CurrentPage`/`TotalPages` response
