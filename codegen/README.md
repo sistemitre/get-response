@@ -57,7 +57,7 @@ Every `emit()` writes two kinds of files, and treats them completely differently
 - **Scaffold-once** — everything else: build/project files (`pyproject.toml`,
   `package.json`, `GetResponse.sln`, both `.csproj` files, lint/format configs), the
   hand-written core runtime (HTTP transport, auth, pagination, error mapping, the opt-in
-  rate limiter, Python's `_compat.py`, C#'s `Internal/EnumWireValues.cs`), the root
+  rate limiter, Python's `_compat.py`, C#'s `Internal/EnumWireValues.cs` and `Internal/DateTimeOffsetJsonConverter.cs`), the root
   client's constructors/lifecycle, READMEs, and test suites. Each is written **only if it
   doesn't already exist** — a fresh checkout gets them scaffolded once; every later
   regenerate leaves them untouched. **Hand-editing these is expected and safe** — that's

@@ -12,7 +12,8 @@ Regenerate via `python -m codegen.generate --csharp`. Two buckets:
   else -- `GetResponse.sln`, both `.csproj` files, `.editorconfig`, `GetResponse.Api/README.md`,
   the hand-written half of `GetResponseClient.cs`, `GetResponseClientOptions.cs`,
   `GetResponseApiException.cs`, `RateLimitOptions.cs`, `RateLimitException.cs`, `Pagination.cs`,
-  `Internal/ApiHttp.cs`, `Internal/RateLimiter.cs`, `Internal/EnumWireValues.cs`, and the whole
+  `Internal/ApiHttp.cs`, `Internal/RateLimiter.cs`, `Internal/EnumWireValues.cs`,
+  `Internal/DateTimeOffsetJsonConverter.cs`, and the whole
   `GetResponse.Api.Tests/` project. `.sln` and both `.csproj` files are scaffolded via the real
   `dotnet` CLI (`dotnet new sln`/`classlib`/`xunit`, `dotnet sln add`, `dotnet add
   package`/`reference`) the one time they're created, then hand-patched for the properties no
@@ -518,7 +519,8 @@ public sealed partial class GetResponseClient : IDisposable
     /// <summary>
     /// The <see cref="JsonSerializerOptions"/> shared by every model and resource client:
     /// property names come from <c>[JsonPropertyName]</c>, enums (de)serialize via their
-    /// <c>[EnumMember]</c> wire value, and null properties are omitted when writing.
+    /// <c>[EnumMember]</c> wire value, date-times accept the API's colon-less offsets
+    /// (<c>+0000</c>), and null properties are omitted when writing.
     /// </summary>
     public static readonly JsonSerializerOptions JsonOptions = CreateJsonOptions();
 
@@ -595,11 +597,100 @@ public sealed partial class GetResponseClient : IDisposable
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
         options.Converters.Add(new EnumMemberJsonConverterFactory());
+        options.Converters.Add(new DateTimeOffsetJsonConverter());
+        options.Converters.Add(new NullableDateTimeOffsetJsonConverter());
         return options;
     }
 }
 """
 
+
+_DATE_TIME_OFFSET_CONVERTER_CS = _SCAFFOLD_HEADER + """\
+using System;
+using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace GetResponse.Api.Internal;
+
+/// <summary>
+/// Reads the date-time shapes the live API actually sends -- notably a colon-less offset
+/// (<c>2026-11-16T10:20:10+0000</c>), which System.Text.Json rejects by default -- plus
+/// <c>+00:00</c>, <c>Z</c> and bare dates (taken as UTC midnight). Writing is unchanged
+/// (ISO 8601 round-trip). Garbage still throws <see cref="JsonException"/>.
+/// </summary>
+internal sealed class DateTimeOffsetJsonConverter : JsonConverter<DateTimeOffset>
+{
+    public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (reader.TokenType != JsonTokenType.String)
+        {
+            throw new JsonException($"Expected a date-time string, got {reader.TokenType}.");
+        }
+
+        return Parse(reader.GetString()!);
+    }
+
+    public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options) =>
+        writer.WriteStringValue(value);
+
+    internal static DateTimeOffset Parse(string text)
+    {
+        // Insert the missing colon in a trailing +HHMM / -HHMM offset.
+        var normalized = text.Length >= 5
+            && (text[^5] == '+' || text[^5] == '-')
+            && char.IsAsciiDigit(text[^4]) && char.IsAsciiDigit(text[^3])
+            && char.IsAsciiDigit(text[^2]) && char.IsAsciiDigit(text[^1])
+            && text.Contains('T')
+                ? text[..^2] + ":" + text[^2..]
+                : text;
+
+        if (DateTimeOffset.TryParse(normalized, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var value))
+        {
+            return value;
+        }
+
+        throw new JsonException($"'{text}' is not a date-time the GetResponse API sends.");
+    }
+}
+
+/// <summary>
+/// Nullable counterpart of <see cref="DateTimeOffsetJsonConverter"/>: the API sometimes sends
+/// <c>""</c> instead of omitting an optional date, which reads as <c>null</c>.
+/// </summary>
+internal sealed class NullableDateTimeOffsetJsonConverter : JsonConverter<DateTimeOffset?>
+{
+    public override bool HandleNull => true;
+
+    public override DateTimeOffset? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (reader.TokenType == JsonTokenType.Null)
+        {
+            return null;
+        }
+
+        if (reader.TokenType != JsonTokenType.String)
+        {
+            throw new JsonException($"Expected a date-time string, got {reader.TokenType}.");
+        }
+
+        var text = reader.GetString();
+        return string.IsNullOrWhiteSpace(text) ? null : DateTimeOffsetJsonConverter.Parse(text);
+    }
+
+    public override void Write(Utf8JsonWriter writer, DateTimeOffset? value, JsonSerializerOptions options)
+    {
+        if (value is { } v)
+        {
+            writer.WriteStringValue(v);
+        }
+        else
+        {
+            writer.WriteNullValue();
+        }
+    }
+}
+"""
 
 _CLIENT_OPTIONS_CS = _SCAFFOLD_HEADER + """\
 using System;
@@ -2215,6 +2306,7 @@ def emit(api: Api, out_dir: str = "get-response-cs") -> None:
     _write_once(internal_dir / "ApiHttp.cs", _API_HTTP_CS)
     _write_once(internal_dir / "RateLimiter.cs", _RATE_LIMITER_CS)
     _write_once(internal_dir / "EnumWireValues.cs", _ENUM_WIRE_VALUES_CS)
+    _write_once(internal_dir / "DateTimeOffsetJsonConverter.cs", _DATE_TIME_OFFSET_CONVERTER_CS)
     _write_once(api_dir / "README.md", _API_README_MD)
     _write_once(root / ".editorconfig", _EDITORCONFIG)
 
