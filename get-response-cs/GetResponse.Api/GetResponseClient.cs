@@ -33,7 +33,8 @@ public sealed partial class GetResponseClient : IDisposable
     /// <summary>
     /// The <see cref="JsonSerializerOptions"/> shared by every model and resource client:
     /// property names come from <c>[JsonPropertyName]</c>, enums (de)serialize via their
-    /// <c>[EnumMember]</c> wire value, and null properties are omitted when writing.
+    /// <c>[EnumMember]</c> wire value, date-times accept the API's colon-less offsets
+    /// (<c>+0000</c>), and null properties are omitted when writing.
     /// </summary>
     public static readonly JsonSerializerOptions JsonOptions = CreateJsonOptions();
 
@@ -110,6 +111,8 @@ public sealed partial class GetResponseClient : IDisposable
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
         options.Converters.Add(new EnumMemberJsonConverterFactory());
+        options.Converters.Add(new DateTimeOffsetJsonConverter());
+        options.Converters.Add(new NullableDateTimeOffsetJsonConverter());
         return options;
     }
 }
